@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const adminRoute = require("./routes/adminRoute");
-
+const loginRoute = require("./routes/loginRoute");
 ////////////////
 //MIDLEWEARE FN
 app.set("view engine", "ejs");
@@ -16,11 +16,37 @@ app.use(express.json());
 ////////////////
 //IMPORT ROUTES
 app.use("/admin", adminRoute);
+app.use("/login", loginRoute);
 
-/////////////
+//////////////
+//////////////
 //HOME ROUTE
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+/////////////
+//MENU ROUTE
+app.get("/menu", (req, res) => {
+  res.render("menu");
+});
+
+/////////////
+//MENU ROUTE
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+
+/////////////
+//MENU ROUTE
+app.get("/gallery", (req, res) => {
+  res.render("gallery");
+});
+
+/////////////
+//MENU ROUTE
+app.get("/elements", (req, res) => {
+  res.render("elements");
 });
 
 ///////
