@@ -25,6 +25,19 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+
+////////////
+//HOME ROUTE
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+////////////
+//HOME ROUTE
+app.post("/register", (req, res) => {
+  console.log(req.body);
+});
+
 /////////////
 //MENU ROUTE
 app.get("/menu", (req, res) => {

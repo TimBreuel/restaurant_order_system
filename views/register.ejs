@@ -7,7 +7,93 @@
     <%- include('partials/bodyHeader') %>
     <!-- #header -->
 
-    <!-- Login Area -->
+
+    <!-- Start reservation Area -->
+    <section
+      class="reservation-area section-gap relative"
+      style="padding-top: 230px;"
+    >
+      <div class="overlay overlay-bg"></div>
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6 reservation-left">
+            <h1 class="text-white" id="registerHeadline">
+              Register your restaurant to our sytem.
+            </h1>
+            <p class="text-white pt-20" id="registerMessage">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam. Quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea.
+            </p>
+          </div>
+          <div class="col-lg-5 reservation-right">
+            <form class="form-wrap text-center" action="#">
+              <input
+                type="text"
+                class="form-control"
+                id="registerRestaurantName"
+                name="YourRestaurantName"
+                placeholder="Your Restaurant Name"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Your Restaurant Name'"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="registerFirstName"
+                name="FirstName"
+                placeholder="First Name"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'First Name'"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="registerLastName"
+                name="LastName"
+                placeholder="Last Name"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Last Name'"
+              />
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="registerEmail"
+                placeholder="Your Email Address"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Your Email Address'"
+              />
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="registerPassword"
+                placeholder="Password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Password'"
+              />
+              <input
+                type="password"
+                class="form-control"
+                name="rePassword"
+                id="registerRePassword"
+                placeholder="Repeat Password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Repeat Password'"
+              />
+
+              <button class="primary-btn text-uppercase mt-20" id="registerBtn">
+                Register
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End reservation Area -->
+
 
     <!-- End login Area -->
 
@@ -16,5 +102,105 @@
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
+
+    <script>
+      //GET THE BUTTON AND MAKE VALIDATION
+      const registerBtn = document.querySelector("#registerBtn");
+      registerBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const registerRestaurantName = document.querySelector(
+          "#registerRestaurantName"
+        );
+        const registerFirstName = document.querySelector("#registerFirstName");
+        const registerLastName = document.querySelector("#registerLastName");
+        const registerEmail = document.querySelector("#registerEmail");
+        const registerPassword = document.querySelector("#registerPassword");
+        const registerRePassword = document.querySelector(
+          "#registerRePassword"
+        );
+        const registerHeadline = document.querySelector("#registerHeadline");
+        const registerMessage = document.querySelector("#registerHeadline");
+        let isVerified = {
+          valid: true,
+          msg: "",
+        };
+
+        if (!registerRestaurantName.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out restaurant name<br>";
+        }
+        if (!registerFirstName.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out frist name<br>";
+        }
+        if (!registerLastName.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out last name<br>";
+        }
+        if (!registerEmail.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out email<br>";
+        }
+        if (!registerPassword.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (!registerPassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (!registerRePassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (registerPassword.value !== registerRePassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Password are not match<br>";
+        }
+        if (!isVerified.valid) {
+          errorMessage(isVerified.msg);
+        } else {
+          const data = {
+            restaurantName: registerRestaurantName.value,
+            firstName: registerFirstName.value,
+            lastName: registerLastName.value,
+            email: registerEmail.value,
+            password: registerPassword.value,
+          };
+          postData("/register", data).then((data) => {
+            console.log(data);
+          });
+        }
+      });
+
+      //////////////////////////
+      //FETCH THE REGISTER DATA
+      async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+
+      ///////////////////
+      //ERROR MESSGAE fn
+      function errorMessage(message) {
+        const registerHeadline = document.querySelector("#registerHeadline");
+        const registerMessage = document.querySelector("#registerMessage");
+        registerHeadline.innerHTML =
+          "Something goes wrong check the text below";
+        registerMessage.innerHTML = message;
+        setTimeout(() => {
+          registerHeadline.innerHTML = "Register your restaurant to our sytem.";
+          registerMessage.innerHTML =
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam. Quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea.";
+        }, 6000);
+      }
+    </script>
+
   </body>
 </html>
