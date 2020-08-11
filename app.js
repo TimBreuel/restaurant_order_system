@@ -20,7 +20,7 @@ app.use("/admin", adminRoute);
 /////////////
 //HOME ROUTE
 app.get("/", (req, res) => {
-  res.send("Restaurant order system");
+  res.render("index");
 });
 
 ///////
