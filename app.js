@@ -49,6 +49,12 @@ app.get("/elements", (req, res) => {
   res.render("elements");
 });
 
+/////////////
+//MENU ROUTE
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
+
 ///////
 //PORT
 const PORT = process.env.PORT || 4000;

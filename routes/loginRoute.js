@@ -19,4 +19,10 @@ loginRoute.get("/bar", (req, res) => {
   res.render("bar");
 });
 
+/////////////
+//LOGIN/BAR ROUTE
+loginRoute.get("/restaurant", (req, res) => {
+  res.render("restaurant");
+});
+
 module.exports = loginRoute;
