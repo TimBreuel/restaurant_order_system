@@ -1,0 +1,25 @@
+{
+  "name": "restaurant_order_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimBreuel/restaurant_order_system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimBreuel/restaurant_order_system/issues"
+  },
+  "homepage": "https://github.com/TimBreuel/restaurant_order_system#readme",
+  "dependencies": {
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.28",
+    "password-hash": "^1.2.2"
+  }
+}
