@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+
 ////////////
 //HOME ROUTE
 app.get("/register", (req, res) => {
