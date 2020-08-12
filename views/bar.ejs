@@ -10,53 +10,31 @@
     <!-- Start reservation Area -->
     <section
       class="reservation-area section-gap relative costumerLoginBar"
-      style="padding-top: 230px;"
+      style="padding-top: 300px;"
     >
       <div class="overlay overlay-bg"></div>
       <div class="container">
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 reservation-left">
-            <h1 class="text-white" id="registerHeadline">
-              Login in to the bar
+            <h1 class="text-white" id="loginBarHeadline">
+              Login to your bar.
             </h1>
-            <p class="text-white pt-20" id="registerMessage">
-              Login to the bar to get the orders for the bar.
+            <p class="text-white pt-20" id="loginBarMessage">
+              Login to your bar to see all your orders that are coming from your
+              costumers.
             </p>
           </div>
           <div class="col-lg-5 reservation-right">
-            <form class="form-wrap text-center" action="#">
-              <input
-                type="text"
-                class="form-control"
-                id="registerRestaurantName"
-                name="YourRestaurantName"
-                placeholder="Your Restaurant Name"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Your Restaurant Name'"
-              />
-              <input
-                type="text"
-                class="form-control"
-                id="registerFirstName"
-                name="FirstName"
-                placeholder="First Name"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'First Name'"
-              />
-              <input
-                type="text"
-                class="form-control"
-                id="registerLastName"
-                name="LastName"
-                placeholder="Last Name"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Last Name'"
-              />
+            <form
+              class="form-wrap text-center"
+              action="#"
+              style="padding-top: 80px; padding-bottom: 80px;"
+            >
               <input
                 type="email"
                 class="form-control"
                 name="email"
-                id="registerEmail"
+                id="loginBarEmail"
                 placeholder="Your Email Address"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Your Email Address'"
@@ -65,23 +43,14 @@
                 type="password"
                 class="form-control"
                 name="password"
-                id="registerPassword"
+                id="loginBarPassword"
                 placeholder="Password"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Password'"
               />
-              <input
-                type="password"
-                class="form-control"
-                name="rePassword"
-                id="registerRePassword"
-                placeholder="Repeat Password"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Repeat Password'"
-              />
 
-              <button class="primary-btn text-uppercase mt-20" id="registerBtn">
-                Register
+              <button class="primary-btn text-uppercase mt-20" id="loginBarBtn">
+                Login
               </button>
             </form>
           </div>
@@ -99,69 +68,33 @@
     <%- include('partials/scripts') %>
     <script>
       //GET THE BUTTON AND MAKE VALIDATION
-      const registerBtn = document.querySelector("#registerBtn");
-      registerBtn.addEventListener("click", (e) => {
+      const loginBarBtn = document.querySelector("#loginBarBtn");
+      loginBarBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        const registerRestaurantName = document.querySelector(
-          "#registerRestaurantName"
-        );
-        const registerFirstName = document.querySelector("#registerFirstName");
-        const registerLastName = document.querySelector("#registerLastName");
-        const registerEmail = document.querySelector("#registerEmail");
-        const registerPassword = document.querySelector("#registerPassword");
-        const registerRePassword = document.querySelector(
-          "#registerRePassword"
-        );
-        const registerHeadline = document.querySelector("#registerHeadline");
-        const registerMessage = document.querySelector("#registerHeadline");
+        const loginBarEmail = document.querySelector("#loginBarEmail");
+        const loginBarPassword = document.querySelector("#loginBarPassword");
         let isVerified = {
           valid: true,
           msg: "",
         };
 
-        if (!registerRestaurantName.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out restaurant name<br>";
-        }
-        if (!registerFirstName.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out frist name<br>";
-        }
-        if (!registerLastName.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out last name<br>";
-        }
-        if (!registerEmail.value.trim()) {
+        if (!loginBarEmail.value.trim()) {
           isVerified.valid = false;
           isVerified.msg += "Please feel out email<br>";
         }
-        if (!registerPassword.value.trim()) {
+        if (!loginBarPassword.value) {
           isVerified.valid = false;
           isVerified.msg += "Please feel out password<br>";
         }
-        if (!registerPassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
-        }
-        if (!registerRePassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
-        }
-        if (registerPassword.value !== registerRePassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Password are not match<br>";
-        }
+
         if (!isVerified.valid) {
           errorMessage(isVerified.msg);
         } else {
           const data = {
-            restaurantName: registerRestaurantName.value,
-            firstName: registerFirstName.value,
-            lastName: registerLastName.value,
-            email: registerEmail.value,
-            password: registerPassword.value,
+            email: loginBarEmail.value,
+            password: loginBarPassword.value,
           };
-          postData("/register", data).then((data) => {
+          postData("/login/bar", data).then((data) => {
             console.log(data);
           });
         }
@@ -183,16 +116,16 @@
       ///////////////////
       //ERROR MESSGAE fn
       function errorMessage(message) {
-        const registerHeadline = document.querySelector("#registerHeadline");
-        const registerMessage = document.querySelector("#registerMessage");
-        registerHeadline.innerHTML =
+        const loginBarHeadline = document.querySelector("#loginBarHeadline");
+        const loginBarMessage = document.querySelector("#loginBarMessage");
+        loginBarHeadline.innerHTML =
           "Something goes wrong check the text below";
-        registerMessage.innerHTML = message;
+        loginBarMessage.innerHTML = message;
         setTimeout(() => {
-          registerHeadline.innerHTML = "Register your restaurant to our sytem.";
-          registerMessage.innerHTML =
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam. Quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea.";
-        }, 6000);
+          loginBarHeadline.innerHTML = "Login to your bar!";
+          loginBarMessage.innerHTML =
+            "Login to your bar to see all your orders that are coming from your costumers.";
+        }, 5000);
       }
     </script>
   </body>
