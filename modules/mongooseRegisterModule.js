@@ -5,10 +5,10 @@
 
 
 const passwordHash = require('password-hash')
-const REGISTERSCHEMA = require('./models/registerSchema')
-const connect = require('./models/connectionFn')
-const MENUSCHEMA = require('./models/menuSchema')
-
+const REGISTERSCHEMA = require('../models/registerSchema')
+const connect = require('../models/connectionFn')
+const MENUSCHEMA = require('../models/menuSchema')
+const emailSender = require('./emailSenderModule')
 
 
 
@@ -30,11 +30,7 @@ function registerUser(rname,fname, lname, email, password) {
             newUser.save().then(() => {
                 resolve()
                 // console.log(response);
-                //email message :
-                // welcome to our web seit . to verify your email click the folloeing link
-                // http://localhost:3000/verify/[newUser._id]
-                    //https://shirin-emailverification.herokuapp.com/verify/[newUser._id]
-              
+         
                 let msg ='Hi ' + fname + ' ' + lname + 'Welcome to our Website\n'
                 msg += 'to verify you email address please click in the following link\n'
                  msg += 'https://shirin-emailverification.herokuapp.com/verify/' + newUser._id
