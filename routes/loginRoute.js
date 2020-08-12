@@ -5,13 +5,13 @@ const loginDataModules = require('../modules/loginModule')
 //////////////////
 //GET LOGIN ROUTE
 loginRoute.get("/", (req, res) => {
-  res.render("login");
-/*   if (req.session.user) {
+//  res.render("login");
+  if (req.session.user) {
     res.redirect('/admin')
   }else{
       res.render('login')
-  } 
- */
+  }  
+ 
 });
 
 loginRoute.post('/login', (req, res) => {  

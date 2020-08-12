@@ -58,6 +58,23 @@ app.post("/register", (req, res) => {
   }
 });
 
+
+///////////////////////////////////
+app.get('/verify/:id', (req, res) => {
+    const id = req.params.id
+    if(id){
+      registerDataModules.verifyRegister(id).then(()=>{
+        res.json(1)
+      }).catch(err =>{
+        res.json(2)
+      })
+    }else{
+      res.send('error')
+    }
+});
+
+
+
 /////////////
 //MENU ROUTE
 app.get("/menu", (req, res) => {
