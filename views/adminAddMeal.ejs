@@ -28,24 +28,159 @@
     <!-- End banner Area -->
 
     <!-- Start menu-area Area -->
-    <section class="menu-area section-gap" id="menu">
+    <section
+      class="menu-area section-gap"
+      id="menu"
+      style="padding-bottom: 0px;"
+    >
       <div class="container">
         <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-70 col-lg-8">
+          <div class="menu-content pb-40 col-lg-8">
             <div class="title text-center">
-              <h1 class="mb-10">Here you can create your menu.</h1>
-              <p>Who are in extremely love with eco friendly system.</p>
+              <h1 class="mb-10" id="addMealHeadline">
+                Here you can create your meals.
+              </h1>
+              <p id="addMealMessage">
+                Who are in extremely love with eco friendly system.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
     <!-- End menu-area Area -->
+    <!-- Start add meal area -->
+    <section class="menu-area">
+      <div class="container">
+        <form class="form-wrap text-center" action="#">
+          <input
+            type="text"
+            class="form-control mb-4"
+            id="addMealTitle"
+            name="addMealTitle"
+            placeholder="Meal title"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Meal title'"
+          />
+          <textarea
+            type="te"
+            class="form-control mb-4"
+            id="AddMealDescription"
+            name="AddMealDescription"
+            placeholder="Meal Description"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Meal Description'"
+          ></textarea>
+          <input
+            type="number"
+            class="form-control mb-4"
+            id="addMealNumber"
+            name="addMealNumber"
+            placeholder="Meal number"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Meal number'"
+          />
+          <input
+            type="number"
+            class="form-control mb-4"
+            id="addMealPrice"
+            name="addMealPrice"
+            placeholder="Meal price"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'Meal price'"
+          />
 
+          <input
+            type="file"
+            class="form-control-file mb-4"
+            name="addMealImg"
+            id="addMealImg"
+            placeholder="Upload an image"
+            accept="image/x-png,image/gif,image/jpeg"
+          />
+
+          <button
+            class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5"
+            id="addMealBtn"
+            style="border-radius: 3px;"
+          >
+            ADD MEAL
+          </button>
+        </form>
+      </div>
+    </section>
+    <!-- End add meal area -->
     <!-- start footer Area -->
     <%- include('partials/footer') %>
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
+
+    <script>
+      //GET THE BUTTON AND MAKE VALIDATION
+      const addMealBtn = document.querySelector("#addMealBtn");
+      addMealBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const addMealTitle = document.querySelector("#addMealTitle");
+        const AddMealDescription = document.querySelector(
+          "#AddMealDescription"
+        );
+        const addMealNumber = document.querySelector("#addMealNumber");
+        const addMealPrice = document.querySelector("#addMealPrice");
+        const addMealImg = document.querySelector("#addMealImg");
+
+        let isVerified = {
+          valid: true,
+          msg: "",
+        };
+
+        if (!addMealTitle.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out title<br>";
+        }
+        if (!addMealPrice.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out title<br>";
+        }
+
+        if (!isVerified.valid) {
+          errorMessage(isVerified.msg);
+        } else {
+          console.log(addMealTitle.value);
+          const fd = new FormData();
+          fd.append("mealTitle", addMealTitle);
+          fd.append("mealDiscription", AddMealDescription.value);
+          fd.append("mealNumber", addMealNumber.value);
+          fd.append("mealPrice", addMealPrice.value);
+          fd.append("mealImg", addMealImg.files);
+          console.log(fd);
+          fetch("/admin/addMeal", {
+            method: "post",
+            body: JSON.stringify(fd),
+          })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => console.log(err));
+        }
+      });
+
+      //////////////////////////
+      //FETCH THE REGISTER DATA
+
+      ///////////////////
+      //ERROR MESSGAE fn
+      function errorMessage(message) {
+        const addMealHeadline = document.querySelector("#addMealHeadline");
+        const addMealMessage = document.querySelector("#addMealMessage");
+        addMealHeadline.innerHTML = "Something goes wrong check the text below";
+        addMealMessage.innerHTML = message;
+        setTimeout(() => {
+          addMealHeadline.innerHTML = "Here you can create your meals.";
+          addMealMessage.innerHTML =
+            "Who are in extremely love with eco friendly system.";
+        }, 6000);
+      }
+    </script>
   </body>
 </html>
