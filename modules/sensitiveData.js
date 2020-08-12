@@ -1,5 +1,5 @@
 function password () {
-    return ''
+    return '#123456abc#'
 }
 
 
