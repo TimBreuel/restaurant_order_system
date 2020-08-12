@@ -1,11 +1,41 @@
 const express = require("express");
 const loginRoute = express.Router();
+const loginDataModules = require('../modules/loginModule')
 
 //////////////////
 //GET LOGIN ROUTE
 loginRoute.get("/", (req, res) => {
   res.render("login");
+/*   if (req.session.user) {
+    res.redirect('/admin')
+  }else{
+      res.render('login')
+  } 
+ */
 });
+
+loginRoute.post('/login', (req, res) => {  
+ // console.log(req.body);
+  if (req.body.email && req.body.password) {
+    loginDataModules.checkUser(req.body.email.trim(), req.body.password).then(user => {
+      req.session.user = user
+    //  console.log(user); 
+      res.json(1)
+    }).catch(error => {
+      if (error == 3) {
+        res.json(3)
+      } else {
+        res.json(4)
+      }
+    })
+  } else {
+    res.json(2)
+  }
+
+
+});
+
+
 
 //////////////////////////
 //GET LOGIN/KITCHEN ROUTE
