@@ -5,7 +5,8 @@ const app = express();
 const path = require("path");
 const adminRoute = require("./routes/adminRoute");
 const loginRoute = require("./routes/loginRoute");
-const dataModules = require('./modules/mongooseRegisterModule')
+const registerDataModules = require('./modules/registerModule')
+
 ////////////////
 //MIDLEWEARE FN
 app.set("view engine", "ejs");
@@ -41,7 +42,7 @@ app.post("/register", (req, res) => {
   const {restaurantName, firstName,lastName,email,password} = req.body
 
   if (restaurantName && firstName && lastName && email && password) {
-    dataModules.registerUser(restaurantName , firstName , lastName , email , password ).then(() => {
+    registerDataModules.registerUser(restaurantName , firstName , lastName , email , password ).then(() => {
       res.json(1) //user register success
     }).catch(error => {
       console.log(error);
