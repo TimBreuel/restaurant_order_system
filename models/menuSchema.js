@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 
+const { Schema } = mongoose
 
 //creat restaurant_menu schema
 const menuSchema = new Schema({
