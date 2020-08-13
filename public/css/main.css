@@ -3399,3 +3399,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 p.words {
   word-wrap: normal;
 }
+
+p.letters {
+  word-wrap: break-word;
+}
