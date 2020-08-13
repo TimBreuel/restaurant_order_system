@@ -89,6 +89,13 @@
             onfocus="this.placeholder = ''"
             onblur="this.placeholder = 'Meal price'"
           />
+          <select class="form-control" id="addMealSelect">
+            <option value="category"> choose category</option>
+            <option value="drinks">Drinks</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+          </select>
 
           <input
             type="file"
@@ -128,6 +135,7 @@
         const addMealNumber = document.querySelector("#addMealNumber");
         const addMealPrice = document.querySelector("#addMealPrice");
         const addMealImg = document.querySelector("#addMealImg");
+        const addMealSelect = document.querySelector("#addMealSelect");
 
         let isVerified = {
           valid: true,
@@ -142,21 +150,36 @@
           isVerified.valid = false;
           isVerified.msg += "Please feel out title<br>";
         }
+        if (!AddMealDescription.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out description<br>";
+        }
+
+        if (
+          addMealSelect.options[addMealSelect.selectedIndex].value ===
+          "category"
+        ) {
+          isVerified.valid = false;
+          isVerified.msg += "Please choose a category<br>";
+        }
 
         if (!isVerified.valid) {
           errorMessage(isVerified.msg);
         } else {
-          console.log(addMealTitle.value);
           const fd = new FormData();
-          fd.append("mealTitle", addMealTitle);
+          fd.append("mealTitle", addMealTitle.value);
           fd.append("mealDiscription", AddMealDescription.value);
           fd.append("mealNumber", addMealNumber.value);
           fd.append("mealPrice", addMealPrice.value);
-          fd.append("mealImg", addMealImg.files);
+          fd.append(
+            "mealCategory",
+            addMealSelect.options[addMealSelect.selectedIndex].value
+          );
+          fd.append("mealImg", addMealImg.files[0]);
           console.log(fd);
           fetch("/admin/addMeal", {
             method: "post",
-            body: JSON.stringify(fd),
+            body: fd,
           })
             .then((response) => {
               console.log(response);
