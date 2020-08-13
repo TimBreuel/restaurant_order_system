@@ -59,7 +59,8 @@ app.post("/register", (req, res) => {
     registerDataModules
       .registerUser(restaurantName, firstName, lastName, email, password)
       .then(() => {
-        res.json(1); //user register success
+       res.json(1); //user register success
+        //res.render("login")
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +83,7 @@ app.get("/verify/:id", (req, res) => {
     registerDataModules
       .verifyRegister(id)
       .then(() => {
-        res.json(1);
+        res.render('login')
       })
       .catch((err) => {
         res.json(2);
