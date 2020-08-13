@@ -60,6 +60,7 @@ app.post("/register", (req, res) => {
 
 
 ///////////////////////////////////
+// VERIFY
 app.get('/verify/:id', (req, res) => {
     const id = req.params.id
     if(id){
