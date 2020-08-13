@@ -24,7 +24,7 @@ function registerUser(rname,fname, lname, email, password) {
                 last_name: lname,
                 email: email,
                 password: passwordHash.generate(password),
-                varfied: false
+                verified: false
             })
             //  save newuser in DB
             newUser.save().then(() => {
@@ -55,11 +55,7 @@ function verifyRegister(id) {
     return new Promise((resolve , reject) =>{
 
         connect().then(()=>{
-            REGISTERSCHEMA.findOne({_id : id}).then(user =>{
-                user.verfied = true
-                resolve(user)
-        
-        }).catch(err =>{
+            REGISTERSCHEMA.findOneAndUpdate({_id:id},{verified: true}).then(user=>resolve(user)).catch(err =>{
             reject(err)
         })  
         })
