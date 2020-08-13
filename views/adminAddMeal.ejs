@@ -52,7 +52,12 @@
     <!-- Start add meal area -->
     <section class="menu-area">
       <div class="container">
-        <form class="form-wrap text-center" action="#">
+        <form
+          class="form-wrap text-center"
+          action="#"
+          id="restaurantId"
+          restaurantId="<%=restaurantId%>"
+        >
           <input
             type="text"
             class="form-control mb-4"
@@ -89,7 +94,7 @@
             onfocus="this.placeholder = ''"
             onblur="this.placeholder = 'Meal price'"
           />
-          <select class="form-control" id="addMealSelect">
+          <select class="form-control mt-4" id="addMealSelect">
             <option value="category"> choose category</option>
             <option value="drinks">Drinks</option>
             <option value="breakfast">Breakfast</option>
@@ -99,7 +104,7 @@
 
           <input
             type="file"
-            class="form-control-file mb-4"
+            class="form-control-file mb-4 mt-5"
             name="addMealImg"
             id="addMealImg"
             placeholder="Upload an image"
@@ -136,7 +141,9 @@
         const addMealPrice = document.querySelector("#addMealPrice");
         const addMealImg = document.querySelector("#addMealImg");
         const addMealSelect = document.querySelector("#addMealSelect");
-
+        const restaurantId = document
+          .querySelector("#restaurantId")
+          .getAttribute("restaurantId");
         let isVerified = {
           valid: true,
           msg: "",
@@ -176,13 +183,22 @@
             addMealSelect.options[addMealSelect.selectedIndex].value
           );
           fd.append("mealImg", addMealImg.files[0]);
-          console.log(fd);
+
+          fd.append("restaurantId", restaurantId);
           fetch("/admin/addMeal", {
             method: "post",
             body: fd,
           })
             .then((response) => {
-              console.log(response);
+              if (response.status === 200) {
+                successOrNot("SUCCESFULL ADDED", "#00AB66");
+                addMealTitle.value = "";
+                AddMealDescription.value = "";
+                addMealNumber.value = "";
+                addMealPrice.value = "";
+              } else {
+                successOrNot("SOMETHING GOES WRONG", "#EA2626");
+              }
             })
             .catch((err) => console.log(err));
         }
@@ -203,6 +219,15 @@
           addMealMessage.innerHTML =
             "Who are in extremely love with eco friendly system.";
         }, 6000);
+      }
+
+      function successOrNot(msg, color) {
+        addMealBtn.style.backgroundColor = color;
+        addMealBtn.innerText = msg;
+        setTimeout(() => {
+          addMealBtn.style.backgroundColor = "#343A40";
+          addMealBtn.innerText = "ADD MEAL";
+        }, 2000);
       }
     </script>
   </body>

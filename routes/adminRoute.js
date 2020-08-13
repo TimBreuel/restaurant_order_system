@@ -2,26 +2,20 @@ const express = require("express");
 const adminRoute = express.Router();
 const adminModule = require("../modules/adminModule");
 
-
-
-
-
-
-adminRoute.use((req , res,next)=> {
-  
+adminRoute.use((req, res, next) => {
   console.log(req.session.user);
-  if (req.session.user) {//!  admin muss be login first
-      next()
-  }else{
-      res.redirect('/login')
-  } 
-}) 
-
+  if (req.session.user) {
+    //!  admin muss be login first
+    next();
+  } else {
+    res.redirect("/login");
+  }
+});
 
 //////////////////
 //GET ADMIN INDEX
 adminRoute.get("/", (req, res) => {
-  res.render("adminIndex" , {email: req.session.user.email});
+  res.render("adminIndex", { email: req.session.user.email });
 });
 
 ////////////////
@@ -33,7 +27,7 @@ adminRoute.get("/menu", (req, res) => {
 /////////////////////
 //GET ADMIN ADD MEAL
 adminRoute.get("/addMeal", (req, res) => {
-  res.render("adminAddMeal");
+  res.render("adminAddMeal", { restaurantId: req.session.user._id });
 });
 
 /////////////////////
@@ -45,7 +39,9 @@ adminRoute.post("/addMeal", (req, res) => {
     mealNumber,
     mealPrice,
     mealCategory,
+    restaurantId,
   } = req.body;
+  console.log(req.body);
   const mealImg = req.files.mealImg;
   adminModule
     .addMeal(
@@ -55,7 +51,7 @@ adminRoute.post("/addMeal", (req, res) => {
       mealPrice,
       mealCategory,
       mealImg,
-      "123456789"
+      restaurantId
     )
     .then((data) => {
       res.json(data);
