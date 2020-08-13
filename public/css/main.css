@@ -2213,6 +2213,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 .reservation-area .reservation-right .nice-select .list .option {
   padding-left: 12px;
 }
+
 @media (max-width: 991px) {
   .reservation-area .reservation-right {
     margin-top: 50px;
@@ -3393,4 +3394,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 .footer-text a,
 .footer-text i {
   color: #f42f2c;
+}
+
+p.words {
+  word-wrap: normal;
 }
