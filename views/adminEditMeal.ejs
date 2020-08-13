@@ -1,137 +1,99 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
-  <head>
-    <%- include('partials/header') %>
-  </head>
-  <body>
-    <%- include('partials/adminHeader') %>
-    <!-- #header -->
 
-    <!-- start banner Area -->
-    <section class="about-banner relative">
-      <div class="overlay overlay-bg"></div>
-      <div class="container">
-        <div class="row d-flex align-items-center justify-content-center">
-          <div class="about-content col-lg-12">
-            <h1 class="text-white">
-              Edit Meal
-            </h1>
-            <p class="text-white link-nav">
-              <a href="/admin">Home </a>
-              <span class="lnr lnr-arrow-right"></span>
-              <a href="/admin/addMeal"> Add Meal</a>
-            </p>
+<head>
+  <%- include('partials/header') %>
+</head>
+
+<body>
+  <%- include('partials/adminHeader') %>
+  <!-- #header -->
+
+  <!-- start banner Area -->
+  <section class="about-banner relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="about-content col-lg-12">
+          <h1 class="text-white">
+            Edit Meal
+          </h1>
+          <p class="text-white link-nav">
+            <a href="/admin">Home </a>
+            <span class="lnr lnr-arrow-right"></span>
+            <a href="/admin/addMeal"> Add Meal</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End banner Area -->
+
+  <!-- Start menu-area Area -->
+  <section class="menu-area section-gap" id="menu">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="menu-content pb-70 col-lg-8">
+          <div class="title text-center">
+            <h1 class="mb-10">Here you can edit your meals</h1>
+            <p>Who are in extremely love with eco friendly system.</p>
           </div>
         </div>
       </div>
-    </section>
-    <!-- End banner Area -->
 
-    <!-- Start menu-area Area -->
-    <section class="menu-area section-gap" id="menu">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-70 col-lg-8">
-            <div class="title text-center">
-              <h1 class="mb-10">Here you can edit your meals</h1>
-              <p>Who are in extremely love with eco friendly system.</p>
-            </div>
-          </div>
+      <!-- edit meal -->
+      <!-- Start add meal area -->
+      <section class="menu-area">
+        <% meals.forEach ((meal , idx) => {%>
+        <div class="container">
+          <form class="form-wrap text-center" action="#" id="restaurantId" restaurantId="<%= meal.restaurantId%>">
+
+
+            <input type="text" placeholder="meal Title" name="addMealTitle" class="form-control mb-4"
+              value="<%= meal.title %>">
+
+            <textarea type="te" class="form-control mb-4" id="AddMealDescription" name="AddMealDescription"
+              placeholder="Meal Description" onfocus="this.placeholder = ''"
+              onblur="this.placeholder = 'Meal Description'"> <%= meal.description %> </textarea>
+
+
+            <input type="number" class="form-control mb-4" id="addMealNumber" name="addMealNumber"
+              placeholder="Meal number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Meal number'" value="<%= meal.number %>"/>
+
+          
+          <input type="number" class="form-control mb-4" id="addMealPrice" name="addMealPrice" placeholder="Meal price" value="<%= meal.price%>" />
+         
+          <div class="form-group">
+         
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <a href="#" class="deletimg">X</a>
+                    <img class="bookimg" width="100" src="<%= meal.img%>" alt="">
+                </div>
+            
+             </div>   
+             <input type="file" class="form-control-file mb-4 mt-5" name="addMealImg" id="addMealImg"
+             placeholder="Upload an image" accept="image/x-png,image/gif,image/jpeg" />
         </div>
 
-        <ul class="filter-wrap filters col-lg-12 no-padding">
-          <li class="active" data-filter="*">All Menu</li>
-          <li data-filter=".breakfast">Breakfast</li>
-          <li data-filter=".lunch">Lunch</li>
-          <li data-filter=".dinner">Dinner</li>
-          <li data-filter=".budget-meal">Budget Meal</li>
-          <li data-filter=".buffet">Buffet</li>
-        </ul>
+     
 
-        <div class="filters-content">
-          <div class="row grid">
-            <div class="col-md-6 all breakfast">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Cappuccion</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all dinner">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Americano</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all budget-meal">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Macchiato</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all breakfast">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Mocha</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all lunch">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Piccolo Latte</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all buffet">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Ristretto</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-          </div>
+            <button class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5" id="addMealBtn"
+              style="border-radius: 3px;">
+              EDIT MEAL
+            </button>
+          </form>
         </div>
-      </div>
-    </section>
-    <!-- End menu-area Area -->
+        <%})%>
+      </section>
+      <!-- end edit -->
 
-    <!-- start footer Area -->
-    <%- include('partials/footer') %>
-    <!-- End footer Area -->
+      <!-- start footer Area -->
+      <%- include('partials/footer') %>
+      <!-- End footer Area -->
 
-    <%- include('partials/scripts') %>
-  </body>
+      <%- include('partials/scripts') %>
+</body>
+
 </html>
