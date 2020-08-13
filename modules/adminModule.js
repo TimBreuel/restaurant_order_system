@@ -48,4 +48,45 @@ function addMeal(
   });
 }
 
-module.exports = { addMeal };
+
+
+// getall meal function
+
+
+
+
+
+
+
+// get meal 
+function getMeal(id) {
+  return new Promise((resolve, reject) => {
+      connect().then(() => {
+        MENUSCHEMA.findOne({ _id: id }).then(meal => {
+              if (meal) {
+                  meal.id = meal._id  // convert it to id
+                  resolve(meal)
+              } else {
+                  reject(new Error('can not find book with this id : ' + id))
+              }
+          }).catch(error => {
+
+              reject(error)
+          })
+
+      }).catch(error => {
+          reject(error)
+      })
+  })
+}
+
+
+//editmeal
+// delet meal
+
+
+
+
+
+
+module.exports = { addMeal , getMeal };

@@ -7,6 +7,7 @@ const adminRoute = require("./routes/adminRoute");
 const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
+const adminModules = require("./modules/adminModule")
 const fs = require("fs");
 const session = require("express-session");
 //creat session object options
@@ -92,6 +93,25 @@ app.get("/verify/:id", (req, res) => {
     res.send("error");
   }
 });
+
+/////////////////////////////
+// GET MEAL
+app.get('/meal/:mealTitle/:id', (req, res) => {
+ 
+  adminModules.getMeal(req.params.id).then(meal => {
+    let checkLogin = false
+    if (req.session.user) {
+      checkLogin = true
+    }
+    res.render('meal', { meal , checkLogin }) //?????
+  }).catch(error => {
+    res.send('404 , meal could not be open');
+  })
+
+});
+
+
+
 
 /////////////
 //MENU ROUTE
