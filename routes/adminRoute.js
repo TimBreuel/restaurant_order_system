@@ -20,6 +20,13 @@ adminRoute.get("/addMeal", (req, res) => {
 });
 
 /////////////////////
+//POST ADMIN ADD MEAL
+adminRoute.post("/addMeal", (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
+});
+
+/////////////////////
 //GET ADMIN ADD MEAL
 adminRoute.get("/deleteMeal", (req, res) => {
   res.render("adminDeleteMeal");
