@@ -6,7 +6,7 @@ const loginDataModules = require('../modules/loginModule')
 //GET LOGIN ROUTE
 loginRoute.get("/", (req, res) => {
 //  res.render("login");
-  if (req.session._id) {
+  if (req.session.user) {
     res.redirect('/admin')
   }else{
       res.render('login')
@@ -20,7 +20,7 @@ loginRoute.post('/login', (req, res) => {
     loginDataModules.checkUser(req.body.email.trim(), req.body.password).then(user => {
       req.session.user = user
     //  console.log(user); 
-      res.json(1)
+      res.render('adminIndex')
     }).catch(error => {
       if (error == 3) {
         res.json(3)

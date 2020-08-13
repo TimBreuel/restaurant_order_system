@@ -1,12 +1,12 @@
 const passwordHash = require('password-hash')
 const connect = require('../models/connectionFn')
-
+const REGISTERSCHEMA = require('../models/registerSchema')
 
 // checkuser mongoose  for LOGIN form
 function checkUser(email, password) {
     return new Promise((resolve, reject) => {
         connect().then(() => {
-            Users.findOne({ email: email }).then(user => {
+            REGISTERSCHEMA.findOne({ email: email }).then(user => {
                 if (user) {
                     if (passwordHash.verify(password, user.password)) {
                         resolve(user)
