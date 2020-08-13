@@ -36,7 +36,7 @@ const userSchema = new Schema({
         max: 100,
         min: 2
     },
-    varfied: {
+    verified : {
         type: Boolean,
         required: true
     }
