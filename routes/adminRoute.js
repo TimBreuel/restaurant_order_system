@@ -1,7 +1,7 @@
 const express = require("express");
 const adminRoute = express.Router();
 const adminModule = require("../modules/adminModule");
-const { response } = require("express");
+
 
 
 
@@ -21,7 +21,7 @@ adminRoute.use((req , res,next)=> {
 //////////////////
 //GET ADMIN INDEX
 adminRoute.get("/", (req, res) => {
-  res.render("adminIndex");
+  res.render("adminIndex" , {email: req.session.user.email});
 });
 
 ////////////////
