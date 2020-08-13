@@ -24,8 +24,9 @@ loginRoute.post("/", (req, res) => {
       .checkUser(req.body.email.trim(), req.body.password)
       .then((user) => {
         req.session.user = user;
-        console.log(user);
         res.json(1);
+       //res.render("login")
+
       })
       .catch((error) => {
         if (error == 3) {
