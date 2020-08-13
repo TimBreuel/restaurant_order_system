@@ -23,6 +23,15 @@ adminRoute.get("/", (req, res) => {
 adminRoute.get("/menu", (req, res) => {
   adminModule
     .getAllMeals(req.session.user._id)
+    .then((meals) => res.render("menu", { meals: meals }))
+    .catch((err) => console.log(err));
+});
+
+////////////////
+//GET ADMIN MENU
+adminRoute.get("/edit/menu", (req, res) => {
+  adminModule
+    .getAllMeals(req.session.user._id)
     .then((meals) => res.render("adminMenu", { meals: meals }))
     .catch((err) => console.log(err));
 });
@@ -78,9 +87,9 @@ adminRoute.get("/deleteMeal", (req, res) => {
 //GET ADMIN ADD MEAL
 adminRoute.get("/editMeal", (req, res) => {
   adminModule
-  .getAllMeals(req.session.user._id)
-  .then((meals) => res.render("adminEditMeal", { meals: meals }))
-  .catch((err) => console.log(err));
+    .getAllMeals(req.session.user._id)
+    .then((meals) => res.render("adminEditMeal", { meals: meals }))
+    .catch((err) => console.log(err));
 });
 
 module.exports = adminRoute;
