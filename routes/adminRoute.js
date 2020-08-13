@@ -1,6 +1,21 @@
 const express = require("express");
 const adminRoute = express.Router();
 
+
+
+
+
+adminRoute.use((req , res,next)=> {
+  
+  console.log(req.session.user);
+  if (req.session.user) {//!  admin muss be login first
+      next()
+  }else{
+      res.redirect('/login')
+  } 
+}) 
+
+
 //////////////////
 //GET ADMIN INDEX
 adminRoute.get("/", (req, res) => {
