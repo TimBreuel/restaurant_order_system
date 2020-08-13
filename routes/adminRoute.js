@@ -1,5 +1,7 @@
 const express = require("express");
 const adminRoute = express.Router();
+const adminModule = require("../modules/adminModule");
+const { response } = require("express");
 
 //////////////////
 //GET ADMIN INDEX
@@ -22,8 +24,28 @@ adminRoute.get("/addMeal", (req, res) => {
 /////////////////////
 //POST ADMIN ADD MEAL
 adminRoute.post("/addMeal", (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
+  const {
+    mealTitle,
+    mealDiscription,
+    mealNumber,
+    mealPrice,
+    mealCategory,
+  } = req.body;
+  const mealImg = req.files.mealImg;
+  adminModule
+    .addMeal(
+      mealTitle,
+      mealDiscription,
+      mealNumber,
+      mealPrice,
+      mealCategory,
+      mealImg,
+      "123456789"
+    )
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => console.log(err));
 });
 
 /////////////////////

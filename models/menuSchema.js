@@ -24,7 +24,7 @@ const menuSchema = new Schema({
     required: true,
   },
   img: {
-    type: [String],
+    type: String,
   },
   restaurantId: {
     type: String,
