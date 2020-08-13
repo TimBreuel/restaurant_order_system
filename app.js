@@ -94,21 +94,6 @@ app.get("/verify/:id", (req, res) => {
   }
 });
 
-/////////////////////////////
-// GET MEAL
-app.get('/meal/:mealTitle/:id', (req, res) => {
- 
-  adminModules.getMeal(req.params.id).then(meal => {
-    let checkLogin = false
-    if (req.session.user) {
-      checkLogin = true
-    }
-    res.render('meal', { meal , checkLogin }) //?????
-  }).catch(error => {
-    res.send('404 , meal could not be open');
-  })
-
-});
 
 
 

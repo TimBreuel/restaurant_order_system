@@ -71,7 +71,10 @@ adminRoute.get("/deleteMeal", (req, res) => {
 /////////////////////
 //GET ADMIN ADD MEAL
 adminRoute.get("/editMeal", (req, res) => {
-  res.render("adminEditMeal");
+  adminModule
+  .getAllMeals(req.session.user._id)
+  .then((meals) => res.render("adminEditMeal", { meals: meals }))
+  .catch((err) => console.log(err));
 });
 
 module.exports = adminRoute;
