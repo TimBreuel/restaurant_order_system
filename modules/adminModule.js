@@ -48,45 +48,45 @@ function addMeal(
   });
 }
 
-
-
-// getall meal function
-
-
-
-
-
-
-
-// get meal 
-function getMeal(id) {
+////////////////
+//GET ALL MEALS
+function getAllMeals(id) {
   return new Promise((resolve, reject) => {
-      connect().then(() => {
-        MENUSCHEMA.findOne({ _id: id }).then(meal => {
-              if (meal) {
-                  meal.id = meal._id  // convert it to id
-                  resolve(meal)
-              } else {
-                  reject(new Error('can not find book with this id : ' + id))
-              }
-          }).catch(error => {
-
-              reject(error)
-          })
-
-      }).catch(error => {
-          reject(error)
+    connect()
+      .then(() => {
+        MENUSCHEMA.find({ restaurantId: id })
+          .then((meals) => resolve(meals))
+          .catch((err) => console.log(err));
       })
-  })
+      .catch((err) => console.log(err));
+  });
 }
 
+// get meal
+function getMeal(id) {
+  return new Promise((resolve, reject) => {
+    connect()
+      .then(() => {
+        MENUSCHEMA.findOne({ _id: id })
+          .then((meal) => {
+            if (meal) {
+              meal.id = meal._id; // convert it to id
+              resolve(meal);
+            } else {
+              reject(new Error("can not find book with this id : " + id));
+            }
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 //editmeal
 // delet meal
 
-
-
-
-
-
-module.exports = { addMeal , getMeal };
+module.exports = { addMeal, getMeal, getAllMeals };

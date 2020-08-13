@@ -21,7 +21,10 @@ adminRoute.get("/", (req, res) => {
 ////////////////
 //GET ADMIN MENU
 adminRoute.get("/menu", (req, res) => {
-  res.render("adminMenu");
+  adminModule
+    .getAllMeals(req.session.user._id)
+    .then((meals) => res.render("adminMenu", { meals: meals }))
+    .catch((err) => console.log(err));
 });
 
 /////////////////////
