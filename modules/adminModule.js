@@ -48,4 +48,23 @@ function addMeal(
   });
 }
 
+
+
+// getall meal function
+
+
+
+
+
+
+
+// get meal 
+//editmeal
+// delet meal
+
+
+
+
+
+
 module.exports = { addMeal };
