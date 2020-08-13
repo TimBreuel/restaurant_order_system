@@ -8,6 +8,15 @@ const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
 const fs = require("fs");
+const session = require('express-session')
+//creat session object options
+const sessionOptions = {
+  secret: 'restaurant_order',
+  //resave: false,  for debuger
+  //saveUninitialized: true,
+  //cookie: { secure: true } 
+  cookie: {}
+}
 ////////////////
 //MIDLEWEARE FN
 app.set("view engine", "ejs");
@@ -20,6 +29,7 @@ app.use(
     limits: { fileSize: 50 * 1024 * 1024 },
   })
 );
+app.use(session(sessionOptions)) //use a session  
 ////////////////
 //IMPORT ROUTES
 app.use("/admin", adminRoute);
