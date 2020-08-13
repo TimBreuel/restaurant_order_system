@@ -33,7 +33,7 @@ function registerUser(rname,fname, lname, email, password) {
          
                 let msg ='Hi ' + fname + ' ' + lname + 'Welcome to our Website\n'
                 msg += 'to verify you email address please click in the following link\n'
-                 msg += 'https://shirin-emailverification.herokuapp.com/verify/' + newUser._id
+                 msg += 'http://localhost:4000/verify/' + newUser._id
                 emailSender.sendEmail(email , 'verify Email' , msg).then(()=>{
                  resolve()
                 }).catch(err =>{
@@ -50,4 +50,24 @@ function registerUser(rname,fname, lname, email, password) {
 }
 
 
-module.exports = {registerUser}
+
+function verifyRegister(id) {
+    return new Promise((resolve , reject) =>{
+
+        connect().then(()=>{
+            REGISTERSCHEMA.findOne({_id : id}).then(user =>{
+                user.verfied = true
+                resolve(user)
+        
+        }).catch(err =>{
+            reject(err)
+        })  
+        })
+      
+
+    })
+}
+
+
+
+module.exports = {registerUser , verifyRegister}
