@@ -8,15 +8,15 @@ const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
 const fs = require("fs");
-const session = require('express-session')
+const session = require("express-session");
 //creat session object options
 const sessionOptions = {
-  secret: 'restaurant_order',
+  secret: "restaurant_order",
   //resave: false,  for debuger
   //saveUninitialized: true,
-  //cookie: { secure: true } 
-  cookie: {}
-}
+  //cookie: { secure: true }
+  cookie: {},
+};
 ////////////////
 //MIDLEWEARE FN
 app.set("view engine", "ejs");
@@ -29,7 +29,7 @@ app.use(
     limits: { fileSize: 50 * 1024 * 1024 },
   })
 );
-app.use(session(sessionOptions)) //use a session  
+app.use(session(sessionOptions)); //use a session
 ////////////////
 //IMPORT ROUTES
 app.use("/admin", adminRoute);
@@ -74,23 +74,23 @@ app.post("/register", (req, res) => {
   }
 });
 
-
 ///////////////////////////////////
 // VERIFY
-app.get('/verify/:id', (req, res) => {
-    const id = req.params.id
-    if(id){
-      registerDataModules.verifyRegister(id).then(()=>{
-        res.json(1)
-      }).catch(err =>{
-        res.json(2)
+app.get("/verify/:id", (req, res) => {
+  const id = req.params.id;
+  if (id) {
+    registerDataModules
+      .verifyRegister(id)
+      .then(() => {
+        res.json(1);
       })
-    }else{
-      res.send('error')
-    }
+      .catch((err) => {
+        res.json(2);
+      });
+  } else {
+    res.send("error");
+  }
 });
-
-
 
 /////////////
 //MENU ROUTE
