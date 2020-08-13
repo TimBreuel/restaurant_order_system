@@ -182,7 +182,10 @@
             "mealCategory",
             addMealSelect.options[addMealSelect.selectedIndex].value
           );
-          fd.append("mealImg", addMealImg.files[0]);
+
+          if (addMealImg.files.length === 1) {
+            fd.append("mealImg", addMealImg.files[0]);
+          }
 
           fd.append("restaurantId", restaurantId);
           fetch("/admin/addMeal", {
@@ -191,13 +194,15 @@
           })
             .then((response) => {
               if (response.status === 200) {
-                successOrNot("SUCCESFULL ADDED", "#00AB66");
+                successOrNot("SUCCESFULL ADDED", "#00AB66 !important");
                 addMealTitle.value = "";
                 AddMealDescription.value = "";
                 addMealNumber.value = "";
                 addMealPrice.value = "";
+                addMealImg.value = "";
+                addMealSelect.selectedIndex = "0";
               } else {
-                successOrNot("SOMETHING GOES WRONG", "#EA2626");
+                successOrNot("SOMETHING GOES WRONG", "#EA2626 !important");
               }
             })
             .catch((err) => console.log(err));
@@ -222,10 +227,11 @@
       }
 
       function successOrNot(msg, color) {
+        addMealBtn.classList.remove("bg-dark");
         addMealBtn.style.backgroundColor = color;
         addMealBtn.innerText = msg;
         setTimeout(() => {
-          addMealBtn.style.backgroundColor = "#343A40";
+          addMealBtn.classList.add("bg-dark");
           addMealBtn.innerText = "ADD MEAL";
         }, 2000);
       }

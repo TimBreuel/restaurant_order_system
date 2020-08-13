@@ -45,7 +45,13 @@ adminRoute.post("/addMeal", (req, res) => {
     restaurantId,
   } = req.body;
   console.log(req.body);
-  const mealImg = req.files.mealImg;
+  let mealImg;
+  if (req.files) {
+    mealImg = req.files.mealImg;
+  } else {
+    mealImg = "";
+  }
+
   adminModule
     .addMeal(
       mealTitle,
