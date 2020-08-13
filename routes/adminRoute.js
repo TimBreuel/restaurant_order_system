@@ -29,7 +29,7 @@ adminRoute.get("/menu", (req, res) => {
 
 ////////////////
 //GET ADMIN MENU
-adminRoute.get("/edit/menu", (req, res) => {
+adminRoute.get("/adminMenu", (req, res) => {
   adminModule
     .getAllMeals(req.session.user._id)
     .then((meals) => res.render("adminMenu", { meals: meals }))
@@ -91,5 +91,35 @@ adminRoute.get("/editMeal", (req, res) => {
     .then((meals) => res.render("adminEditMeal", { meals: meals }))
     .catch((err) => console.log(err));
 });
+
+
+
+adminRoute.post('/editMeal', (req, res) => {
+  const { newMealTitle, oldImg, mealDedcription, newMealNumber, newPrice, restaurantId } = req.body
+
+  if (req.files) {
+    const mealImg = req.files.img
+    try {
+      fs.unlinkSync('./public' + req.body.oldImg) //delet old img file   
+    } catch (error) {
+      
+    }
+  }
+
+  //console.log(oldImgsUrlArr);
+  adminModule.updateMeal(restaurantId, newMealTitle, oldImgsUrlArr, mealDedcription, newMealNumber, newImgs, newPrice, req.session.user._id).then(() => {
+    res.json(1)
+
+  }).catch(error => {
+    res.json(2)
+  })
+
+
+
+})
+
+
+
+
 
 module.exports = adminRoute;
