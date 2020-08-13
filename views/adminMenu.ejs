@@ -41,27 +41,58 @@
 
         <ul class="filter-wrap filters col-lg-12 no-padding">
           <li class="active" data-filter="*">All Menu</li>
+          <li data-filter=".drinks">Drinks</li>
           <li data-filter=".breakfast">Breakfast</li>
           <li data-filter=".lunch">Lunch</li>
           <li data-filter=".dinner">Dinner</li>
-          <li data-filter=".budget-meal">Budget Meal</li>
-          <li data-filter=".buffet">Buffet</li>
         </ul>
 
         <div class="filters-content">
           <div class="row grid">
-            <div class="col-md-6 all breakfast">
+            <!-- JSX LOOP TO RENDER MENU -->
+            <% meals.forEach(meal => { %> <% if (meal.img !== '') { %>
+            <div class="col-md-6 all <%= meal.category %>">
+              <div class="single-menu">
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src="<%= meal.img %> " alt="" />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="title-wrap d-flex justify-content-between">
+                      <% if (meal.number !== '') { %>
+                      <h4><%= meal.number %> <%= meal.title %></h4>
+                      <h4 class="price">$<%= meal.price %></h4>
+                      <% }else{ %>
+                      <h4><%= meal.title %></h4>
+                      <h4 class="price">$<%= meal.price %></h4>
+                      <% } %>
+                    </div>
+                    <p>
+                      <%= meal.description %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }else{ %>
+            <div class="col-md-6 all <%= meal.category %>">
               <div class="single-menu">
                 <div class="title-wrap d-flex justify-content-between">
-                  <h4>Cappuccion</h4>
-                  <h4 class="price">$49</h4>
+                  <% if (meal.number !== '') { %>
+                  <h4><%= meal.number %> <%= meal.title %></h4>
+                  <h4 class="price">$<%= meal.price %></h4>
+                  <% }else{ %>
+                  <h4><%= meal.title %></h4>
+                  <h4 class="price">$<%= meal.price %></h4>
+                  <% } %>
                 </div>
                 <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
+                  <%= meal.description %>
                 </p>
               </div>
             </div>
+            <% } %> <% }) %>
+
             <div class="col-md-6 all dinner">
               <div class="single-menu">
                 <div class="title-wrap d-flex justify-content-between">
