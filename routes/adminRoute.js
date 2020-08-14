@@ -70,7 +70,7 @@ adminRoute.post("/addMeal", (req, res) => {
     mealNumber,
     mealPrice,
     mealCategory,
-    restaurantId,
+  
   } = req.body;
   console.log(req.body);
   let mealImg;
@@ -88,7 +88,7 @@ adminRoute.post("/addMeal", (req, res) => {
       mealPrice,
       mealCategory,
       mealImg,
-      restaurantId
+    
     )
     .then((data) => {
       res.json(data);
@@ -105,31 +105,39 @@ adminRoute.get("/deleteMeal", (req, res) => {
 /////////////////////
 //GET ADMIN ADD MEAL
 adminRoute.get("/editMeal/:id", (req, res) => {
+  const mealId = req.params.id
   adminModule
-    .getMeal(req.params.id)
+    .getMeal(mealId)
     .then((meal) => res.render("adminEditMeal", { meal: meal }))
     .catch((err) => console.log(err));
 });
 
 adminRoute.post("/editMeal", (req, res) => {
   const {
+    mealId,
     mealTitle,
     mealDiscription,
     mealNumber,
     mealPrice,
-    mealImg,
     mealCategory,
   } = req.body;
   //console.log(oldImgsUrlArr);
+  let mealImg = null
+  if(req.files) {
+   mealImg = req.files.mealImg
+  }
+  
   adminModule
     .updateMeal(
+      mealId,
       mealTitle,
       mealDiscription,
       mealNumber,
-      mealImg,
       mealPrice,
+      mealImg,
+      
       mealCategory,
-      req.session.user._id
+      req.session.user._id ,
     )
     .then(() => {
       res.json(1);

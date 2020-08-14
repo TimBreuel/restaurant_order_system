@@ -91,7 +91,7 @@ function getMeal(id) {
     connect().then(() => {
       MENUSCHEMA.findOne({ _id: id }).then(meal => {
         if (meal) {
-
+          console.log(meal);
           resolve(meal)
         } else {
           reject(new Error('can not find meal with this id : ' + id))
@@ -132,11 +132,13 @@ function updateMeal(
             description: mealDedcription,
             number: newMealNumber,
             price: newPrice,
-            category: newMealCategory,
-            img: newImg,
+            category: newMealCategory
           }
         )
-          .then(() => {
+          .then((result) => {
+            if(newImg){
+              newImg.mv('./public' + result.img)
+            }
             resolve();
           })
           .catch((err) => {
@@ -148,6 +150,32 @@ function updateMeal(
       });
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //editmeal
 // delet meal
