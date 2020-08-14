@@ -13,19 +13,28 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li><a href="/admin">Home</a></li>
+          <li><a href="/admin/menu">Menu</a></li>
           <li class="menu-has-children">
             <a href="/login">Login</a>
             <ul>
               <li><a href="/login">Restaurant</a></li>
               <li><a href="/login/kitchen">Kitchen</a></li>
               <li><a href="/login/bar">Bar</a></li>
+              <li><a href="/login/tables">Tables</a></li>
             </ul>
           </li>
-          <li><a href="/admin/menu">Menu</a></li>
-          <li><a href="/admin/adminMenu">Menu edit</a></li>
-          <li><a href="/admin/addMeal">Add Meal</a></li>
-          <li><a href="/admin/editMeal">Edit Meal</a></li>
-          <li><a href="/admin/deleteMeal">Delete Meal</a></li>
+
+          <li class="menu-has-children">
+            <a href="/admin/editMenu">Edit</a>
+            <ul>
+              <li><a href="/admin/edit/menu">Menu edit</a></li>
+              <li><a href="/admin/addMeal">Add Meal</a></li>
+              <li><a href="/admin/editMeal">Edit Meal</a></li>
+              <li><a href="/admin/deleteMeal">Delete Meal</a></li>
+            </ul>
+          </li>
+          <li><a href="/admin/settings">Settings</a></li>
+
           <li><a href="/login/logout">Logout</a></li>
         </ul>
       </nav>
