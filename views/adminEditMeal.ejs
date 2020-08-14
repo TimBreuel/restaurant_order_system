@@ -79,7 +79,7 @@
 
      
 
-            <button class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5" id="addMealBtn"
+            <button class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5" id="editMealBtn"
               style="border-radius: 3px;">
               EDIT MEAL
             </button>
@@ -94,6 +94,100 @@
       <!-- End footer Area -->
 
       <%- include('partials/scripts') %>
+      <script>
+        //GET THE BUTTON AND MAKE VALIDATION
+        const editMealBtn = document.querySelector("#editMealBtn");
+        editMealBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const addMealTitle = document.querySelector("#addMealTitle");
+          const AddMealDescription = document.querySelector(
+            "#AddMealDescription"
+          );
+          const addMealNumber = document.querySelector("#addMealNumber");
+          const addMealPrice = document.querySelector("#addMealPrice");
+          const addMealImg = document.querySelector("#addMealImg");
+         // const addMealSelect = document.querySelector("#addMealSelect");
+       
+          let isVerified = {
+            valid: true,
+            msg: "",
+          };
+  
+          if (!addMealTitle.value.trim()) {
+            isVerified.valid = false;
+            isVerified.msg += "Please feel out title<br>";
+          }
+          if (!addMealPrice.value.trim()) {
+            isVerified.valid = false;
+            isVerified.msg += "Please feel out title<br>";
+          }
+          if (!AddMealDescription.value.trim()) {
+            isVerified.valid = false;
+            isVerified.msg += "Please feel out description<br>";
+          }
+   
+          if (!isVerified.valid) {
+            errorMessage(isVerified.msg);
+          } else {
+            const fd = new FormData();
+            fd.append("mealTitle", addMealTitle.value);
+            fd.append("mealDiscription", AddMealDescription.value);
+            fd.append("mealNumber", addMealNumber.value);
+            fd.append("mealPrice", addMealPrice.value);
+
+            if (addMealImg.files.length === 1) {
+              fd.append("mealImg", addMealImg.files[0]);
+            }
+  
+            fd.append("restaurantId", restaurantId);
+            fetch("/admin/editMeal", {
+              method: "post",
+              body: fd,
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  successOrNot("SUCCESFULL ADDED", "#00AB66 !important");
+                  addMealTitle.value = "";
+                  AddMealDescription.value = "";
+                  addMealNumber.value = "";
+                  addMealPrice.value = "";
+                  addMealImg.value = "";
+            
+                } else {
+                  successOrNot("SOMETHING GOES WRONG", "#EA2626 !important");
+                }
+              })
+              .catch((err) => console.log(err));
+          }
+        });
+  
+        //////////////////////////
+        //FETCH THE REGISTER DATA
+  
+        ///////////////////
+        //ERROR MESSGAE fn
+        function errorMessage(message) {
+          const addMealHeadline = document.querySelector("#addMealHeadline");
+          const addMealMessage = document.querySelector("#addMealMessage");
+          addMealHeadline.innerHTML = "Something goes wrong check the text below";
+          addMealMessage.innerHTML = message;
+          setTimeout(() => {
+            addMealHeadline.innerHTML = "Here you can create your meals.";
+            addMealMessage.innerHTML =
+              "Who are in extremely love with eco friendly system.";
+          }, 6000);
+        }
+  
+        function successOrNot(msg, color) {
+          addMealBtn.classList.remove("bg-dark");
+          addMealBtn.style.backgroundColor = color;
+          addMealBtn.innerText = msg;
+          setTimeout(() => {
+            addMealBtn.classList.add("bg-dark");
+            addMealBtn.innerText = "ADD MEAL";
+          }, 2000);
+        }
+      </script>
 </body>
 
 </html>
