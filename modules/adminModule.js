@@ -26,7 +26,7 @@ function addMeal(
             "_" +
             imgEnd;
           let newImgNameDb = "/upload/" + newImgName;
-          img.mv("./public/uploads/" + newImgName);
+          img.mv("./public/upload/" + newImgName);
           const newMeal = new MENUSCHEMA({
             title: title,
             description: description,
@@ -83,32 +83,43 @@ function getAllMeals(id) {
   });
 }
 
-
-function updateMeal(id, newMealTitle, mealDedcription, newMealNumber, newPrice, newImg , newMealCategory) {
+function updateMeal(
+  id,
+  newMealTitle,
+  mealDedcription,
+  newMealNumber,
+  newPrice,
+  newImg,
+  newMealCategory
+) {
   return new Promise((resolve, reject) => {
-     connect().then(()=>{
-      MENUSCHEMA.findOneAndUpdate({_id:id} , 
-        {img:newImg , 
-          title:newMealTitle ,
-          description:mealDedcription ,
-          number:newMealNumber ,
-          price : newPrice ,
-          category :newMealCategory
-
-         }).then(()=>{
-          resolve()
-      }).catch(err =>{
-        reject(err)
+    connect()
+      .then(() => {
+        MENUSCHEMA.findOneAndUpdate(
+          { _id: id },
+          {
+            img: newImg,
+            title: newMealTitle,
+            description: mealDedcription,
+            number: newMealNumber,
+            price: newPrice,
+            category: newMealCategory,
+          }
+        )
+          .then(() => {
+            resolve();
+          })
+          .catch((err) => {
+            reject(err);
+          });
       })
-     }).catch((err)=>{
-      reject(err)
-     })
-  })
-
+      .catch((err) => {
+        reject(err);
+      });
+  });
 }
-
 
 //editmeal
 // delet meal
 
-module.exports = { addMeal, getAllMeals , updateMeal};
+module.exports = { addMeal, getAllMeals, updateMeal };
