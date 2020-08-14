@@ -95,19 +95,9 @@ adminRoute.get("/editMeal", (req, res) => {
 
 
 adminRoute.post('/editMeal', (req, res) => {
-  const { newMealTitle, oldImg, mealDedcription, newMealNumber, newPrice, restaurantId } = req.body
-
-  if (req.files) {
-    const mealImg = req.files.img
-    try {
-      fs.unlinkSync('./public' + req.body.oldImg) //delet old img file   
-    } catch (error) {
-      
-    }
-  }
-
-  //console.log(oldImgsUrlArr);
-  adminModule.updateMeal(restaurantId, newMealTitle, oldImgsUrlArr, mealDedcription, newMealNumber, newImgs, newPrice, req.session.user._id).then(() => {
+  const { newMealTitle, mealDedcription, newMealNumber, newPrice,newImg, newMealCategory } = req.body
+ //console.log(oldImgsUrlArr);
+  adminModule.updateMeal( newMealTitle, mealDedcription, newMealNumber, newImg, newPrice, newMealCategory,req.session.user._id).then(() => {
     res.json(1)
 
   }).catch(error => {

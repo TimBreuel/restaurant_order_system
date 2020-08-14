@@ -84,61 +84,25 @@ function getAllMeals(id) {
 }
 
 
-function updateMeal(restaurantId, newMealTitle, oldImg, mealDedcription, newMealNumber, newPrice, newImg, userid) {
+function updateMeal(id, newMealTitle, mealDedcription, newMealNumber, newPrice, newImg , newMealCategory) {
   return new Promise((resolve, reject) => {
-      try {
+     connect().then(()=>{
+      MENUSCHEMA.findOneAndUpdate({_id:id} , 
+        {img:newImg , 
+          title:newMealTitle ,
+          description:mealDedcription ,
+          number:newMealNumber ,
+          price : newPrice ,
+          category :newMealCategory
 
-
-          (async () => {
-
-              //! first get old meal 
-              let oldMealData = await connect().then(()=>{
-                MENUSCHEMA.find({restaurantId:restaurantId})
-              }).then((meal)=>{
-                if (!meal.img) {
-                  
-                }
-              })
-              const deletedImgs = []
-              let keepImgs = []
-
-              oldMealData.img.forEach(img => {
-                  if (oldImg.indexOf(img) == -1) {
-                      deletedImgs.push(img)  // we need to delet them from the fills too in line 255
-                  } else {
-                      keepImgs.push(img)
-                  }
-              });
-              // save new images to file system and then arry to be save to db
-              const newImgsUrlsArr = []
-              newImg.forEach((img, idx) => {
-                  const imgExt = img.name.substr(img.name.lastIndexOf('.'))
-                  // set new img name without space  /uploadedFiles/my_book_5464_0.jpg
-                  const newImgName = newMealTitle.trim().replace(/ /g, '_') + '_' + userid + '_' + idx + '_' + (oldBookData.__v + 1) + imgExt
-                  newImgsUrlsArr.push('/uploadedFiles/' + newImgName)
-                  img.mv('./public/uploadedFiles/' + newImgName)  //renaming/moving a  file and update all
-              })
-
-              //delet the old deletedImg from db
-              deletedImgs.forEach(file => {
-                  if (fs.existsSync('./public' + file)) {  // check if this file exist
-                      fs.unlinkSync('./public' + file)   //! delet the old imgs in line 227
-                  }
-
-              })
-
-              const result = await Books.updateOne({ _id: bookid }, {
-                  title: newMealTitle,
-                  description: mealDedcription,
-                  //pdfUrl >> we replace it in line 262 
-                  imgs: [...keepImgs, ...newImgsUrlsArr],
-                  $inc: { __v: 1 }
-              })
-              resolve()
-          })()
-      } catch (error) {
-          reject(error)
-      }
+         }).then(()=>{
+          resolve()
+      }).catch(err =>{
+        reject(err)
+      })
+     }).catch((err)=>{
+      reject(err)
+     })
   })
 
 }
