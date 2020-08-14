@@ -12,8 +12,10 @@
       <div class="container">
         <div class="row fullscreen align-items-center justify-content-between">
           <div class="col-lg-12 banner-content">
-            <h6 class="text-white">Wellcome Name...</h6>
-            <h1 class="text-white">Restaurant Name...</h1>
+            <h6 class="text-white">
+              Wellcome <%= user.first_name %> <%= user.last_name %>
+            </h6>
+            <h1 class="text-white"><%= user.restaurant_name %></h1>
             <p class="text-white">
               Here in the admin area you can create your meal ,update and
               delete. You find everting in the Navigation bar. If you have

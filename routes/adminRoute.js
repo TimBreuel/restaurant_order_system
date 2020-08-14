@@ -15,7 +15,13 @@ adminRoute.use((req, res, next) => {
 //////////////////
 //GET ADMIN INDEX
 adminRoute.get("/", (req, res) => {
-  res.render("adminIndex", { email: req.session.user.email });
+  res.render("adminIndex", { user: req.session.user });
+});
+
+///////////////
+//GET SETTINGS
+adminRoute.get("/settings", (req, res) => {
+  res.render("settings", { user: req.session.user });
 });
 
 ////////////////
