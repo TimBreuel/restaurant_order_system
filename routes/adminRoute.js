@@ -1,9 +1,10 @@
 const express = require("express");
 const adminRoute = express.Router();
 const adminModule = require("../modules/adminModule");
+const serviceModule = require("../modules/serviceModule");
 
 adminRoute.use((req, res, next) => {
-  console.log(req.session.user);
+  // console.log(req.session.user);
   if (req.session.user) {
     //!  admin muss be login first
     next();
@@ -22,6 +23,18 @@ adminRoute.get("/", (req, res) => {
 //GET SETTINGS
 adminRoute.get("/settings", (req, res) => {
   res.render("settings", { user: req.session.user });
+});
+
+///////////////
+//POST SETTINGS
+adminRoute.post("/settings", (req, res) => {
+  const { tables, restaurantId } = req.body;
+  serviceModule
+    .addTables(restaurantId, tables)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => console.log(err));
 });
 
 ////////////////
@@ -98,24 +111,32 @@ adminRoute.get("/editMeal", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-
-
-adminRoute.post('/editMeal', (req, res) => {
-  const { mealTitle, mealDiscription, mealNumber, mealPrice,mealImg, mealCategory } = req.body
- //console.log(oldImgsUrlArr);
-  adminModule.updateMeal( mealTitle, mealDiscription, mealNumber, mealImg, mealPrice, mealCategory,req.session.user._id ).then(() => {
-    res.json(1)
-
-  }).catch(error => {
-    res.json(2)
-  })
-
-
-
-})
-
-
-
-
+adminRoute.post("/editMeal", (req, res) => {
+  const {
+    mealTitle,
+    mealDiscription,
+    mealNumber,
+    mealPrice,
+    mealImg,
+    mealCategory,
+  } = req.body;
+  //console.log(oldImgsUrlArr);
+  adminModule
+    .updateMeal(
+      mealTitle,
+      mealDiscription,
+      mealNumber,
+      mealImg,
+      mealPrice,
+      mealCategory,
+      req.session.user._id
+    )
+    .then(() => {
+      res.json(1);
+    })
+    .catch((error) => {
+      res.json(2);
+    });
+});
 
 module.exports = adminRoute;
