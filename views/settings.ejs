@@ -35,17 +35,85 @@
       <div class="row d-flex justify-content-center">
         <div class="menu-content pb-70 col-lg-8">
           <div class="title text-center">
-            <h1 class="mb-10">Here you can set your tables</h1>
-            
+            <h1 class="mb-10" id="tableHeadline">Here you can set your tables</h1>
+            <form
+          class="form-wrap text-center mt-5"
+          action="#"
+          id="restaurantIdForm"
+          restaurantId="<%= user._id%>"
+        >
+          <input
+            type="number"
+            class="form-control mb-4"
+            id="addTables"
+            name="addTables"
+            placeholder="How much tables"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = 'How much tables'"
+          />
+          
+          <button
+            class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5"
+            id="addTablesBtn"
+            style="border-radius: 3px;"
+          >
+            SET TABLES
+          </button>
+        </form>
           </div>
         </div>
       </div>
   </section>
 
-
-
-
       <%- include('partials/scripts') %>
+      <script>
+        const addTablesBtn = document.querySelector('#addTablesBtn')
+        const restaurantId = document.querySelector('#restaurantIdForm').getAttribute('restaurantId')
+        const tableHeadline = document.querySelector('#tableHeadline')
+        addTablesBtn.addEventListener('click', (e)=>{
+          e.preventDefault()
+          const addTables = document.querySelector('#addTables')
+          const data = {
+            tables: addTables.value,
+            restaurantId: restaurantId
+          }
+          postData('/admin/settings',data)
+          .then(data => {
+           if(data ===1){
+            addTables.value = ''
+            addTables.style.border = '2px solid green'
+            tableHeadline.innerHTML = 'SUCCESSFULLY ADDED'
+            setTimeout(()=>{
+              addTables.style.border = '1px solid #ced4da'},3000)
+              tableHeadline.innerHTML = 'Here you can set your tables'
+           } else{
+            
+            addTables.style.border = '1px solid red'
+            tableHeadline.innerHTML = 'SOMTHING GOES WRONG'
+            setTimeout(()=>{
+              addTables.style.border = '1px solid #ced4da'},3000)
+              tableHeadline.innerHTML = 'Here you can set your tables'
+           }
+          }).catch(err=>{
+            console.log(err)
+          })
+                  
+        })
+
+        async function postData(url = "", data = {}) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+
+
+      </script>
 </body>
 
 </html>
