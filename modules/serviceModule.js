@@ -25,4 +25,14 @@ const addTables = (restaurantId, number) => {
   });
 };
 
-module.exports = { addTables };
+const getAllTables = (restaurantId) => {
+  return new Promise((resolve, reject) => {
+    connect().then(() => {
+      TABLESCHEMA.find({ restaurantId: restaurantId })
+        .then((tables) => resolve(tables))
+        .catch((err) => console.log(err));
+    });
+  });
+};
+
+module.exports = { addTables, getAllTables };

@@ -1,6 +1,7 @@
 const express = require("express");
 const loginRoute = express.Router();
 const loginDataModules = require("../modules/loginModule");
+const serviceModule = require("../modules/serviceModule");
 
 //////////////////
 //GET LOGIN ROUTE
@@ -25,8 +26,7 @@ loginRoute.post("/", (req, res) => {
       .then((user) => {
         req.session.user = user;
         res.json(1);
-       //res.render("login")
-
+        //res.render("login")
       })
       .catch((error) => {
         if (error == 3) {
@@ -43,7 +43,7 @@ loginRoute.post("/", (req, res) => {
 //////////////////////////
 //GET LOGIN/KITCHEN ROUTE
 loginRoute.get("/kitchen", (req, res) => {
-  res.render("kitchen");
+  res.render("loginKitchen");
 });
 
 //////////////////////////
@@ -56,7 +56,7 @@ loginRoute.post("/kitchen", (req, res) => {
 /////////////////////
 //GET LOGIN/BAR ROUTE
 loginRoute.get("/bar", (req, res) => {
-  res.render("bar");
+  res.render("loginBar");
 });
 
 /////////////////////
@@ -69,7 +69,37 @@ loginRoute.post("/bar", (req, res) => {
 /////////////////////
 //GET LOGIN/BAR ROUTE
 loginRoute.get("/restaurant", (req, res) => {
-  res.render("restaurant");
+  res.render("loginRestaurant");
 });
+
+/////////////////////
+//POST RESTAURANT ROUTE
+loginRoute.post("/restaurant", (req, res) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+});
+
+/////////////////////
+//GET LOGIN/BAR ROUTE
+loginRoute.get("/service", (req, res) => {
+  res.render("loginService");
+});
+
+/////////////////////
+//POST RESTAURANT ROUTE
+loginRoute.post("/service", (req, res) => {
+  const { email, password } = req.body;
+  serviceModule
+    .getAllTables(req.session.user._id)
+    .then((tables) => {
+      res.render("service", { tables });
+    })
+    .catch((err) => console.log(err));
+  console.log(req.body);
+});
+
+/////////////////////
+//GET LOGIN/BAR ROUTE
+loginRoute.get("/service/test", (req, res) => {});
 
 module.exports = loginRoute;

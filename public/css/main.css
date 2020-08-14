@@ -58,10 +58,9 @@ iframe {
   border: 0;
 }
 
-.adminMenuBtn{
+.adminMenuBtn {
   z-index: 100;
 }
-
 
 a,
 a:focus,
@@ -2173,6 +2172,16 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: url(../img/customer/adrien-olichon-amI1M8Q49fI-unsplash.jpg)
     no-repeat center/cover !important;
 }
+.costumerLoginRestaurant {
+  background: url(../img/customer/van-thanh-1ktlYkBZZF4-unsplash.jpg) no-repeat
+    center/cover !important;
+}
+
+.costumerLoginService {
+  background: url(../img/customer/kate-townsend-hEC6zxdFF0M-unsplash.jpg)
+    no-repeat center/cover !important;
+}
+
 .reservation-area .overlay-bg {
   background: rgba(17, 22, 24, 0.75);
 }
