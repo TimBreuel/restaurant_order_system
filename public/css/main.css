@@ -57,6 +57,12 @@ a {
 iframe {
   border: 0;
 }
+
+.adminMenuBtn{
+  z-index: 100;
+}
+
+
 a,
 a:focus,
 a:hover {
