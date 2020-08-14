@@ -91,10 +91,10 @@ adminRoute.get("/deleteMeal", (req, res) => {
 
 /////////////////////
 //GET ADMIN ADD MEAL
-adminRoute.get("/editMeal", (req, res) => {
+adminRoute.get("/editMeal/:id", (req, res) => {
   adminModule
-    .getAllMeals(req.session.user._id)
-    .then((meals) => res.render("adminEditMeal", { meals: meals }))
+    .getMeal(req.params.id)
+    .then((meal) => res.render("adminEditMeal", { meal: meal }))
     .catch((err) => console.log(err));
 });
 

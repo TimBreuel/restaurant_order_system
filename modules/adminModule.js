@@ -83,6 +83,35 @@ function getAllMeals(id) {
   });
 }
 
+
+//////////////////////////////////////
+// GET MEAL
+function getMeal(id) {
+  return new Promise((resolve, reject) => {
+    connect().then(() => {
+      MENUSCHEMA.findOne({ _id: id }).then(meal => {
+        if (meal) {
+
+          resolve(meal)
+        } else {
+          reject(new Error('can not find meal with this id : ' + id))
+        }
+      }).catch(error => {
+
+        reject(error)
+      })
+
+    }).catch(error => {
+      reject(error)
+    })
+  })
+}
+
+
+
+
+
+
 function updateMeal(
   id,
   newMealTitle,
@@ -98,12 +127,13 @@ function updateMeal(
         MENUSCHEMA.findOneAndUpdate(
           { _id: id },
           {
-            img: newImg,
+
             title: newMealTitle,
             description: mealDedcription,
             number: newMealNumber,
             price: newPrice,
             category: newMealCategory,
+            img: newImg,
           }
         )
           .then(() => {
@@ -122,4 +152,4 @@ function updateMeal(
 //editmeal
 // delet meal
 
-module.exports = { addMeal, getAllMeals, updateMeal };
+module.exports = { addMeal, getAllMeals, updateMeal, getMeal };

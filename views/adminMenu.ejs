@@ -69,7 +69,7 @@
                       <% if (meal.number !== '') { %>
                       <h4><%= meal.number %> <%= meal.title %></h4>
                       <h4 class="price">$<%= meal.price %></h4>
-              <a href="/admin/editMeal" class="adminEditMenuBtn" ><input class="btn btn-success" type="button" value="EDIT"></a>
+              <a href="/admin/editMeal/<%-meal.id%>" class="adminEditMenuBtn" ><input class="btn btn-success" type="button" value="EDIT"></a>
               <a href="/admin/adminDeleteMeal" class="adminDeletMenuBtn" ><input class="btn btn-danger" type="button" value="DELETE"></a>
 
                       <% }else{ %>
