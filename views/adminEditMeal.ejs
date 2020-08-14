@@ -44,7 +44,6 @@
       <!-- edit meal -->
       <!-- Start add meal area -->
       <section class="menu-area">
-        <% meals.forEach ((meal , idx) => {%>
         <div class="container">
           <form class="form-wrap text-center" action="#" id="restaurantId" restaurantId="<%= meal.restaurantId%>">
 
@@ -76,7 +75,7 @@
                 
                 <div class="col-md-3">
                     <a href="#" class="deletimg">X</a>
-                    <img class="mealImg" width="100" src="<%= meal.img%>" alt="">
+                    <img class="mealImgclass" width="100" src="<%= meal.img%>" alt="">
                 </div>
             
              </div>   
@@ -92,7 +91,6 @@
             </button>
           </form>
         </div>
-        <%})%>
       </section>
       <!-- end edit -->
 
@@ -118,8 +116,10 @@
           );
           const addMealNumber = document.querySelector("#addMealNumber");
           const addMealPrice = document.querySelector("#addMealPrice");
-          const addMealImg = document.querySelector("#addMealImg").files;
+          const addMealImg = document.querySelector("#addMealImg").files[0];
+         const  mealImgclass = document.querySelector('.mealImgclass').src
           const addMealSelect = document.querySelector("#addMealSelect");
+        console.log(mealImgclass.src ,addMealNumber.value );
        
           let isVerified = {
             valid: true,
@@ -162,9 +162,9 @@
             addMealSelect.options[addMealSelect.selectedIndex].value
           );
 
-            if (addMealImg.files) {
-              fd.append("mealImg", addMealImg.files[0]);
-            }
+          if (mealImgclass) {
+            fd.append("mealImg", mealImgclass);
+          }
   
             fd.append("restaurantId", restaurantId);
             fetch("/admin/editMeal", {
