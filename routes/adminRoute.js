@@ -101,9 +101,9 @@ adminRoute.get("/editMeal", (req, res) => {
 
 
 adminRoute.post('/editMeal', (req, res) => {
-  const { newMealTitle, mealDedcription, newMealNumber, newPrice,newImg, newMealCategory } = req.body
+  const { mealTitle, mealDiscription, mealNumber, mealPrice,mealImg, mealCategory } = req.body
  //console.log(oldImgsUrlArr);
-  adminModule.updateMeal( newMealTitle, mealDedcription, newMealNumber, newImg, newPrice, newMealCategory,req.session.user._id).then(() => {
+  adminModule.updateMeal( mealTitle, mealDiscription, mealNumber, mealImg, mealPrice, mealCategory,req.session.user._id ).then(() => {
     res.json(1)
 
   }).catch(error => {
