@@ -84,8 +84,31 @@ function getAllMeals(id) {
 }
 
 
+function updateMeal(id, newMealTitle, mealDedcription, newMealNumber, newPrice, newImg , newMealCategory) {
+  return new Promise((resolve, reject) => {
+     connect().then(()=>{
+      MENUSCHEMA.findOneAndUpdate({_id:id} , 
+        {img:newImg , 
+          title:newMealTitle ,
+          description:mealDedcription ,
+          number:newMealNumber ,
+          price : newPrice ,
+          category :newMealCategory
+
+         }).then(()=>{
+          resolve()
+      }).catch(err =>{
+        reject(err)
+      })
+     }).catch((err)=>{
+      reject(err)
+     })
+  })
+
+}
+
 
 //editmeal
 // delet meal
 
-module.exports = { addMeal, getAllMeals };
+module.exports = { addMeal, getAllMeals , updateMeal};

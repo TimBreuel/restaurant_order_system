@@ -29,7 +29,7 @@ adminRoute.get("/menu", (req, res) => {
 
 ////////////////
 //GET ADMIN MENU
-adminRoute.get("/edit/menu", (req, res) => {
+adminRoute.get("/adminMenu", (req, res) => {
   adminModule
     .getAllMeals(req.session.user._id)
     .then((meals) => res.render("adminMenu", { meals: meals }))
@@ -91,5 +91,25 @@ adminRoute.get("/editMeal", (req, res) => {
     .then((meals) => res.render("adminEditMeal", { meals: meals }))
     .catch((err) => console.log(err));
 });
+
+
+
+adminRoute.post('/editMeal', (req, res) => {
+  const { newMealTitle, mealDedcription, newMealNumber, newPrice,newImg, newMealCategory } = req.body
+ //console.log(oldImgsUrlArr);
+  adminModule.updateMeal( newMealTitle, mealDedcription, newMealNumber, newImg, newPrice, newMealCategory,req.session.user._id).then(() => {
+    res.json(1)
+
+  }).catch(error => {
+    res.json(2)
+  })
+
+
+
+})
+
+
+
+
 
 module.exports = adminRoute;
