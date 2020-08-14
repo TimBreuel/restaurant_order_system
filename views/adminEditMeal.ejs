@@ -35,8 +35,8 @@
       <div class="row d-flex justify-content-center">
         <div class="menu-content pb-70 col-lg-8">
           <div class="title text-center">
-            <h1 class="mb-10">Here you can edit your meals</h1>
-            <p>Who are in extremely love with eco friendly system.</p>
+            <h1 class="mb-10" id="editMealHeadline">Here you can edit your meals</h1>
+            <p id="editMealMessage">Who are in extremely love with eco friendly system.</p>
           </div>
         </div>
       </div>
@@ -79,13 +79,13 @@
                 </div>
             
              </div>   
-             <input type="file" class="form-control-file mb-4 mt-5" name="addMealImg" id="addMealImg"
+             <input type="file" class="form-control-file mb-4 mt-5" name="MealImg" id="addMealImg"
              placeholder="Upload an image" accept="image/x-png,image/gif,image/jpeg" />
         </div>
 
      
 
-            <button class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5" id="editMealBtn"
+            <button class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5" id="editMealBtn"  
               style="border-radius: 3px;">
               EDIT MEAL
             </button>
@@ -110,6 +110,7 @@
         const editMealBtn = document.querySelector("#editMealBtn");
         editMealBtn.addEventListener("click", (e) => {
           e.preventDefault();
+      
           const addMealTitle = document.querySelector("#addMealTitle");
           const AddMealDescription = document.querySelector(
             "#AddMealDescription"
@@ -117,7 +118,7 @@
           const addMealNumber = document.querySelector("#addMealNumber");
           const addMealPrice = document.querySelector("#addMealPrice");
           const addMealImg = document.querySelector("#addMealImg").files[0];
-         const  mealImgclass = document.querySelector('.mealImgclass').getAttribute('src')
+         const  mealImgclass = document.querySelector('.mealImgclass')
           const addMealSelect = document.querySelector("#addMealSelect");
         console.log(mealImgclass );
        
@@ -152,7 +153,8 @@
             errorMessage(isVerified.msg);
           } else {
             const fd = new FormData();
-            
+          
+            fd.append("mealId", '<%-meal.id%>');
             fd.append("mealTitle", addMealTitle.value);
             fd.append("mealDiscription", AddMealDescription.value);
             fd.append("mealNumber", addMealNumber.value);
@@ -162,11 +164,11 @@
             addMealSelect.options[addMealSelect.selectedIndex].value
           );
 
-          if (mealImgclass) {
-            fd.append("mealImg", mealImgclass);
+          if (addMealImg) {
+            fd.append("mealImg", addMealImg);
           }
   
-            fd.append("restaurantId", restaurantId);
+          //  fd.append("restaurantId", restaurantId);
             fetch("/admin/editMeal", {
               method: "post",
               body: fd,
@@ -174,12 +176,7 @@
               .then((response) => {
                 if (response.status === 200) {
                   successOrNot("SUCCESFULL ADDED", "#00AB66 !important");
-                  addMealTitle.value = "";
-                  AddMealDescription.value = "";
-                  addMealNumber.value = "";
-                  addMealPrice.value = "";
-                  addMealImg.value = "";
-                  addMealSelect.selectedIndex = "0";
+
                 } else {
                   successOrNot("SOMETHING GOES WRONG", "#EA2626 !important");
                 }
@@ -194,26 +191,26 @@
         ///////////////////
         //ERROR MESSGAE fn
         function errorMessage(message) {
-          const addMealHeadline = document.querySelector("#addMealHeadline");
-          const addMealMessage = document.querySelector("#addMealMessage");
-          addMealHeadline.innerHTML = "Something goes wrong check the text below";
-          addMealMessage.innerHTML = message;
+          const editMealHeadline = document.querySelector("#editMealHeadline");
+          const editMealMessage = document.querySelector("#editMealMessage");
+          editMealHeadline.innerHTML = "Something goes wrong check the text below";
+          editMealMessage.innerHTML = message;
           setTimeout(() => {
-            addMealHeadline.innerHTML = "Here you can create your meals.";
-            addMealMessage.innerHTML =
+            editMealHeadline.innerHTML = "Here you can create your meals.";
+            editMealMessage.innerHTML =
               "Who are in extremely love with eco friendly system.";
           }, 6000);
         }
   
-        function successOrNot(msg, color) {
-          addMealBtn.classList.remove("bg-dark");
-          addMealBtn.style.backgroundColor = color;
-          addMealBtn.innerText = msg;
+       function successOrNot(msg, color) {
+          editMealBtn.classList.remove("bg-dark");
+          editMealBtn.style.backgroundColor = color;
+          editMealBtn.innerText = msg;
           setTimeout(() => {
-            addMealBtn.classList.add("bg-dark");
-            addMealBtn.innerText = "ADD MEAL";
+            editMealBtn.classList.add("bg-dark");
+            editMealBtn.innerText = "ADD MEAL";
           }, 2000);
-        }
+        } 
       </script>
 </body>
 
