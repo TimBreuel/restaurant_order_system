@@ -49,7 +49,7 @@
           <form class="form-wrap text-center" action="#" id="restaurantId" restaurantId="<%= meal.restaurantId%>">
 
 
-            <input type="text" placeholder="meal Title" name="addMealTitle" class="form-control mb-4"
+            <input type="text" placeholder="meal Title" name="addMealTitle" id="addMealTitle" class="form-control mb-4"
               value="<%= meal.title %>">
 
             <textarea type="te" class="form-control mb-4" id="AddMealDescription" name="AddMealDescription"
@@ -62,14 +62,21 @@
 
           
           <input type="number" class="form-control mb-4" id="addMealPrice" name="addMealPrice" placeholder="Meal price" value="<%= meal.price%>" />
-         
+          <select class="form-control mt-4" id="addMealSelect">
+            <option value="category"> choose category</option>
+            <option value="drinks">Drinks</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+          </select>
+
           <div class="form-group">
          
             <div class="row">
                 
                 <div class="col-md-3">
                     <a href="#" class="deletimg">X</a>
-                    <img class="bookimg" width="100" src="<%= meal.img%>" alt="">
+                    <img class="mealImg" width="100" src="<%= meal.img%>" alt="">
                 </div>
             
              </div>   
@@ -95,6 +102,12 @@
 
       <%- include('partials/scripts') %>
       <script>
+
+      document.querySelector('.deletimg').addEventListener('click' , e =>{
+        e.preventDefault()
+        e.target.parentElement.remove()
+      })
+
         //GET THE BUTTON AND MAKE VALIDATION
         const editMealBtn = document.querySelector("#editMealBtn");
         editMealBtn.addEventListener("click", (e) => {
@@ -105,8 +118,8 @@
           );
           const addMealNumber = document.querySelector("#addMealNumber");
           const addMealPrice = document.querySelector("#addMealPrice");
-          const addMealImg = document.querySelector("#addMealImg");
-         // const addMealSelect = document.querySelector("#addMealSelect");
+          const addMealImg = document.querySelector("#addMealImg").files;
+          const addMealSelect = document.querySelector("#addMealSelect");
        
           let isVerified = {
             valid: true,
@@ -125,17 +138,31 @@
             isVerified.valid = false;
             isVerified.msg += "Please feel out description<br>";
           }
-   
+          
+        if (
+          addMealSelect.options[addMealSelect.selectedIndex].value ===
+          "category"
+        ) {
+          isVerified.valid = false;
+          isVerified.msg += "Please choose a category<br>";
+        }
+
+
           if (!isVerified.valid) {
             errorMessage(isVerified.msg);
           } else {
             const fd = new FormData();
+            
             fd.append("mealTitle", addMealTitle.value);
             fd.append("mealDiscription", AddMealDescription.value);
             fd.append("mealNumber", addMealNumber.value);
             fd.append("mealPrice", addMealPrice.value);
+            fd.append(
+            "mealCategory",
+            addMealSelect.options[addMealSelect.selectedIndex].value
+          );
 
-            if (addMealImg.files.length === 1) {
+            if (addMealImg.files) {
               fd.append("mealImg", addMealImg.files[0]);
             }
   
@@ -152,7 +179,7 @@
                   addMealNumber.value = "";
                   addMealPrice.value = "";
                   addMealImg.value = "";
-            
+                  addMealSelect.selectedIndex = "0";
                 } else {
                   successOrNot("SOMETHING GOES WRONG", "#EA2626 !important");
                 }

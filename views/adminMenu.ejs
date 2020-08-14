@@ -51,6 +51,7 @@
           <div class="row grid">
             <!-- JSX LOOP TO RENDER MENU -->
             <% meals.forEach(meal => { %> <% if (meal.img !== '') { %>
+
             <div class="col-md-6 all <%= meal.category %>">
               <div class="single-menu">
                 <div class="row">
@@ -68,9 +69,13 @@
                       <% if (meal.number !== '') { %>
                       <h4><%= meal.number %> <%= meal.title %></h4>
                       <h4 class="price">$<%= meal.price %></h4>
+              <a href="/admin/editMeal" class="adminEditMenuBtn" ><input class="btn btn-success" type="button" value="EDIT"></a>
+              <a href="/admin/adminDeleteMeal" class="adminDeletMenuBtn" ><input class="btn btn-danger" type="button" value="DELETE"></a>
+
                       <% }else{ %>
                       <h4><%= meal.title %></h4>
                       <h4 class="price">$<%= meal.price %></h4>
+
                       <% } %>
                     </div>
                     <p>
@@ -97,10 +102,13 @@
                 </p>
               
               </div>
-        
-                <a href="/admin/adminEditMeal" class="adminMenuBtn" ><input class="btn btn-success" type="button" value="EDIT"> </a>
+              <div>
+              </div>
+                
             </div>
+
             <% } %> <% }) %>
+          
                      
           </div>
          
