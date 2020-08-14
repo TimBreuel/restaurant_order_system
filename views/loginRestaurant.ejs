@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+  <head>
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <%- include('partials/bodyHeader') %>
+    <!-- #header -->
+
+    <!-- Start reservation Area -->
+    <section
+      class="reservation-area section-gap relative costumerLoginRestaurant"
+      style="padding-top: 300px;"
+    >
+      <div class="overlay overlay-bg"></div>
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6 reservation-left">
+            <h1 class="text-white" id="loginRestaurantHeadline">
+              Login to your restaurant.
+            </h1>
+            <p class="text-white pt-20" id="loginRestaurantMessage">
+              Login to your restaurant to see the admin service and other stuff.
+            </p>
+          </div>
+          <div class="col-lg-5 reservation-right">
+            <form
+              class="form-wrap text-center"
+              action="#"
+              style="padding-top: 80px; padding-bottom: 80px;"
+            >
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="loginRestaurantEmail"
+                placeholder="Your Email Address"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Your Email Address'"
+              />
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="loginRestaurantPassword"
+                placeholder="Password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Password'"
+              />
+
+              <button
+                class="primary-btn text-uppercase mt-20"
+                id="loginRestaurantBtn"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End reservation Area -->
+
+    <!-- End login Area -->
+
+    <!-- start footer Area -->
+    <%- include('partials/footer') %>
+    <!-- End footer Area -->
+
+    <%- include('partials/scripts') %>
+    <script>
+      //GET THE BUTTON AND MAKE VALIDATION
+      const loginRestaurantBtn = document.querySelector("#loginRestaurantBtn");
+      loginRestaurantBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const loginRestaurantEmail = document.querySelector(
+          "#loginRestaurantEmail"
+        );
+        const loginRestaurantPassword = document.querySelector(
+          "#loginRestaurantPassword"
+        );
+        let isVerified = {
+          valid: true,
+          msg: "",
+        };
+
+        if (!loginKitchenEmail.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out email<br>";
+        }
+        if (!loginKitchenPassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+
+        if (!isVerified.valid) {
+          errorMessage(isVerified.msg);
+        } else {
+          const data = {
+            email: loginKitchenEmail.value,
+            password: loginKitchenPassword.value,
+          };
+          postData("/login/restaurant", data).then((data) => {
+            console.log(data);
+          });
+        }
+      });
+
+      //////////////////////////
+      //FETCH THE REGISTER DATA
+      async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+
+      ///////////////////
+      //ERROR MESSGAE fn
+      function errorMessage(message) {
+        const loginRestaurantHeadline = document.querySelector(
+          "#loginRestaurantHeadline"
+        );
+        const loginRestaurantMessage = document.querySelector(
+          "#loginRestaurantMessage"
+        );
+        loginRestaurantHeadline.innerHTML =
+          "Something goes wrong check the text below";
+        loginRestaurantMessage.innerHTML = message;
+        setTimeout(() => {
+          loginRestaurantHeadline.innerHTML = "Login to your kitchen!";
+          loginRestaurantMessage.innerHTML =
+            "Login to your kitchen to see all your orders that are coming from your costumers.";
+        }, 6000);
+      }
+    </script>
+  </body>
+</html>

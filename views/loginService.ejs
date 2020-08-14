@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+  <head>
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <%- include('partials/bodyHeader') %>
+    <!-- #header -->
+
+    <!-- Start reservation Area -->
+    <section
+      class="reservation-area section-gap relative costumerLoginService"
+      style="padding-top: 300px;"
+    >
+      <div class="overlay overlay-bg"></div>
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6 reservation-left">
+            <h1 class="text-white" id="loginServiceHeadline">
+              Login to your service area.
+            </h1>
+            <p class="text-white pt-20" id="loginServiceMessage">
+              Login to your service area to see your tables and who whants to
+              pay or need extension.
+            </p>
+          </div>
+          <div class="col-lg-5 reservation-right">
+            <form
+              class="form-wrap text-center"
+              action="#"
+              style="padding-top: 80px; padding-bottom: 80px;"
+            >
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="loginServiceEmail"
+                placeholder="Your Email Address"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Your Email Address'"
+              />
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="loginServicePassword"
+                placeholder="Password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Password'"
+              />
+
+              <button
+                class="primary-btn text-uppercase mt-20"
+                id="loginServiceBtn"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End reservation Area -->
+
+    <!-- End login Area -->
+
+    <!-- start footer Area -->
+    <%- include('partials/footer') %>
+    <!-- End footer Area -->
+
+    <%- include('partials/scripts') %>
+    <script>
+      //GET THE BUTTON AND MAKE VALIDATION
+      const loginServiceBtn = document.querySelector("#loginServiceBtn");
+      loginServiceBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const loginServiceEmail = document.querySelector("#loginServiceEmail");
+        const loginServicePassword = document.querySelector(
+          "#loginServicePassword"
+        );
+        let isVerified = {
+          valid: true,
+          msg: "",
+        };
+
+        if (!loginServiceEmail.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out email<br>";
+        }
+        if (!loginServicePassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+
+        if (!isVerified.valid) {
+          errorMessage(isVerified.msg);
+        } else {
+          const data = {
+            email: loginServiceEmail.value,
+            password: loginServicePassword.value,
+          };
+          postData("/login/service", data).then((data) => {
+            console.log(data);
+          });
+        }
+      });
+
+      //////////////////////////
+      //FETCH THE REGISTER DATA
+      async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+
+      ///////////////////
+      //ERROR MESSGAE fn
+      function errorMessage(message) {
+        const loginServiceHeadline = document.querySelector(
+          "#loginServiceHeadline"
+        );
+        const loginServiceMessage = document.querySelector(
+          "#loginServiceMessage"
+        );
+        loginServiceHeadline.innerHTML =
+          "Something goes wrong check the text below";
+        loginServiceMessage.innerHTML = message;
+        setTimeout(() => {
+          loginServiceHeadline.innerHTML = "Login to your kitchen!";
+          loginServiceMessage.innerHTML =
+            "Login to your kitchen to see all your orders that are coming from your costumers.";
+        }, 6000);
+      }
+    </script>
+  </body>
+</html>
