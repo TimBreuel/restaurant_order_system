@@ -99,15 +99,19 @@
             email: loginServiceEmail.value,
             password: loginServicePassword.value,
           };
-          postData("/login/service", data).then((data) => {
-            console.log(data);
-          });
+          postDataService("/login/service", data)
+            .then((data) => {
+              if (data === 1) {
+                window.location.href = "/login/service";
+              }
+            })
+            .catch((err) => console.log(err));
         }
       });
 
       //////////////////////////
       //FETCH THE REGISTER DATA
-      async function postData(url = "", data = {}) {
+      async function postDataService(url = "", data = {}) {
         const response = await fetch(url, {
           method: "POST",
           headers: {

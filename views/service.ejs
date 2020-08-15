@@ -25,36 +25,65 @@
     <section
       class="menu-area section-gap"
       id="menu"
-      style="height: 100vh; padding-bottom: 0;"
+      style="height: 100vh; padding-bottom: 0; padding-top: 40px;"
     >
       <div class="container">
         <div class="filters-content">
           <div class="row grid">
             <!-- JSX LOOP TO RENDER MENU -->
 
+            <% tables.forEach(table => { %>
+
             <div class="col-md-6 all">
               <div class="single-menu">
                 <div class="title-wrap d-flex justify-content-between">
-                  <h3>Table num. <%= tables.table_number %></h3>
+                  <h3>Table Num: <%= table.table_number %></h3>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
+                  <% if (table.service===false) { %>
                   <button
-                    class="btn btn-small text-white <% if (tables.service ===true) { %> bg-warning <% } %><% } else { %> bg-dark <% } %>"
+                    class="btn btn-small text-white bg-secondary serviceResetBtn"
+                    tableId="<%= table._id %> "
+                    tableService="<%= table.service %>"
                   >
                     Service
                   </button>
+                  <% } else{%>
                   <button
-                    class="btn btn-small text-white <% if (tables.service ===true) { %> bg-primary <% } %><% } else { %> bg-dark <% } %>"
+                    class="btn btn-small text-white bg-warning serviceResetBtn"
+                    tableId="<%= table._id %> "
+                    tableService="<%= table.service %>"
+                  >
+                    Service
+                  </button>
+                  <% }%> <% if (table.pay===false) { %>
+                  <button
+                    class="btn btn-small text-white bg-secondary payedResetBtn"
+                    tableId="<%= table._id %> "
+                    tablePay="<%= table.pay %>"
                   >
                     Payed
                   </button>
-                  <button class="btn btn-small bg-secondary text-white">
+                  <% } else{%>
+                  <button
+                    class="btn btn-small text-white bg-primary payedResetBtn"
+                    tableId="<%= table._id %> "
+                    tablePay="<%= table.pay %>"
+                  >
+                    Payed
+                  </button>
+                  <% }%>
+                  <button
+                    class="btn btn-small bg-secondary text-white tableResetBtn"
+                    tableId="<%= table._id %> "
+                  >
                     Reset
                   </button>
                 </div>
               </div>
-              <div></div>
             </div>
+
+            <% }) %>
           </div>
         </div>
       </div>
@@ -62,5 +91,52 @@
     <!-- End menu-area Area -->
 
     <%- include('partials/scripts') %>
+    <script>
+      /////////////////
+      //SERVICE BUTTONS
+      const serviceResetBtn = document.querySelectorAll(".serviceResetBtn");
+      serviceResetBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          postData("/login/service/tableService", {
+            tableId: e.target.getAttribute("tableId"),
+          }).then((data) => {
+            if (data === 1) {
+              e.target.classList.remove("bg-warning");
+              e.target.classList.add("bg-secondary");
+            }
+          });
+        });
+      });
+
+      /////////////////
+      //PAYMENT BUTTONS
+      const payedResetBtn = document.querySelectorAll(".payedResetBtn");
+      payedResetBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          postData("/login/service/tablePayment", {
+            tableId: e.target.getAttribute("tableId"),
+          }).then((data) => {
+            if (data === 1) {
+              e.target.classList.remove("bg-primary");
+              e.target.classList.add("bg-secondary");
+            }
+          });
+        });
+      });
+
+      //POST DATA FETCH
+      async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+    </script>
   </body>
 </html>
