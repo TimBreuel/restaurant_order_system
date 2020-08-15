@@ -17,6 +17,7 @@ function connect() {
           useUnifiedTopology: true,
           useCreateIndex: true,
           useNewUrlParser: true,
+          useFindAndModify: false,
         })
         .then(() => {
           resolve();

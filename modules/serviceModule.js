@@ -25,14 +25,47 @@ const addTables = (restaurantId, number) => {
   });
 };
 
-const getAllTables = (restaurantId) => {
+const getAllTables = (id) => {
   return new Promise((resolve, reject) => {
-    connect().then(() => {
-      TABLESCHEMA.find({ restaurantId: restaurantId })
-        .then((tables) => resolve(tables))
-        .catch((err) => console.log(err));
-    });
+    connect()
+      .then(() => {
+        TABLESCHEMA.find({ restaurantId: id })
+          .then((tables) => resolve(tables))
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   });
 };
 
-module.exports = { addTables, getAllTables };
+const setTableService = (tableId, boolean) => {
+  return new Promise((resolve, reject) => {
+    connect()
+      .then(() => {
+        TABLESCHEMA.findByIdAndUpdate(
+          { _id: tableId.trim() },
+          { service: boolean }
+        )
+          .then(() => resolve())
+          .catch((err) => {
+            reject(err);
+          });
+      })
+      .catch((err) => console.log(err));
+  });
+};
+
+const setTablePayment = (tableId, boolean) => {
+  return new Promise((resolve, reject) => {
+    connect()
+      .then(() => {
+        TABLESCHEMA.findByIdAndUpdate({ _id: tableId.trim() }, { pay: boolean })
+          .then(() => resolve())
+          .catch((err) => {
+            reject(err);
+          });
+      })
+      .catch((err) => console.log(err));
+  });
+};
+
+module.exports = { addTables, getAllTables, setTableService, setTablePayment };
