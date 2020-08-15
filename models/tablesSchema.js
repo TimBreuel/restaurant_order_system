@@ -20,6 +20,9 @@ const tablesSchema = new Schema({
     type: String,
     required: true,
   },
+  orders: {
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model("restaurant_tables", tablesSchema);
