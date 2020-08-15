@@ -2,6 +2,7 @@ const express = require("express");
 const loginRoute = express.Router();
 const loginDataModules = require("../modules/loginModule");
 const serviceModule = require("../modules/serviceModule");
+const adminModule = require("../modules/adminModule");
 
 //////////////////
 //GET LOGIN ROUTE
@@ -131,7 +132,7 @@ loginRoute.post("/service/tableService", (req, res) => {
 });
 
 /////////////////////
-//POST TABLE PAYMENT
+//POST TABLESERVICE PAYMENT
 loginRoute.post("/service/tablePayment", (req, res) => {
   serviceModule
     .setTablePayment(req.body.tableId, false)
@@ -139,6 +140,57 @@ loginRoute.post("/service/tablePayment", (req, res) => {
       res.json(1);
     })
     .catch((err) => console.log(err));
+});
+
+//////////////////
+//GET LOGIN TABLE
+loginRoute.get("/table", (req, res) => {
+  // console.log(req.session.user);
+  if (req.session.user) {
+    const promiseTable = serviceModule
+      .getTable(req.session.user._id, table_number)
+      .then((table) => {
+        return table;
+      })
+      .catch((err) => console.log(err));
+
+    const promiseMenu = adminModule
+      .getAllMeals(req.session.user._id)
+      .then((meals) => {
+        return meals;
+      })
+      .catch((err) => console.log(err));
+    Promise.all([promiseTable, promiseMenu]).then((tableMenu) => {
+      res.render("menuTable", tableMenu);
+    });
+  } else {
+    res.render("loginTable");
+  }
+});
+
+//////////////////
+//GET LOGIN TABLE
+loginRoute.post("/table", (req, res) => {
+  const { email, password, table_number } = req.body;
+  if (email && password) {
+    loginDataModules
+      .checkUser(email.trim(), password)
+      .then((user) => {
+        user.table_number = table_number;
+        console.log(user);
+        req.session.user = user;
+        res.json(1);
+      })
+      .catch((error) => {
+        if (error == 3) {
+          res.json(3);
+        } else {
+          res.json(4);
+        }
+      });
+  } else {
+    res.json(2);
+  }
 });
 
 module.exports = loginRoute;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+  <head>
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+      <!-- Brand -->
+      <a class="navbar-brand" href="/login/logout"
+        >Table: #<%= tableMenu %> Logout</a
+      >
+
+      <!-- Toggler/collapsibe Button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- End menu-area Area -->
+
+    <!-- start footer Area -->
+    <%- include('partials/footer') %>
+    <!-- End footer Area -->
+
+    <%- include('partials/scripts') %>
+  </body>
+</html>

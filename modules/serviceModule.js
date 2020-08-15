@@ -72,4 +72,20 @@ const setTablePayment = (tableId, boolean) => {
   });
 };
 
-module.exports = { addTables, getAllTables, setTableService, setTablePayment };
+const getTable = (id, tableNumber) => {
+  return new Promise((resolve, reject) => {
+    connect().then(() => {
+      TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
+        .then((table) => resolve(table))
+        .catch((err) => error);
+    });
+  });
+};
+
+module.exports = {
+  addTables,
+  getAllTables,
+  setTableService,
+  setTablePayment,
+  getTable,
+};
