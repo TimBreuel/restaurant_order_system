@@ -2182,6 +2182,11 @@ body.mobile-nav-active #mobile-nav-toggle {
     no-repeat center/cover !important;
 }
 
+.costumerLoginTable {
+  background: url(../img/customer/haydn-golden-qFpIQMc33VM-unsplash.jpg)
+    no-repeat center/cover !important;
+}
+
 .reservation-area .overlay-bg {
   background: rgba(17, 22, 24, 0.75);
 }

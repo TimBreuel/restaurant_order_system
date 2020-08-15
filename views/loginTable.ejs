@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+  <head>
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <%- include('partials/bodyHeader') %>
+    <!-- #header -->
+
+    <!-- Start reservation Area -->
+    <section
+      class="reservation-area section-gap relative costumerLoginTable"
+      style="padding-top: 300px;"
+    >
+      <div class="overlay overlay-bg"></div>
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6 reservation-left">
+            <h1 class="text-white" id="loginTableHeadline">
+              Login to your table.
+            </h1>
+            <p class="text-white pt-20" id="loginTableMessage">
+              Login to your table to see the menu and make some orders to the
+              kitchen.
+            </p>
+          </div>
+          <div class="col-lg-5 reservation-right">
+            <form
+              class="form-wrap text-center"
+              action="#"
+              style="padding-top: 80px; padding-bottom: 80px;"
+            >
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="loginTableEmail"
+                placeholder="Your Email Address"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Your Email Address'"
+              />
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="loginTablePassword"
+                placeholder="Password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Password'"
+              />
+              <input
+                type="number"
+                class="form-control"
+                name="table number"
+                id="loginTableNumber"
+                placeholder="Table number"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Table number'"
+              />
+              <button
+                class="primary-btn text-uppercase mt-20"
+                id="loginTableBtn"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End reservation Area -->
+
+    <!-- End login Area -->
+
+    <!-- start footer Area -->
+    <%- include('partials/footer') %>
+    <!-- End footer Area -->
+
+    <%- include('partials/scripts') %>
+    <script>
+      //GET THE BUTTON AND MAKE VALIDATION
+      const loginTableBtn = document.querySelector("#loginTableBtn");
+      loginTableBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const loginTableEmail = document.querySelector("#loginTableEmail");
+        const loginTablePassword = document.querySelector(
+          "#loginTablePassword"
+        );
+        const loginTableNumber = document.querySelector("#loginTableNumber");
+        let isVerified = {
+          valid: true,
+          msg: "",
+        };
+
+        if (!loginTableEmail.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out email<br>";
+        }
+        if (!loginTablePassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (!loginTableNumber.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out table number<br>";
+        }
+
+        if (!isVerified.valid) {
+          errorMessage(isVerified.msg);
+        } else {
+          const data = {
+            email: loginTableEmail.value,
+            password: loginTablePassword.value,
+            table_number: loginTableNumber.value,
+          };
+          postDataService("/login/table", data)
+            .then((data) => {
+              if (data === 1) {
+                window.location.href = "/login/service";
+              }
+            })
+            .catch((err) => console.log(err));
+        }
+      });
+
+      //////////////////////////
+      //FETCH THE REGISTER DATA
+      async function postDataService(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+
+      ///////////////////
+      //ERROR MESSGAE fn
+      function errorMessage(message) {
+        const loginTableHeadline = document.querySelector(
+          "#loginTableHeadline"
+        );
+        const loginTableMessage = document.querySelector("#loginTableMessage");
+        loginTableHeadline.innerHTML =
+          "Something goes wrong check the text below";
+        loginTableMessage.innerHTML = message;
+        setTimeout(() => {
+          loginTableHeadline.innerHTML = "Login to your table!";
+          loginTableMessage.innerHTML =
+            "Login to your table to see the menu and make some orders to the kitchen.";
+        }, 6000);
+      }
+    </script>
+  </body>
+</html>

@@ -5,19 +5,23 @@ const addTables = (restaurantId, number) => {
   return new Promise((resolve, reject) => {
     connect()
       .then(() => {
-        let newTables = [];
-        for (let index = 0; index < number; index++) {
-          const newTable = new TABLESCHEMA({
-            table_number: index + 1,
-            service: false,
-            pay: false,
-            restaurantId: restaurantId,
-          });
-          newTables.push(newTable);
-        }
-        TABLESCHEMA.insertMany(newTables)
+        TABLESCHEMA.deleteMany({ restaurantId: restaurantId })
           .then(() => {
-            resolve(1);
+            let newTables = [];
+            for (let index = 0; index < number; index++) {
+              const newTable = new TABLESCHEMA({
+                table_number: index + 1,
+                service: false,
+                pay: false,
+                restaurantId: restaurantId,
+              });
+              newTables.push(newTable);
+            }
+            TABLESCHEMA.insertMany(newTables)
+              .then(() => {
+                resolve(1);
+              })
+              .catch((err) => console.log(err));
           })
           .catch((err) => console.log(err));
       })
@@ -68,4 +72,20 @@ const setTablePayment = (tableId, boolean) => {
   });
 };
 
-module.exports = { addTables, getAllTables, setTableService, setTablePayment };
+const getTable = (id, tableNumber) => {
+  return new Promise((resolve, reject) => {
+    connect().then(() => {
+      TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
+        .then((table) => resolve(table))
+        .catch((err) => error);
+    });
+  });
+};
+
+module.exports = {
+  addTables,
+  getAllTables,
+  setTableService,
+  setTablePayment,
+  getTable,
+};
