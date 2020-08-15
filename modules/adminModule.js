@@ -153,31 +153,24 @@ function updateMeal(
 
 
 
+function dltMeal(id) {
+  return new Promise((resolve, reject) => {
+
+    getMeal(id).then(() => {
+      MENUSCHEMA.deleteOne({ _id: id }).then(() => {
+                  resolve()
+              }).catch(error => {
+                  reject(error)
+              })       
+      }).catch(error => {
+          reject(error)
+      })
 
 
 
+  })
+}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//editmeal
-// delet meal
-
-module.exports = { addMeal, getAllMeals, updateMeal, getMeal };
+module.exports = { addMeal, getAllMeals, updateMeal, getMeal , dltMeal };

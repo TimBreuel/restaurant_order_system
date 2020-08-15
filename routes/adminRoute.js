@@ -102,6 +102,15 @@ adminRoute.get("/deleteMeal", (req, res) => {
   res.render("adminDeleteMeal");
 });
 
+adminRoute.post("/deleteMeal", (req, res) => {
+  adminModule.dltMeal(req.body.id).then(()=>{ 
+    res.json(1)
+}).catch(error=>{
+    res.json(2)
+})
+});
+
+
 /////////////////////
 //GET ADMIN ADD MEAL
 adminRoute.get("/editMeal/:id", (req, res) => {
