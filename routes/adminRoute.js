@@ -103,7 +103,7 @@ adminRoute.get("/deleteMeal", (req, res) => {
 });
 
 adminRoute.post("/deleteMeal", (req, res) => {
-  adminModule.dltMeal(req.body.id).then(()=>{ 
+  adminModule.dltMeal(req.body.mealid ).then(()=>{ 
     res.json(1)
 }).catch(error=>{
     res.json(2)

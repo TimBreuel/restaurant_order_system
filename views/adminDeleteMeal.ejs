@@ -33,7 +33,7 @@
         <div class="row d-flex justify-content-center">
           <div class="menu-content pb-70 col-lg-8">
             <div class="title text-center">
-              <h1 class="mb-10">Here you can delete a meal from the menu</h1>
+              <h1 class="mb-10">Here you can see your aktuell menu.</h1>
               <p>Who are in extremely love with eco friendly system.</p>
             </div>
           </div>
@@ -41,88 +41,77 @@
 
         <ul class="filter-wrap filters col-lg-12 no-padding">
           <li class="active" data-filter="*">All Menu</li>
+          <li data-filter=".drinks">Drinks</li>
           <li data-filter=".breakfast">Breakfast</li>
           <li data-filter=".lunch">Lunch</li>
           <li data-filter=".dinner">Dinner</li>
-          <li data-filter=".budget-meal">Budget Meal</li>
-          <li data-filter=".buffet">Buffet</li>
         </ul>
 
         <div class="filters-content">
           <div class="row grid">
-            <div class="col-md-6 all breakfast">
+            <!-- JSX LOOP TO RENDER MENU -->
+            <% meals.forEach(meal => { %> <% if (meal.img !== '') { %>
+
+            <div class="col-md-6 all <%= meal.category %>">
               <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Cappuccion</h4>
-                  <h4 class="price">$49</h4>
+                <div class="row">
+                  <div class="col-md-4" style="padding: 0 0 0 0;">
+                    <img
+                      src="<%= meal.img %> "
+                      alt=""
+                      width="100%"
+                      height="150px"
+                      class="rounded"
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="title-wrap d-flex justify-content-between">
+                      <% if (meal.number !== '') { %>
+                      <h4><%= meal.number %> <%= meal.title %></h4>
+                      <h4 class="price">$<%= meal.price %></h4>
+              <a href="/admin/editMeal/<%-meal.id%>" class="adminEditMenuBtn" ><input class="btn btn-success" type="button" value="EDIT"></a>
+              <a href="/admin/deleteMeal" class="adminDeletMenuBtn" ><input class="btn btn-danger" type="button" value="DELETE"></a>
+
+                      <% }else{ %>
+                      <h4><%= meal.title %></h4>
+                      <h4 class="price">$<%= meal.price %></h4>
+
+                      <% } %>
+                    </div>
+                    <p>
+                      <%= meal.description %>
+                    </p>
+                  </div>
                 </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
               </div>
             </div>
-            <div class="col-md-6 all dinner">
+            <% }else{ %>
+            <div class="col-md-6 all <%= meal.category %>">
               <div class="single-menu">
                 <div class="title-wrap d-flex justify-content-between">
-                  <h4>Americano</h4>
-                  <h4 class="price">$49</h4>
+                  <% if (meal.number !== '') { %>
+                  <h4><%= meal.number %> <%= meal.title %></h4>
+                  <h4 class="price">$<%= meal.price %></h4>
+                  <% }else{ %>
+                  <h4><%= meal.title %></h4>
+                  <h4 class="price">$<%= meal.price %></h4>
+                  <% } %>
                 </div>
                 <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
+                  <%= meal.description %>  
                 </p>
+              
               </div>
-            </div>
-            <div class="col-md-6 all budget-meal">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Macchiato</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
+              <div>
               </div>
+                
             </div>
-            <div class="col-md-6 all breakfast">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Mocha</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all lunch">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Piccolo Latte</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6 all buffet">
-              <div class="single-menu">
-                <div class="title-wrap d-flex justify-content-between">
-                  <h4>Ristretto</h4>
-                  <h4 class="price">$49</h4>
-                </div>
-                <p>
-                  Usage of the Internet is becoming more common due to rapid
-                  advance.
-                </p>
-              </div>
-            </div>
+
+            <% } %> <% }) %>
+          
+                     
           </div>
+         
         </div>
       </div>
     </section>

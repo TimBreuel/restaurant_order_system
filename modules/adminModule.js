@@ -153,11 +153,19 @@ function updateMeal(
 
 
 
-function dltMeal(id) {
+function dltMeal(mealid ) {
   return new Promise((resolve, reject) => {
 
-    getMeal(id).then(() => {
-      MENUSCHEMA.deleteOne({ _id: id }).then(() => {
+    getMeal(mealid).then((meal) => {
+      
+        if (fs.existsSync('./public' + meal.img) ) {
+        fs.unlinkSync('./public' + meal.img)
+      }
+      else {
+        reject(new Error('haking try'))
+    }
+   
+      MENUSCHEMA.deleteOne({ _id: mealid }).then(() => {
                   resolve()
               }).catch(error => {
                   reject(error)
