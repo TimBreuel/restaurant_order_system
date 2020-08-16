@@ -148,7 +148,7 @@ loginRoute.get("/table", (req, res) => {
   // console.log(req.session.user);
   if (req.session.user) {
     const promiseTable = serviceModule
-      .getTable(req.session.user._id, table_number)
+      .getTable(req.session.user._id, req.session.table_number)
       .then((table) => {
         return table;
       })
@@ -160,9 +160,11 @@ loginRoute.get("/table", (req, res) => {
         return meals;
       })
       .catch((err) => console.log(err));
-    Promise.all([promiseTable, promiseMenu]).then((tableMenu) => {
-      res.render("menuTable", tableMenu);
-    });
+    Promise.all([promiseTable, promiseMenu])
+      .then((tableMenu) => {
+        res.render("menuTable", { tableMenu });
+      })
+      .catch((err) => console.log(err));
   } else {
     res.render("loginTable");
   }
@@ -176,9 +178,9 @@ loginRoute.post("/table", (req, res) => {
     loginDataModules
       .checkUser(email.trim(), password)
       .then((user) => {
-        user.table_number = table_number;
-        console.log(user);
-        req.session.user = user;
+        let testSession = req.session;
+        testSession.user = user;
+        testSession.table_number = table_number;
         res.json(1);
       })
       .catch((error) => {
