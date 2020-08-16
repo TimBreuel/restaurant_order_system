@@ -116,7 +116,7 @@
           postDataService("/login/table", data)
             .then((data) => {
               if (data === 1) {
-                window.location.href = "/login/service";
+                window.location.href = "/login/table";
               }
             })
             .catch((err) => console.log(err));
