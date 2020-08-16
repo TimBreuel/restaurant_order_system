@@ -4,31 +4,59 @@
     <%- include('partials/header') %>
   </head>
   <body>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-      <!-- Brand -->
-      <a class="navbar-brand" href="/login/logout"
-        >Table: #<%= tableMenu[0].table_number %> Logout</a
-      >
-
-      <!-- Toggler/collapsibe Button -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#collapsibleNavbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-        </ul>
+    <div class="pos-f-t">
+      <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+          <h4 class="text-white">Your orders:</h4>
+          <span class="text-muted">Toggleable via the navbar brand.</span>
+          <ul>
+            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
+            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
+            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
+            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
+            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
+          </ul>
+        </div>
       </div>
-    </nav>
+      <nav class="navbar navbar-dark bg-dark">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class=""
+            ><svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-basket2-fill"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11.314 1.036a.5.5 0 0 1 .65.278l2 5a.5.5 0 1 1-.928.372l-2-5a.5.5 0 0 1 .278-.65zm-6.628 0a.5.5 0 0 0-.65.278l-2 5a.5.5 0 1 0 .928.372l2-5a.5.5 0 0 0-.278-.65z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M1.5 7a.5.5 0 0 0-.489.605l1.5 7A.5.5 0 0 0 3 15h10a.5.5 0 0 0 .489-.395l1.5-7A.5.5 0 0 0 14.5 7h-13zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"
+              />
+              <path
+                d="M0 6.5A.5.5 0 0 1 .5 6h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1z"
+              /></svg
+          ></span>
+        </button>
+        <div>
+          <a class="navbar-brand" href="/login/logout"
+            >Table: #<%= tableMenu[0].table_number %> Logout</a
+          >
+        </div>
+      </nav>
+    </div>
 
     <!-- Start menu-area Area -->
     <section class="menu-area section-gap" id="menu" style="padding-top: 70px;">
