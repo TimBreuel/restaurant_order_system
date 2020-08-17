@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+  <head>
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <div
+      class="bg-dark"
+      style="
+        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        display: flex;
+        justify-content: center;
+      "
+    >
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li><a href="/login/logout" style="font-size: 18px;">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Start menu-area Area -->
+    <section
+      class="menu-area section-gap"
+      id="menu"
+      style="height: 100vh; padding-bottom: 0; padding-top: 40px;"
+    >
+      <div class="container">
+        <div class="filters-content">
+          <div class="row grid">
+            <!-- JSX LOOP TO RENDER MENU -->
+
+           
+
+            <div class="col-md-6 all">
+              <div class="single-menu">
+
+                <div class="title-wrap d-flex justify-content-between">
+                  <h3>Table number: #</h3>
+                </div>
+
+                <div style="display: flex; justify-content: space-between;">
+                  <button
+                    class="btn btn-small bg-secondary text-white tableResetBtn"
+                    tableId=""
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+
+       
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End menu-area Area -->
+
+    <%- include('partials/scripts') %>
+   <!-- <script>
+      /////////////////
+      //SERVICE BUTTONS
+      const serviceResetBtn = document.querySelectorAll(".serviceResetBtn");
+      serviceResetBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          postData("/login/service/tableService", {
+            tableId: e.target.getAttribute("tableId"),
+          }).then((data) => {
+            if (data === 1) {
+              e.target.classList.remove("bg-warning");
+              e.target.classList.add("bg-secondary");
+            }
+          });
+        });
+      });
+
+      /////////////////
+      //PAYMENT BUTTONS
+      const payedResetBtn = document.querySelectorAll(".payedResetBtn");
+      payedResetBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          postData("/login/service/tablePayment", {
+            tableId: e.target.getAttribute("tableId"),
+          }).then((data) => {
+            if (data === 1) {
+              e.target.classList.remove("bg-primary");
+              e.target.classList.add("bg-secondary");
+            }
+          });
+        });
+      });
+
+      //POST DATA FETCH
+      async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+    </script>  -->
+  </body>
+</html>

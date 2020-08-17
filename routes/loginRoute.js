@@ -44,7 +44,11 @@ loginRoute.post("/", (req, res) => {
 //////////////////////////
 //GET LOGIN/KITCHEN ROUTE
 loginRoute.get("/kitchen", (req, res) => {
-  res.render("loginKitchen");
+  if (req.session.user) {
+    res.render("kitchen");
+  } else {
+    res.render("loginKitchen");
+  }
 });
 
 //////////////////////////
@@ -52,6 +56,25 @@ loginRoute.get("/kitchen", (req, res) => {
 loginRoute.post("/kitchen", (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
+  if (email && password) {
+    loginDataModules
+      .checkUser(email.trim(), password)
+      .then((user) => {
+        req.session.user = user;
+     res.json(1);
+       // res.render('kitchen')
+        //res.render("login")
+      })
+      .catch((error) => {
+        if (error == 3) {
+          res.json(3);
+        } else {
+          res.json(4);
+        }
+      });
+  } else {
+    res.json(2);
+  }
 });
 
 /////////////////////
