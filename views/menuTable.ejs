@@ -47,6 +47,30 @@
             </svg>
           </span>
         </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          id="sendOrder"
+          style="font-weight: 300; font-size: 18px;"
+        >
+          Send order
+        </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          id="needService"
+          style="font-weight: 300; font-size: 18px;"
+        >
+          Need service
+        </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          id="wantsToPay"
+          style="font-weight: 300; font-size: 18px;"
+        >
+          Wants to pay
+        </button>
         <div>
           <a class="navbar-brand" href="/login/logout"
             >Table: #<%= tableMenu[0].table_number %> Logout</a
@@ -143,14 +167,18 @@
     <%- include('partials/scripts') %>
 
     <script>
+      //////////////////////
+      //UI SELECTORS GLOBAL
+      const ulCartList = document.querySelector(".ul-cart-list");
+      /////////////////////////
+      //ADD A MEAL TO THE CART
       const addToCardBtn = document.querySelectorAll(".addToCardBtn");
       addToCardBtn.forEach((btn) => {
         btn.addEventListener("click", (e) => {
-          const ulCartList = document.querySelector(".ul-cart-list");
           e.preventDefault();
-          console.log(e.target.parentElement.children[0].children[0].innerText);
           let liElement = document.createElement("li");
-          liElement.innerHTML = `<h4 mealId="${e.target.parentElement.children[0].children[0].getAttribute(
+          liElement.classList.add("orderListItem");
+          liElement.innerHTML = `<h4 class="text-white" mealId="${e.target.parentElement.children[0].children[0].getAttribute(
             "mealId"
           )}"><span class="deleteMealItem text-danger">X</span> ${
             e.target.parentElement.children[0].children[0].innerText
@@ -162,6 +190,35 @@
           });
         });
       });
+
+      //SEND ORDER TO THE DATABASE
+      const sendOrder = document.querySelector("#sendOrder");
+      sendOrder.addEventListener("click", (e) => {
+        const orderListItem = document.querySelectorAll(".orderListItem");
+        let orderListArr = [];
+        orderListItem.forEach((orderItem) => {
+          console.log(orderItem.children[0].getAttribute("mealId"));
+          orderListArr.push(orderItem.children[0].getAttribute("mealId"));
+        });
+        let data = {
+          order: orderListArr,
+        };
+        postDataTable("/login/table/sendOrder", data).then((response) => {
+          if (response === 1) {
+          }
+        });
+      });
+
+      async function postDataTable(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
     </script>
   </body>
 </html>
