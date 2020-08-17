@@ -8,14 +8,10 @@
       <div class="collapse" id="navbarToggleExternalContent">
         <div class="bg-dark p-4">
           <h4 class="text-white">Your orders:</h4>
-          <span class="text-muted">Toggleable via the navbar brand.</span>
-          <ul>
-            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
-            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
-            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
-            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
-            <li>Mega burger blalbalbla <span style="float: left;">X</span></li>
-          </ul>
+          <span class="text-muted"
+            >When you want delete a meal click the x button</span
+          >
+          <ul class="ul-cart-list"></ul>
         </div>
       </div>
       <nav class="navbar navbar-dark bg-dark">
@@ -47,8 +43,9 @@
               />
               <path
                 d="M0 6.5A.5.5 0 0 1 .5 6h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1z"
-              /></svg
-          ></span>
+              />
+            </svg>
+          </span>
         </button>
         <div>
           <a class="navbar-brand" href="/login/logout"
@@ -88,17 +85,22 @@
                   <div class="col-md-8">
                     <div class="title-wrap d-flex justify-content-between">
                       <% if (meal.number !== '') { %>
-                      <h4><%= meal.number %> <%= meal.title %></h4>
+                      <h4 mealId="<%= meal._id %>">
+                        <%= meal.number %> <%= meal.title %>
+                      </h4>
                       <h4 class="price">$<%= meal.price %></h4>
                       <% }else{ %>
-                      <h4><%= meal.title %></h4>
+                      <h4 mealId="<%= meal._id %>"><%= meal.title %></h4>
                       <h4 class="price">$<%= meal.price %></h4>
                       <% } %>
                     </div>
                     <p>
                       <%= meal.description %>
                     </p>
-                    <button class="btn btn-block bg-light addToCard mt-5">
+                    <button
+                      class="btn btn-block bg-light addToCardBtn mt-5"
+                      mealId="<%= meal._id %>"
+                    >
                       Add to cart
                     </button>
                   </div>
@@ -110,17 +112,19 @@
               <div class="single-menu">
                 <div class="title-wrap d-flex justify-content-between">
                   <% if (meal.number !== '') { %>
-                  <h4><%= meal.number %> <%= meal.title %></h4>
+                  <h4 mealId="<%= meal._id %>">
+                    <%= meal.number %> <%= meal.title %>
+                  </h4>
                   <h4 class="price">$<%= meal.price %></h4>
                   <% }else{ %>
-                  <h4><%= meal.title %></h4>
+                  <h4 mealId="<%= meal._id %>"><%= meal.title %></h4>
                   <h4 class="price">$<%= meal.price %></h4>
                   <% } %>
                 </div>
                 <p>
                   <%= meal.description %>
                 </p>
-                <button class="btn btn-block bg-light addToCard mt-5">
+                <button class="btn btn-block bg-light addToCardBtn mt-5">
                   Add to cart
                 </button>
               </div>
@@ -137,5 +141,27 @@
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
+
+    <script>
+      const addToCardBtn = document.querySelectorAll(".addToCardBtn");
+      addToCardBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const ulCartList = document.querySelector(".ul-cart-list");
+          e.preventDefault();
+          console.log(e.target.parentElement.children[0].children[0].innerText);
+          let liElement = document.createElement("li");
+          liElement.innerHTML = `<h4 mealId="${e.target.parentElement.children[0].children[0].getAttribute(
+            "mealId"
+          )}"><span class="deleteMealItem text-danger">X</span> ${
+            e.target.parentElement.children[0].children[0].innerText
+          }</h4>`;
+          ulCartList.prepend(liElement);
+          liElement.children[0].children[0].addEventListener("click", (e) => {
+            e.preventDefault();
+            e.target.parentElement.parentElement.remove();
+          });
+        });
+      });
+    </script>
   </body>
 </html>
