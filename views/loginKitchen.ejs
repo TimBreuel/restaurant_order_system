@@ -100,8 +100,12 @@
             password: loginKitchenPassword.value,
           };
           postData("/login/kitchen", data).then((data) => {
-            console.log(data);
-          });
+            //console.log(data);
+            if (data === 1) {
+              window.location.href = "/login/kitchen";
+            }
+            
+          }).catch(err =>{console.log(err);})
         }
       });
 
