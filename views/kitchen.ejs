@@ -60,10 +60,11 @@
                   
 
                     </ul>
-                    <div style="display: flex; justify-content:center; ;">
-                      <button mealid="<%= table.id%>"  style="width: 100%" class="btn btn-small bg-danger text-white tableResetBtn " tableId="<%= table._id%>">
+                    <div style="display: flex; justify-content:center;">
+                     <a href="#" mealid="<%= table.id%>" class="DeletMealBtn w-100"> <button mealid="<%= table.id%>"  style="width: 100%" class="btn btn-small bg-danger text-white tableResetBtn " >
                         Done
                       </button>
+                    </a>
                     </div>
                   </div>
               </div>
@@ -134,7 +135,7 @@ $(document).ready(function () {
 
     let mealid;
 
-    document.querySelectorAll('.tableResetBtn').forEach(btn =>{
+    document.querySelectorAll('.DeletMealBtn').forEach(btn =>{
       btn.addEventListener('click' , e =>{
       e.preventDefault()
       showModal(true, 'Delete', 'are you sure you want to delet, no way to bring it back ...')
