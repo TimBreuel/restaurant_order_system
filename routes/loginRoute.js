@@ -61,8 +61,8 @@ loginRoute.post("/kitchen", (req, res) => {
       .checkUser(email.trim(), password)
       .then((user) => {
         req.session.user = user;
-     res.json(1);
-       // res.render('kitchen')
+        res.json(1);
+        // res.render('kitchen')
         //res.render("login")
       })
       .catch((error) => {
@@ -216,6 +216,27 @@ loginRoute.post("/table", (req, res) => {
   } else {
     res.json(2);
   }
+});
+
+//////////////////
+//GET LOGIN TABLE
+loginRoute.post("/table/sendOrder", (req, res) => {
+  const { restaurantId, tableId, orderArr } = req.body;
+  const promiseSetTable = serviceModule
+    .setTableOrders(tableId, orderArr)
+    .then(() => {
+      return;
+    })
+    .catch((err) => console.log(err));
+  const promiseSetKitchen = serviceModule
+    .setOrderToKitchen(restaurantId, tableId, orderArr)
+    .then(() => {
+      return;
+    })
+    .catch((err) => console.log(err));
+  Promise.all([promiseSetTable, promiseSetKitchen])
+    .then(() => res.json(1))
+    .catch(() => res.json(2));
 });
 
 module.exports = loginRoute;

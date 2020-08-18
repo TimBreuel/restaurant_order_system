@@ -1,5 +1,6 @@
 const connect = require("../models/connectionFn");
 const TABLESCHEMA = require("../models/tablesSchema");
+const KITCHENSCHEMA = require("../models/kitchenSchema");
 
 const addTables = (restaurantId, number) => {
   return new Promise((resolve, reject) => {
@@ -72,6 +73,23 @@ const setTablePayment = (tableId, boolean) => {
   });
 };
 
+const setTableOrders = (tableId, orderArr) => {
+  return new Promise((resolve, reject) => {
+    connect()
+      .then(() => {
+        TABLESCHEMA.findByIdAndUpdate(
+          { _id: tableId.trim() },
+          { orders: orderArr }
+        )
+          .then(() => resolve())
+          .catch((err) => {
+            reject(err);
+          });
+      })
+      .catch((err) => console.log(err));
+  });
+};
+
 const getTable = (id, tableNumber) => {
   return new Promise((resolve, reject) => {
     connect().then(() => {
@@ -82,10 +100,30 @@ const getTable = (id, tableNumber) => {
   });
 };
 
+const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
+  return new Promise((resolve, reject) => {
+    connect()
+      .then(() => {
+        const newOrder = new KITCHENSCHEMA({
+          restaurantId: restaurantId,
+          tableId: tableId,
+          orders: orderArr,
+        });
+        newOrder
+          .save()
+          .then(() => resolve())
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  });
+};
+
 module.exports = {
   addTables,
   getAllTables,
   setTableService,
   setTablePayment,
   getTable,
+  setTableOrders,
+  setOrderToKitchen,
 };
