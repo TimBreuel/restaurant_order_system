@@ -7,7 +7,7 @@ const adminRoute = require("./routes/adminRoute");
 const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
-const adminModules = require("./modules/adminModule")
+const adminModules = require("./modules/adminModule");
 const fs = require("fs");
 const session = require("express-session");
 //creat session object options
@@ -60,7 +60,7 @@ app.post("/register", (req, res) => {
     registerDataModules
       .registerUser(restaurantName, firstName, lastName, email, password)
       .then(() => {
-       res.json(1); //user register success
+        res.json(1); //user register success
         //res.render("login")
       })
       .catch((error) => {
@@ -84,7 +84,7 @@ app.get("/verify/:id", (req, res) => {
     registerDataModules
       .verifyRegister(id)
       .then(() => {
-        res.render('login')
+        res.render("login");
       })
       .catch((err) => {
         res.json(2);
@@ -93,10 +93,6 @@ app.get("/verify/:id", (req, res) => {
     res.send("error");
   }
 });
-
-
-
-
 
 /////////////
 //MENU ROUTE
@@ -126,6 +122,10 @@ app.get("/elements", (req, res) => {
 //MENU ROUTE
 app.get("/contact", (req, res) => {
   res.render("contact");
+});
+
+app.get("/404", (req, res) => {
+  res.render("404");
 });
 
 ///////

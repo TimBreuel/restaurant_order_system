@@ -83,7 +83,12 @@
         </div>
       </nav>
     </div>
-
+    <div
+      class="message text-center menu-area section-gap"
+      style="padding: 50px 0 30px 0; font-size: 28px;"
+    >
+      We have a problem
+    </div>
     <!-- Start menu-area Area -->
     <section class="menu-area section-gap" id="menu" style="padding-top: 70px;">
       <div class="container">
@@ -172,6 +177,8 @@
     <%- include('partials/scripts') %>
 
     <script>
+      let infoMessage = document.querySelector(".message");
+      const tableIdLogout = document.querySelector(".tableIdLogout");
       //////////////////////
       //UI SELECTORS GLOBAL
       const ulCartList = document.querySelector(".ul-cart-list");
@@ -205,7 +212,6 @@
           console.log(orderItem.children[0].getAttribute("mealId"));
           orderListArr.push(orderItem.children[0].getAttribute("mealId"));
         });
-        const tableIdLogout = document.querySelector(".tableIdLogout");
 
         let data = {
           restaurantId: tableIdLogout.getAttribute("restaurantId"),
@@ -213,37 +219,87 @@
           order: orderListArr,
         };
         postDataTable("/login/table/sendOrder", data).then((response) => {
-          const navBar = document.querySelector(".menu-area");
-
-          switch (response) {
-            case 1:
-              // const successDiv = document.createElement("div");
-              // successDiv.innerHTML = `<div class="text-success" style="text-align:center; font-size:18px;">Successfully ordered</div>`;
-              // navBar.append(successDiv);
-              // setTimeout(() => {
-              //   navBar.remove(successDiv);
-              //   ulLiDeleteList.innerHTML = "";
-              // }, 2000);
-              const ulLiDeleteList = document.querySelector(".ul-cart-list");
-              ulLiDeleteList.innerHTML = "";
-              alert("Success");
-              break;
-            case 2:
-              // const NoSuccessDiv = document.createElement("div");
-              // NoSuccessDiv.innerHTML = `<div class="text-success" style="text-align:center; font-size:18px;">Somthing goes wrong!</div>`;
-              // navBar.append(NoSuccessDiv);
-              // setTimeout(() => {
-              //   navBar.remove(NoSuccessDiv);
-              // }, 2000);
-              alert("Something goes wrong");
-              break;
-
-            default:
-              break;
+          if (response === 1) {
+            infoMessage.innerText = "Your order have been send to the Kitchen";
+            infoMessage.classList.remove("d-none");
+            infoMessage.classList.add("text-success");
+            setTimeout(() => {
+              infoMessage.classList.add("d-none");
+            }, 5000);
+          } else {
+            infoMessage.innerText = "Something goes wrong";
+            infoMessage.classList.remove("d-none");
+            infoMessage.classList.add("text-danger");
+            setTimeout(() => {
+              infoMessage.classList.add("d-none");
+            }, 5000);
           }
         });
       });
 
+      /////////////////
+      //SET SERVICE BTN
+      const needServiceBtn = document.querySelector("#needService");
+      needServiceBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        let needServiceData = {
+          tableId: tableIdLogout.getAttribute("tableid"),
+          neddService: true,
+        };
+        postDataTable("/login/table/needService", needServiceData).then(
+          (response) => {
+            if (response === 1) {
+              infoMessage.innerText = "The service is contacted";
+              infoMessage.classList.remove("d-none");
+              infoMessage.classList.add("text-warning");
+              setTimeout(() => {
+                infoMessage.classList.add("d-none");
+              }, 5000);
+            } else {
+              infoMessage.innerText = "Something goes wrong";
+              infoMessage.classList.remove("d-none");
+              infoMessage.classList.add("text-danger");
+              setTimeout(() => {
+                infoMessage.classList.add("d-none");
+              }, 5000);
+            }
+          }
+        );
+      });
+
+      //////////////////
+      //SET WANT TO PAY
+      const wantsToPay = document.querySelector("#wantsToPay");
+      wantsToPay.addEventListener("click", (e) => {
+        e.preventDefault();
+        let wantsToPayData = {
+          tableId: tableIdLogout.getAttribute("tableid"),
+          wantsToPay: true,
+        };
+        postDataTable("/login/table/wantsToPay", wantsToPayData).then(
+          (response) => {
+            if (response === 1) {
+              infoMessage.innerText =
+                "The service is contacted that you want to pay";
+              infoMessage.classList.remove("d-none");
+              infoMessage.classList.add("text-primary");
+              setTimeout(() => {
+                infoMessage.classList.add("d-none");
+              }, 5000);
+            } else {
+              infoMessage.innerText = "Something goes wrong";
+              infoMessage.classList.remove("d-none");
+              infoMessage.classList.add("text-danger");
+              setTimeout(() => {
+                infoMessage.classList.add("d-none");
+              }, 5000);
+            }
+          }
+        );
+      });
+
+      /////////////////////
+      //FETCH DATA FUNCTION
       async function postDataTable(url = "", data = {}) {
         const response = await fetch(url, {
           method: "POST",

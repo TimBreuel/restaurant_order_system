@@ -185,6 +185,15 @@ loginRoute.post("/service/tablePayment", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+///////////////////////////////
+//POST TABLESERVICE RESET TABLE
+loginRoute.post("/service/resetTable", (req, res) => {
+  serviceModule
+    .resetTableOrder(req.body.tableId)
+    .then(() => res.json(1))
+    .catch((err) => console.log(err));
+});
+
 //////////////////
 //GET LOGIN TABLE
 loginRoute.get("/table", (req, res) => {
@@ -255,6 +264,24 @@ loginRoute.post("/table/sendOrder", (req, res) => {
     })
     .catch((err) => console.log(err));
   Promise.all([promiseSetTable, promiseSetKitchen])
+    .then(() => res.json(1))
+    .catch(() => res.json(2));
+});
+
+//////////////////
+//GET LOGIN TABLE
+loginRoute.post("/table/needService", (req, res) => {
+  serviceModule
+    .setTableService(req.body.tableId, req.body.neddService)
+    .then(() => res.json(1))
+    .catch(() => res.json(2));
+});
+
+//////////////////
+//GET LOGIN TABLE
+loginRoute.post("/table/wantsToPay", (req, res) => {
+  serviceModule
+    .setTablePayment(req.body.tableId, req.body.wantsToPay)
     .then(() => res.json(1))
     .catch(() => res.json(2));
 });
