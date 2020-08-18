@@ -165,6 +165,15 @@ loginRoute.post("/service/tablePayment", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+///////////////////////////////
+//POST TABLESERVICE RESET TABLE
+loginRoute.post("/service/resetTable", (req, res) => {
+  serviceModule
+    .resetTableOrder(req.body.tableId)
+    .then(() => res.json(1))
+    .catch((err) => console.log(err));
+});
+
 //////////////////
 //GET LOGIN TABLE
 loginRoute.get("/table", (req, res) => {

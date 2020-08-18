@@ -126,6 +126,27 @@
         });
       });
 
+      //////////////////
+      //TABLE RESET BTN
+      const tableResetBtn = document.querySelectorAll(".tableResetBtn");
+      tableResetBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          postData("/login/service/resetTable", {
+            tableId: e.target.getAttribute("tableId"),
+          }).then((data) => {
+            if (data === 1) {
+              e.target.classList.remove("bg-secondary");
+              e.target.classList.add("bg-success");
+              setTimeout(() => {
+                e.target.classList.remove("bg-success");
+                e.target.classList.add("bg-secondary");
+              }, 3000);
+            }
+          });
+        });
+      });
+
       //POST DATA FETCH
       async function postData(url = "", data = {}) {
         const response = await fetch(url, {
