@@ -3423,3 +3423,8 @@ p.words {
 p.letters {
   word-wrap: break-word;
 }
+
+
+.decoration{
+  text-decoration: line-through;
+}
