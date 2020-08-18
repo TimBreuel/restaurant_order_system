@@ -30,6 +30,7 @@
 
 
           <div class="col-md-12 all">
+            
             <div class="single-menu">
               <!-- 
                 <div class="title-wrap d-flex justify-content-between ">
@@ -46,44 +47,28 @@
                 </div> -->
               <!-- accordion -->
               <!--Accordion wrapper-->
+        
               <% tableMenu[1].forEach(table => { %>
-              <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-                <!-- Accordion card -->
-                <div class="card">
-
-                  <!-- Card header -->
-                  <div class="card-header" role="tab" id="headingOne1">
-                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
-                      aria-controls="collapseOne1">
-                      <h3 class="mb-0 text-center">
-                        Table number: #<%= table.number %>
-                      </h3>
-                    </a>
-                  </div>
-
-
-
-                  <!-- Card body -->
-                  <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
-                    data-parent="#accordionEx">
+                <div class="tableCollapse ">
+                  <h2 class="text-center"><span>+</span> Table number:<%= table.number %></h2>
+                  <div>
                     <ul class="card-body">
-                      <li> <a href="#" class="font-weight-bold h3 lineThrought"> <%= table.category %> </a> </li>
+                    
                       <li> <a href="#" class="font-weight-bold h3 lineThrought">
                           <h4><%= table.number %> - <%= table.title %></h4>
                         </a> </li>
-                      <li> <a href="#" class="font-weight-bold h3 lineThrought"> Drink </a> </li>
+                  
 
                     </ul>
                     <div style="display: flex; justify-content:center; ;">
-                      <button style="width: 100%" class="btn btn-small bg-danger text-white tableResetBtn " tableId="">
+                      <button mealid="<%= table.id%>"  style="width: 100%" class="btn btn-small bg-danger text-white tableResetBtn " tableId="<%= table._id%>">
                         Done
                       </button>
                     </div>
                   </div>
-
-                </div>
+              </div>
                 <% }) %>
+               
                 <!-- Accordion card -->
 
 
@@ -98,20 +83,102 @@
       </div>
   </section>
   <!-- End menu-area Area -->
+  <!-- modal start -->
+  <div class="modal" tabindex="-1" role="dialog" id="resultModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delet???</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>are you sure you want to delet </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modaldeletMealBtn" data-dismiss="modal" class="btn btn-danger">DELET</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal end -->
 
   <%- include('partials/scripts') %>
 
   <script>
+    //accordion 
+$(document).ready(function () {
+    $('.tableCollapse > h2 > span').click(function (e) { 
+        e.preventDefault();
+        $('.tableCollapse > div').slideUp(500)
+        let current = $(this).text()
+          $('.tableCollapse > h2 > span').text('+');
+           current=='-' ? $(this).text('+').parent().next().slideUp() : $(this).text('-').parent().next().slideDown()
+    });
+});
+
 
     document.querySelectorAll('.lineThrought').forEach(element => {
       element.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(e.target);
+        //console.log(e.target);
         e.target.style.textDecoration = "line-through"
         // e.target.classList.toggle('decoration')
       });
     });
 
+
+
+
+    let mealid;
+
+    document.querySelectorAll('.tableResetBtn').forEach(btn =>{
+      btn.addEventListener('click' , e =>{
+      e.preventDefault()
+      showModal(true, 'Delete', 'are you sure you want to delet, no way to bring it back ...')
+      mealid = btn.getAttribute('mealid') 
+
+    })
+    })
+
+
+
+    document.querySelector("#modaldeletMealBtn").addEventListener('click', (e) => {  //!4
+            e.preventDefault() 
+            // get parentElement to remove it
+            document.querySelector('a[mealid="' + mealid + '"]').parentElement.parentElement.parentElement.remove()
+         data = {   //   it muss be as a object
+                mealid: mealid
+            }
+            postDtata('/admin/deleteMeal', data).then((data) => {  
+                //hide the delet confirmation modal
+                $('#deletConfirmModal').modal('hide')
+                if (data.status == 200) {
+                    if (data == 1) {
+                        showModal(false, 'success', "meal is Deleted")
+
+                    } else {
+                        showModal(true, 'error', "meal can not be Deleted")
+                    }
+                } 
+            }).catch(error => {
+                showModal(true, 'error', "error from server")
+
+            }) 
+        })
+
+        async function postDtata(url = "", data = "") {   // send data to server 
+            const response = await fetch(url, {
+                method: "Post",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)  
+            })
+            return response.json()
+        }
 
   </script>
 
