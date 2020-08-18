@@ -72,7 +72,11 @@
           Wants to pay
         </button>
         <div>
-          <a class="navbar-brand" href="/login/logout"
+          <a
+            class="navbar-brand tableIdLogout"
+            href="/login/logout"
+            restaurantid="<%= tableMenu[0].restaurantId %>"
+            tableid="<%= tableMenu[0]._id %>"
             >Table: #<%= tableMenu[0].table_number %> Logout</a
           >
         </div>
@@ -200,11 +204,41 @@
           console.log(orderItem.children[0].getAttribute("mealId"));
           orderListArr.push(orderItem.children[0].getAttribute("mealId"));
         });
+        const tableIdLogout = document.querySelector(".tableIdLogout");
+
         let data = {
+          restaurantId: tableIdLogout.getAttribute("restaurantId"),
+          tableId: tableIdLogout.getAttribute("tableid"),
           order: orderListArr,
         };
         postDataTable("/login/table/sendOrder", data).then((response) => {
-          if (response === 1) {
+          const navBar = document.querySelector(".menu-area");
+
+          switch (response) {
+            case 1:
+              // const successDiv = document.createElement("div");
+              // successDiv.innerHTML = `<div class="text-success" style="text-align:center; font-size:18px;">Successfully ordered</div>`;
+              // navBar.append(successDiv);
+              // setTimeout(() => {
+              //   navBar.remove(successDiv);
+              //   ulLiDeleteList.innerHTML = "";
+              // }, 2000);
+              const ulLiDeleteList = document.querySelector(".ul-cart-list");
+              ulLiDeleteList.innerHTML = "";
+              alert("Success");
+              break;
+            case 2:
+              // const NoSuccessDiv = document.createElement("div");
+              // NoSuccessDiv.innerHTML = `<div class="text-success" style="text-align:center; font-size:18px;">Somthing goes wrong!</div>`;
+              // navBar.append(NoSuccessDiv);
+              // setTimeout(() => {
+              //   navBar.remove(NoSuccessDiv);
+              // }, 2000);
+              alert("Something goes wrong");
+              break;
+
+            default:
+              break;
           }
         });
       });
