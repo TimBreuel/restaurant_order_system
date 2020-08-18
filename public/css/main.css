@@ -3428,3 +3428,32 @@ p.letters {
 .decoration{
   text-decoration: line-through;
 }
+
+
+.tableCollapse{
+  border-radius: 2px;
+  border: 1px solid black;
+}
+.tableCollapse > h2 {
+  background-color: #343a40;
+  color: #fff;
+  padding: 10px;
+}
+.tableCollapse > h2:hover{
+  color:#f42f2c;
+} 
+.tableCollapse > h2 > span {
+  cursor: pointer;
+}
+
+
+
+.tableCollapse > div {
+  padding: 10px;
+  display: none;
+}
+
+
+#mines{
+  display: none;
+}
