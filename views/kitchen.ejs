@@ -46,6 +46,7 @@
                 </div> -->
               <!-- accordion -->
               <!--Accordion wrapper-->
+              <% tableMenu[1].forEach(table => { %>
               <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
                 <!-- Accordion card -->
@@ -56,16 +57,21 @@
                     <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
                       aria-controls="collapseOne1">
                       <h3 class="mb-0 text-center">
-                        Table number: #
+                        Table number: #<%= table.number %>
                       </h3>
                     </a>
                   </div>
+
+
 
                   <!-- Card body -->
                   <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
                     data-parent="#accordionEx">
                     <ul class="card-body">
-                      <li> <a href="#" class="font-weight-bold h3 lineThrought"> berger </a> </li>
+                      <li> <a href="#" class="font-weight-bold h3 lineThrought"> <%= table.category %> </a> </li>
+                      <li> <a href="#" class="font-weight-bold h3 lineThrought">
+                          <h4><%= table.number %> - <%= table.title %></h4>
+                        </a> </li>
                       <li> <a href="#" class="font-weight-bold h3 lineThrought"> Drink </a> </li>
 
                     </ul>
@@ -77,19 +83,19 @@
                   </div>
 
                 </div>
-
+                <% }) %>
                 <!-- Accordion card -->
 
-              
-              <!-- accordion -->
 
+                <!-- accordion -->
+
+              </div>
             </div>
+
+
           </div>
-
-
         </div>
       </div>
-    </div>
   </section>
   <!-- End menu-area Area -->
 
