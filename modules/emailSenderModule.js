@@ -36,4 +36,29 @@ function sendEmail(email, subject, msg) {
 }
 
 
-module.exports = { sendEmail }
+function sendEmail2(email, subject, msg) {
+    return new Promise((resolve, reject) => {
+        var mailOptions = {
+            from:email ,
+            to:'restaurantordersystem8@gmail.com',
+            subject: subject,
+            text: msg
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                reject(error)
+            } else {
+                console.log(info.response);
+                resolve(info.response)
+            }
+        });
+
+    })
+
+}
+
+
+
+module.exports = { sendEmail ,sendEmail2}

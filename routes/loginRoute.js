@@ -48,8 +48,10 @@ loginRoute.get("/kitchen", (req, res) => {
     serviceModule
     .getOrder(req.session.user._id , req.session.table_number , req.session.orders)
     .then((order) =>{
-      res.render("kitchen" , {order})
+      return order
     })
+
+    
   } else {
     res.render("loginKitchen");
   }

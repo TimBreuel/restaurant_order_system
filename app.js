@@ -8,6 +8,7 @@ const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
 const adminModules = require("./modules/adminModule");
+const emailSender = require("./modules/emailSenderModule")
 const fs = require("fs");
 const session = require("express-session");
 //creat session object options
@@ -93,6 +94,40 @@ app.get("/verify/:id", (req, res) => {
     res.send("error");
   }
 });
+
+
+
+////////////////////////////////
+//emailSender
+app.get('/contact', (req, res) => {
+  res.render('contact',{sent:1})   
+}); 
+
+
+app.post('/contact', (req, res) => {
+  console.log(req.body)
+  const {name,email,subject,message} = req.body
+
+  if (name !="" && name.length < 100 ) {
+        emailSender.sendEmail2(name ,email , subject , message ,(ok)=>{
+    if (ok) {
+ 
+      res.render('contact',{sent:2})  //!
+    }else{
+    
+     res.render('contact' , {sent:3})  //!
+
+    }
+     
+  });
+  }
+
+
+
+});
+
+
+
 
 /////////////
 //MENU ROUTE
