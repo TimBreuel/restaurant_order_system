@@ -48,20 +48,21 @@
               <!-- accordion -->
               <!--Accordion wrapper-->
         
-              <% tableMenu[1].forEach(table => { %>
+               <% order.forEach(meal => { %>
                 <div class="tableCollapse ">
-                  <h2 class="text-center"><span>+</span> Table number:<%= table.number %></h2>
+                  <h2 class="text-center"><span>+</span> Table number:<%= meal.table_number %></h2>
                   <div>
+
                     <ul class="card-body">
-                    
+                   
                       <li> <a href="#" class="font-weight-bold h3 lineThrought">
-                          <h4><%= table.number %> - <%= table.title %></h4>
+                          <h4><%= meal.number %> - <%= meal.title %></h4>
                         </a> </li>
                   
 
                     </ul>
                     <div style="display: flex; justify-content:center;">
-                     <a href="#" mealid="<%= table.id%>" class="DeletMealBtn w-100"> <button mealid="<%= table.id%>"  style="width: 100%" class="btn btn-small bg-danger text-white tableResetBtn " >
+                     <a href="#" mealid="<%= meal.id%>" class="DeletMealBtn w-100"> <button style="width: 100%" class="btn btn-small bg-danger text-white tableResetBtn " >
                         Done
                       </button>
                     </a>

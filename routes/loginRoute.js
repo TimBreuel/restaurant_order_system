@@ -45,25 +45,11 @@ loginRoute.post("/", (req, res) => {
 //GET LOGIN/KITCHEN ROUTE
 loginRoute.get("/kitchen", (req, res) => {
   if (req.session.user) {
-    const tableNummer = serviceModule
-      .getTable(req.session.user._id, req.session.table_number)
-      .then((table) => {
-        return table;
-      })
-      .catch((err) => console.log(err));
-
-    const promisemeals = adminModule
-      .getAllMeals(req.session.user._id)
-      .then((meals) => {
-        return meals;
-      })
-      .catch((err) => console.log(err));
-
-    Promise.all([tableNummer, promisemeals])
-      .then((tableMenu) => {
-        res.render("kitchen", { tableMenu });
-      })
-      .catch((err) => console.log(err));
+    serviceModule
+    .getOrder(req.session.user._id , req.session.table_number , req.session.orders)
+    .then((order) =>{
+      res.render("kitchen" , {order})
+    })
   } else {
     res.render("loginKitchen");
   }
@@ -79,9 +65,9 @@ loginRoute.post("/kitchen", (req, res) => {
       .checkUser(email.trim(), password)
       .then((user) => {
         req.session.user = user;
+        
         res.json(1);
-        // res.render('kitchen')
-        //res.render("login")
+      
       })
       .catch((error) => {
         if (error == 3) {
@@ -94,6 +80,9 @@ loginRoute.post("/kitchen", (req, res) => {
     res.json(2);
   }
 });
+
+
+
 
 /////////////////////
 //GET LOGIN/BAR ROUTE

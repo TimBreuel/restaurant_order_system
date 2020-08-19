@@ -128,6 +128,23 @@ const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
   });
 };
 
+
+
+const getOrder = (id, tableNumber , meals) => {
+  return new Promise((resolve, reject) => {
+    connect().then(() => {
+      KITCHENSCHEMA.find({ restaurantId: id, tableId: tableNumber ,orders:meals})
+        .then((table) => {
+          table.orders
+          resolve(table)
+        })
+        .catch((err) => reject(err));
+    });
+  });
+};
+
+
+
 module.exports = {
   addTables,
   getAllTables,
@@ -137,4 +154,5 @@ module.exports = {
   setTableOrders,
   setOrderToKitchen,
   resetTableOrder,
+  getOrder
 };
