@@ -12,7 +12,7 @@
       <div class="container">
         <div class="row fullscreen align-items-center justify-content-between">
           <div class="col-lg-12 banner-content">
-            <h6 class="text-white">Wide Options of Choice</h6>
+            <h6 class="text-white"></h6>
             <h1 class="text-white">Delicious Recipes</h1>
             <p class="text-white">
               inappropriate behavior is often laughed off as “boys will be
@@ -55,8 +55,11 @@
         <div class="row d-flex justify-content-center">
           <div class="menu-content pb-70 col-lg-8">
             <div class="title text-center">
-              <h1 class="mb-10">What kind of Foods we serve for you</h1>
-              <p>Who are in extremely love with eco friendly system.</p>
+              <h1 class="mb-10">This is how your menu could look like</h1>
+              <p>
+                Who are is interestestet in our system can register and take a
+                look
+              </p>
             </div>
           </div>
         </div>
@@ -150,7 +153,6 @@
     </section>
     <!-- End menu-area Area -->
 
-
     <!-- Start reservation Area -->
     <section class="reservation-area section-gap relative">
       <div class="overlay overlay-bg"></div>
@@ -158,7 +160,8 @@
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 reservation-left">
             <h1 class="text-white">
-              Reserve Your Seats to Confirm if You Come with Your Family
+              Register your restaurant to our sytem and see how amazing it is.
+              :)
             </h1>
             <p class="text-white pt-20">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -172,46 +175,60 @@
               <input
                 type="text"
                 class="form-control"
-                name="name"
-                placeholder="Your Name"
+                id="registerRestaurantName"
+                name="YourRestaurantName"
+                placeholder="Your Restaurant Name"
                 onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Your Name'"
+                onblur="this.placeholder = 'Your Restaurant Name'"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="registerFirstName"
+                name="FirstName"
+                placeholder="First Name"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'First Name'"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="registerLastName"
+                name="LastName"
+                placeholder="Last Name"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Last Name'"
               />
               <input
                 type="email"
                 class="form-control"
                 name="email"
+                id="registerEmail"
                 placeholder="Your Email Address"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Your Email Address'"
               />
               <input
-                type="text"
+                type="password"
                 class="form-control"
-                name="phone"
-                placeholder="Phone Number"
+                name="password"
+                id="registerPassword"
+                placeholder="Password"
                 onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Phone Number'"
+                onblur="this.placeholder = 'Password'"
               />
               <input
-                type="text"
-                class="form-control date-picker"
-                name="date"
-                placeholder="Select Date & time"
+                type="password"
+                class="form-control"
+                name="rePassword"
+                id="registerRePassword"
+                placeholder="Repeat Password"
                 onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Select Date & time'"
+                onblur="this.placeholder = 'Repeat Password'"
               />
-              <div class="form-select" id="service-select">
-                <select>
-                  <option data-display="">Select Event</option>
-                  <option value="1">Event One</option>
-                  <option value="2">Event Two</option>
-                  <option value="3">Event Three</option>
-                  <option value="4">Event Four</option>
-                </select>
-              </div>
-              <button class="primary-btn text-uppercase mt-20">
-                Make Reservation
+
+              <button class="primary-btn text-uppercase mt-20" id="registerBtn">
+                Register
               </button>
             </form>
           </div>
@@ -220,15 +237,16 @@
     </section>
     <!-- End reservation Area -->
 
-
     <!-- Start gallery-area Area -->
     <section class="gallery-area section-gap" id="gallery">
       <div class="container">
         <div class="row d-flex justify-content-center">
           <div class="menu-content pb-70 col-lg-8">
             <div class="title text-center">
-              <h1 class="mb-10">Food and Customer Gallery</h1>
-              <p>Who are in extremely love with eco friendly system.</p>
+              <h1 class="mb-10">Food and Customer Gallery coming soon</h1>
+              <p>
+                We are working on this part to make your restsurant more better
+              </p>
             </div>
           </div>
         </div>
@@ -278,175 +296,110 @@
         </div>
       </div>
     </section>
-    <!-- End gallery-area Area -->
-
-    <!-- Start review Area -->
-    <section class="review-area section-gap">
-      <div class="container">
-        <div class="row">
-          <div class="active-review-carusel">
-            <div class="single-review">
-              <img src="/img/user.png" alt="" />
-              <h4>Hulda Sutton</h4>
-              <div class="star">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-              </div>
-              <p>
-                “Accessories Here you can find the best computer accessory for
-                your laptop, monitor, printer, scanner, speaker. Here you can
-                find the best computer accessory for your laptop, monitor,
-                printer, scanner, speaker.”
-              </p>
-            </div>
-            <div class="single-review">
-              <img src="/img/user.png" alt="" />
-              <h4>Hulda Sutton</h4>
-              <div class="star">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-              </div>
-              <p>
-                “Accessories Here you can find the best computer accessory for
-                your laptop, monitor, printer, scanner, speaker. Here you can
-                find the best computer accessory for your laptop, monitor,
-                printer, scanner, speaker.”
-              </p>
-            </div>
-            <div class="single-review">
-              <img src="/img/user.png" alt="" />
-              <h4>Hulda Sutton</h4>
-              <div class="star">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-              </div>
-              <p>
-                “Accessories Here you can find the best computer accessory for
-                your laptop, monitor, printer, scanner, speaker. Here you can
-                find the best computer accessory for your laptop, monitor,
-                printer, scanner, speaker.”
-              </p>
-            </div>
-            <div class="single-review">
-              <img src="/img/user.png" alt="" />
-              <h4>Hulda Sutton</h4>
-              <div class="star">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-              </div>
-              <p>
-                “Accessories Here you can find the best computer accessory for
-                your laptop, monitor, printer, scanner, speaker. Here you can
-                find the best computer accessory for your laptop, monitor,
-                printer, scanner, speaker.”
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End review Area -->
-
-    <!-- Start blog Area -->
-    <section class="blog-area section-gap" id="blog">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-70 col-lg-8">
-            <div class="title text-center">
-              <h1 class="mb-10">Latest From Our Blog</h1>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6 single-blog">
-            <div class="thumb">
-              <img class="img-fluid" src="/img/b1.jpg" alt="" />
-            </div>
-            <p class="date">10 Jan 2018</p>
-            <a href="/blog-single.html"
-              ><h4>Cooking Perfect Fried Rice in minutes</h4></a
-            >
-            <p>
-              inappropriate behavior ipsum dolor sit amet, consectetur.
-            </p>
-            <div class="meta-bottom d-flex justify-content-between">
-              <p><span class="lnr lnr-heart"></span> 15 Likes</p>
-              <p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 single-blog">
-            <div class="thumb">
-              <img class="img-fluid" src="/img/b2.jpg" alt="" />
-            </div>
-            <p class="date">10 Jan 2018</p>
-            <a href="/blog-single.html"
-              ><h4>Secret of making Heart Shaped eggs</h4></a
-            >
-            <p>
-              inappropriate behavior ipsum dolor sit amet, consectetur.
-            </p>
-            <div class="meta-bottom d-flex justify-content-between">
-              <p><span class="lnr lnr-heart"></span> 15 Likes</p>
-              <p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 single-blog">
-            <div class="thumb">
-              <img class="img-fluid" src="/img/b3.jpg" alt="" />
-            </div>
-            <p class="date">10 Jan 2018</p>
-            <a href="/blog-single.html"
-              ><h4>How to check steak if it is tender or not</h4></a
-            >
-            <p>
-              inappropriate behavior ipsum dolor sit amet, consectetur.
-            </p>
-            <div class="meta-bottom d-flex justify-content-between">
-              <p><span class="lnr lnr-heart"></span> 15 Likes</p>
-              <p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 single-blog">
-            <div class="thumb">
-              <img class="img-fluid" src="/img/b4.jpg" alt="" />
-            </div>
-            <p class="date">10 Jan 2018</p>
-            <a href="/blog-single.html"
-              ><h4>Seaseme and black seed Flavored Bun Rocks</h4></a
-            >
-            <p>
-              inappropriate behavior ipsum dolor sit amet, consectetur.
-            </p>
-            <div class="meta-bottom d-flex justify-content-between">
-              <p><span class="lnr lnr-heart"></span> 15 Likes</p>
-              <p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End blog Area -->
 
     <!-- start footer Area -->
     <%- include('partials/footer') %>
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
+    <script>
+      //GET THE BUTTON AND MAKE VALIDATION
+      const registerBtn = document.querySelector("#registerBtn");
+      registerBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const registerRestaurantName = document.querySelector(
+          "#registerRestaurantName"
+        );
+        const registerFirstName = document.querySelector("#registerFirstName");
+        const registerLastName = document.querySelector("#registerLastName");
+        const registerEmail = document.querySelector("#registerEmail");
+        const registerPassword = document.querySelector("#registerPassword");
+        const registerRePassword = document.querySelector(
+          "#registerRePassword"
+        );
+        const registerHeadline = document.querySelector("#registerHeadline");
+        const registerMessage = document.querySelector("#registerHeadline");
+        let isVerified = {
+          valid: true,
+          msg: "",
+        };
+
+        if (!registerRestaurantName.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out restaurant name<br>";
+        }
+        if (!registerFirstName.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out frist name<br>";
+        }
+        if (!registerLastName.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out last name<br>";
+        }
+        if (!registerEmail.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out email<br>";
+        }
+        if (!registerPassword.value.trim()) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (!registerPassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (!registerRePassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Please feel out password<br>";
+        }
+        if (registerPassword.value !== registerRePassword.value) {
+          isVerified.valid = false;
+          isVerified.msg += "Password are not match<br>";
+        }
+        if (!isVerified.valid) {
+          errorMessage(isVerified.msg);
+        } else {
+          const data = {
+            restaurantName: registerRestaurantName.value,
+            firstName: registerFirstName.value,
+            lastName: registerLastName.value,
+            email: registerEmail.value,
+            password: registerPassword.value,
+          };
+          postData("/register", data).then((data) => {
+            console.log(data);
+          });
+        }
+      });
+
+      //////////////////////////
+      //FETCH THE REGISTER DATA
+      async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
+
+      ///////////////////
+      //ERROR MESSGAE fn
+      function errorMessage(message) {
+        const registerHeadline = document.querySelector("#registerHeadline");
+        const registerMessage = document.querySelector("#registerMessage");
+        registerHeadline.innerHTML =
+          "Something goes wrong check the text below";
+        registerMessage.innerHTML = message;
+        setTimeout(() => {
+          registerHeadline.innerHTML =
+            "Register your restaurant to our sytem and see how amazing it is. :)";
+          registerMessage.innerHTML =
+            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam. Quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea.";
+        }, 6000);
+      }
+    </script>
   </body>
 </html>
