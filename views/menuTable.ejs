@@ -222,6 +222,7 @@
           tableId: tableIdLogout.getAttribute("tableid"),
           order: orderListArr,
         };
+        console.log(data);
         postDataTable("/login/table/sendOrder", data).then((response) => {
           if (response === 1) {
             ulCartList.innerHTML = "";
