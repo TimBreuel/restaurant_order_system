@@ -10,7 +10,7 @@
     <!-- Start reservation Area -->
     <section
       class="reservation-area section-gap relative costumerLoginKitchen"
-      style="padding-top: 300px;"
+      style="padding-top: 300px; height: 100vh;"
     >
       <div class="overlay overlay-bg"></div>
       <div class="container">
@@ -99,13 +99,16 @@
             email: loginKitchenEmail.value,
             password: loginKitchenPassword.value,
           };
-          postData("/login/kitchen", data).then((data) => {
-            //console.log(data);
-            if (data === 1) {
-              window.location.href = "/login/kitchen";
-            }
-            
-          }).catch(err =>{console.log(err);})
+          postData("/login/kitchen", data)
+            .then((data) => {
+              //console.log(data);
+              if (data === 1) {
+                window.location.href = "/login/kitchen";
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       });
 
