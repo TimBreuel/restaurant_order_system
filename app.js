@@ -100,7 +100,7 @@ app.get("/verify/:id", (req, res) => {
 ////////////////////////////////
 //emailSender
 app.get('/contact', (req, res) => {
-  res.render('contact',{sent:1})   
+  res.render('contact')   
 }); 
 
 
@@ -109,17 +109,11 @@ app.post('/contact', (req, res) => {
   const {name,email,subject,message} = req.body
 
   if (name !="" && name.length < 100 ) {
-        emailSender.sendEmail2(name ,email , subject , message ,(ok)=>{
-    if (ok) {
- 
-      res.render('contact',{sent:2})  //!
-    }else{
-    
-     res.render('contact' , {sent:3})  //!
-
-    }
-     
-  });
+        emailSender.sendEmail2(name ,email , subject , message ).then(()=>{
+          res.json(1)
+        }).catch(err=>{
+          res.json(2)
+        })
   }
 
 
