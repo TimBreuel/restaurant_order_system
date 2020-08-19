@@ -81,9 +81,9 @@ loginRoute.post("/kitchen", (req, res) => {
       .checkUser(email.trim(), password)
       .then((user) => {
         req.session.user = user;
+        req.session.table_number = table_number
         res.json(1);
-        // res.render('kitchen')
-        //res.render("login")
+      
       })
       .catch((error) => {
         if (error == 3) {
