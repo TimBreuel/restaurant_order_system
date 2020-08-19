@@ -1,6 +1,7 @@
 const connect = require("../models/connectionFn");
 const TABLESCHEMA = require("../models/tablesSchema");
 const KITCHENSCHEMA = require("../models/kitchenSchema");
+const MENUSCHEMA = require("../models/menuSchema");
 
 const addTables = (restaurantId, number) => {
   return new Promise((resolve, reject) => {
@@ -128,22 +129,36 @@ const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
   });
 };
 
-
-
-const getOrder = (id, tableNumber , meals) => {
+/////////////////////////////////
+//GET ALL ORDERS FOR THE KITCHEN
+const getOrder = (id) => {
   return new Promise((resolve, reject) => {
     connect().then(() => {
-      KITCHENSCHEMA.find({ restaurantId: id, tableId: tableNumber ,orders:meals})
-        .then((table) => {
-          table.orders
-          resolve(table)
+      KITCHENSCHEMA.find({ restaurantId: id })
+        .then((ordersArr) => {
+          const orderObjFinalReturn = [];
+          ordersArr.forEach((orderObj) => {
+            const promisesArr = [];
+            orderObj.orders.forEach((orderId) => {
+              promisesArr.push(MENUSCHEMA.findById({ _id: orderId }));
+            });
+            Promise.all(promisesArr)
+              .then((newOrders) => {
+                orderObj.orders = newOrders;
+                // console.log(ordersArr);
+                orderObjFinalReturn.push(ordersArr);
+              })
+              .catch((errs) => {
+                reject(errs);
+              });
+          });
+          console.log(orderObjFinalReturn);
+          resolve(orderObjFinalReturn);
         })
         .catch((err) => reject(err));
     });
   });
 };
-
-
 
 module.exports = {
   addTables,
@@ -154,5 +169,5 @@ module.exports = {
   setTableOrders,
   setOrderToKitchen,
   resetTableOrder,
-  getOrder
+  getOrder,
 };

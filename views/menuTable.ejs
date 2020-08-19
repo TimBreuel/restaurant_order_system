@@ -78,6 +78,7 @@
             href="/login/logout"
             restaurantid="<%= tableMenu[0].restaurantId %>"
             tableid="<%= tableMenu[0]._id %>"
+            tablenumber="<%= tableMenu[0].table_number %>"
             >Table: #<%= tableMenu[0].table_number %> Logout</a
           >
         </div>
@@ -220,6 +221,7 @@
         let data = {
           restaurantId: tableIdLogout.getAttribute("restaurantId"),
           tableId: tableIdLogout.getAttribute("tableid"),
+          tableNumber: tableIdLogout.getAttribute("tablenumber"),
           order: orderListArr,
         };
         console.log(data);
