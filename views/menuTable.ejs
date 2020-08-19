@@ -47,7 +47,7 @@
             </svg>
           </span>
         </button>
-        
+
         <button
           class="navbar-toggler"
           type="button"
@@ -84,13 +84,17 @@
       </nav>
     </div>
     <div
-      class="message text-center menu-area section-gap"
+      class="message text-center menu-area section-gap d-none"
       style="padding: 50px 0 30px 0; font-size: 28px;"
     >
       We have a problem
     </div>
     <!-- Start menu-area Area -->
-    <section class="menu-area section-gap" id="menu" style="padding-top: 70px;">
+    <section
+      class="menu-area section-gap"
+      id="menu"
+      style="padding-top: 70px; height: 100vh;"
+    >
       <div class="container">
         <ul class="filter-wrap filters col-lg-12 no-padding">
           <li class="active" data-filter="*">All Menu</li>
@@ -181,7 +185,7 @@
       const tableIdLogout = document.querySelector(".tableIdLogout");
       //////////////////////
       //UI SELECTORS GLOBAL
-      const ulCartList = document.querySelector(".ul-cart-list");
+      let ulCartList = document.querySelector(".ul-cart-list");
       /////////////////////////
       //ADD A MEAL TO THE CART
       const addToCardBtn = document.querySelectorAll(".addToCardBtn");
@@ -206,10 +210,10 @@
       //SEND ORDER TO THE DATABASE
       const sendOrder = document.querySelector("#sendOrder");
       sendOrder.addEventListener("click", (e) => {
-        const orderListItem = document.querySelectorAll(".orderListItem");
+        let orderListItem = document.querySelectorAll(".orderListItem");
         let orderListArr = [];
         orderListItem.forEach((orderItem) => {
-          console.log(orderItem.children[0].getAttribute("mealId"));
+          // console.log(orderItem.children[0].getAttribute("mealId"));
           orderListArr.push(orderItem.children[0].getAttribute("mealId"));
         });
 
@@ -220,11 +224,13 @@
         };
         postDataTable("/login/table/sendOrder", data).then((response) => {
           if (response === 1) {
+            ulCartList.innerHTML = "";
             infoMessage.innerText = "Your order have been send to the Kitchen";
             infoMessage.classList.remove("d-none");
             infoMessage.classList.add("text-success");
             setTimeout(() => {
               infoMessage.classList.add("d-none");
+              infoMessage.classList.remove("text-success");
             }, 5000);
           } else {
             infoMessage.innerText = "Something goes wrong";
@@ -232,6 +238,7 @@
             infoMessage.classList.add("text-danger");
             setTimeout(() => {
               infoMessage.classList.add("d-none");
+              infoMessage.classList.remove("text-danger");
             }, 5000);
           }
         });
@@ -254,6 +261,7 @@
               infoMessage.classList.add("text-warning");
               setTimeout(() => {
                 infoMessage.classList.add("d-none");
+                infoMessage.classList.remove("text-warning");
               }, 5000);
             } else {
               infoMessage.innerText = "Something goes wrong";
@@ -261,6 +269,7 @@
               infoMessage.classList.add("text-danger");
               setTimeout(() => {
                 infoMessage.classList.add("d-none");
+                infoMessage.classList.remove("text-danger");
               }, 5000);
             }
           }
@@ -285,6 +294,7 @@
               infoMessage.classList.add("text-primary");
               setTimeout(() => {
                 infoMessage.classList.add("d-none");
+                infoMessage.classList.remove("text-primary");
               }, 5000);
             } else {
               infoMessage.innerText = "Something goes wrong";
@@ -292,6 +302,7 @@
               infoMessage.classList.add("text-danger");
               setTimeout(() => {
                 infoMessage.classList.add("d-none");
+                infoMessage.classList.remove("text-danger");
               }, 5000);
             }
           }
