@@ -85,7 +85,7 @@
 
      
 
-            <button class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5" id="editMealBtn"  
+            <button class="btn btn-block bg-dark text-uppercase mt-20 mb-5 text-withe" id="editMealBtn"  
               style="border-radius: 3px;">
               EDIT MEAL
             </button>
@@ -175,10 +175,10 @@
             })
               .then((response) => {
                 if (response.status === 200) {
-                  successOrNot("SUCCESFULL ADDED", "#00AB66 !important");
+                  successOrNot("SUCCESFULL EDIT", "bg-success");
 
                 } else {
-                  successOrNot("SOMETHING GOES WRONG", "#EA2626 !important");
+                  successOrNot("SOMETHING GOES WRONG", "bg-danger");
                 }
               })
               .catch((err) => console.log(err));
@@ -204,11 +204,12 @@
   
        function successOrNot(msg, color) {
           editMealBtn.classList.remove("bg-dark");
-          editMealBtn.style.backgroundColor = color;
+          editMealBtn.classList.add(color)
           editMealBtn.innerText = msg;
           setTimeout(() => {
             editMealBtn.classList.add("bg-dark");
-            editMealBtn.innerText = "ADD MEAL";
+            editMealBtn.classList.remove(color)
+            editMealBtn.innerText = "EDIT MEAL";
           }, 2000);
         } 
       </script>

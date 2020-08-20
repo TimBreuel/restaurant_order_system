@@ -4,7 +4,7 @@
     <%- include('partials/header') %>
   </head>
 
-  <body>
+  <body onload="pageloadEvery(30000)">
     <div
       class="bg-dark"
       style="
@@ -197,6 +197,9 @@
           body: JSON.stringify(data),
         });
         return response.json();
+      }
+      function pageloadEvery(t) {
+        setTimeout("location.reload(true)", t);
       }
     </script>
 
