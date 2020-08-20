@@ -54,12 +54,13 @@
                     <div style="display: flex; justify-content: center;">
                       <a
                         href="#"
-                        mealid="<%= order._id%>"
+                        menuid="<%= order._id%>"
                         class="DeletMealBtn w-100"
                       >
                         <button
                           style="width: 100%;"
                           class="btn btn-small bg-danger text-white tableResetBtn"
+                         
                         >
                           Done
                         </button>
@@ -143,7 +144,7 @@
         });
       });
 
-      let mealid;
+      let menuid;
 
       document.querySelectorAll(".DeletMealBtn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
@@ -153,7 +154,7 @@
             "Delete",
             "are you sure you want to delet, no way to bring it back ..."
           );
-          mealid = btn.getAttribute("mealid");
+          menuid = btn.getAttribute("menuid");
         });
       });
 
@@ -164,13 +165,15 @@
           e.preventDefault();
           // get parentElement to remove it
           document
-            .querySelector('a[mealid="' + mealid + '"]')
+            .querySelector('a[menuid="' + menuid + '"]')
             .parentElement.parentElement.parentElement.remove();
           data = {
             //   it muss be as a object
-            mealid: mealid,
+            menuid: menuid,
           };
-          postDtata("/admin/deleteMeal", data)
+          console.log(data);
+
+          postDtata("/admin/deleteMealKitchen", data)
             .then((data) => {
               //hide the delet confirmation modal
               $("#deletConfirmModal").modal("hide");

@@ -79,6 +79,7 @@ loginRoute.post("/kitchen", (req, res) => {
   }
 });
 
+
 /////////////////////
 //GET LOGIN/BAR ROUTE
 loginRoute.get("/bar", (req, res) => {

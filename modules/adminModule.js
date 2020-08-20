@@ -1,5 +1,6 @@
 const connect = require("../models/connectionFn");
 const MENUSCHEMA = require("../models/menuSchema");
+const KITCHENSCHEMA = require("../models/kitchenSchema")
 const fs = require("fs");
 
 function addMeal(
@@ -136,7 +137,7 @@ function updateMeal(
           }
         )
           .then((result) => {
-            if(newImg){
+            if (newImg) {
               newImg.mv('./public' + result.img)
             }
             resolve();
@@ -153,26 +154,23 @@ function updateMeal(
 
 
 
-function dltMeal(mealid ) {
+function dltMeal(mealid) {
   return new Promise((resolve, reject) => {
-
     getMeal(mealid).then((meal) => {
-      
-        if (fs.existsSync('./public' + meal.img) ) {
+      if (fs.existsSync('./public' + meal.img)) {
         fs.unlinkSync('./public' + meal.img)
       }
       else {
         reject(new Error('haking try'))
-    }
-   
+      }
       MENUSCHEMA.deleteOne({ _id: mealid }).then(() => {
-                  resolve()
-              }).catch(error => {
-                  reject(error)
-              })       
+        resolve()
       }).catch(error => {
-          reject(error)
+        reject(error)
       })
+    }).catch(error => {
+      reject(error)
+    })
 
 
 
@@ -180,5 +178,26 @@ function dltMeal(mealid ) {
 }
 
 
+function dltMealkitchen(menuid) {
+  return new Promise((resolve, reject) => {
 
-module.exports = { addMeal, getAllMeals, updateMeal, getMeal , dltMeal };
+    connect().then(()=>{
+           KITCHENSCHEMA.deleteOne({ _id: menuid }).then(() => {
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    }).catch(err =>{
+      reject(error)
+
+    })
+  })
+}
+
+
+
+
+
+
+
+module.exports = { addMeal, getAllMeals, updateMeal, getMeal, dltMeal, dltMealkitchen };
