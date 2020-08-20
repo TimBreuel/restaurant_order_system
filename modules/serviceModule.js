@@ -95,7 +95,14 @@ const getTable = (id, tableNumber) => {
   return new Promise((resolve, reject) => {
     connect().then(() => {
       TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
-        .then((table) => resolve(table))
+        .then((table) => {
+          console.log(table);
+          if (!table === null) {
+            resolve(table);
+          } else {
+            resolve("not_exist");
+          }
+        })
         .catch((err) => reject(err));
     });
   });
