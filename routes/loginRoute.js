@@ -58,13 +58,15 @@ loginRoute.get("/kitchen", (req, res) => {
 //POST LOGIN/KITCHEN ROUTE
 loginRoute.post("/kitchen", (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   if (email && password) {
     loginDataModules
       .checkUser(email.trim(), password)
       .then((user) => {
         req.session.user = user;
-
+        
         res.json(1);
+      
       })
       .catch((error) => {
         if (error == 3) {
@@ -77,6 +79,9 @@ loginRoute.post("/kitchen", (req, res) => {
     res.json(2);
   }
 });
+
+
+
 
 /////////////////////
 //GET LOGIN/BAR ROUTE
@@ -258,7 +263,10 @@ loginRoute.post("/table/sendOrder", (req, res) => {
     .then(() => {
       return;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.render('404')
+    //  console.log(err)
+    });
   const promiseSetKitchen = serviceModule
     .setOrderToKitchen(restaurantId, tableId, order, tableNumber)
     .then(() => {

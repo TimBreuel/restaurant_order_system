@@ -149,7 +149,7 @@ const getOrder = (id) => {
                 if (menu._id == orderId) {
                   newOrdersArr.push(menu);
                 }
-              });
+              }); 
             });
             orderObj.orders = newOrdersArr;
             newOrdersArr = [];
