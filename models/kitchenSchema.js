@@ -7,6 +7,7 @@ const kitchenSchema = new Schema({
   restaurantId: {
     type: String,
     max: 200,
+    required: true,
   },
   tableId: {
     type: String,
@@ -14,6 +15,9 @@ const kitchenSchema = new Schema({
   },
   orders: {
     type: Array,
+  },
+  tableNumber: {
+    type: String,
   },
 });
 
