@@ -111,7 +111,7 @@ const resetTableOrder = (tableId) => {
   });
 };
 
-const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
+const setOrderToKitchen = (restaurantId, tableId, orderArr, tableNumber) => {
   return new Promise((resolve, reject) => {
     connect()
       .then(() => {
@@ -119,6 +119,7 @@ const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
           restaurantId: restaurantId,
           tableId: tableId,
           orders: orderArr,
+          tableNumber: tableNumber,
         });
         newOrder
           .save()
@@ -134,27 +135,6 @@ const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
 const getOrder = (id) => {
   return new Promise((resolve, reject) => {
     connect().then(() => {
-      // KITCHENSCHEMA.find({ restaurantId: id })
-      //   .then((ordersArr) => {
-
-      //     ordersArr.forEach((orderObj) => {
-      //       const promisesArr = [];
-      //       orderObj.orders.forEach((orderId) => {
-      //         promisesArr.push(MENUSCHEMA.findById({ _id: orderId }));
-      //       });
-      //       Promise.all(promisesArr)
-      //         .then((newOrders) => {
-      //           // console.log(newOrders);
-      //           orderObj.orders = newOrders;
-      //           // console.log(ordersArr);
-      //           //resolve(ordersArr);
-      //         })
-      //         .catch((errs) => {
-      //           reject(errs);
-      //         });
-      //     });
-      //   })
-      //   .catch((err) => reject(err));
       const promisesArr1 = [];
       promisesArr1.push(KITCHENSCHEMA.find({ restaurantId: id }));
       promisesArr1.push(MENUSCHEMA.find({ restaurantId: id }));
@@ -165,8 +145,8 @@ const getOrder = (id) => {
           let newOrdersArr = [];
           ordersArr.forEach((orderObj) => {
             orderObj.orders.forEach((orderId) => {
-            menuArr.forEach((menu) => {
-                if (menu._id === orderId) {
+              menuArr.forEach((menu) => {
+                if (menu._id == orderId) {
                   newOrdersArr.push(menu);
                 }
               }); 
@@ -174,8 +154,7 @@ const getOrder = (id) => {
             orderObj.orders = newOrdersArr;
             newOrdersArr = [];
           });
-         // console.log(err);
-          //console.log("ORDER ARRAY", ordersArr);
+          resolve(ordersArr);
         })
         .catch((errors) => {
           reject(errors);
