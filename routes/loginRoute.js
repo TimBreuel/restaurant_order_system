@@ -102,7 +102,7 @@ loginRoute.get("/restaurant", (req, res) => {
 //POST RESTAURANT ROUTE
 loginRoute.post("/restaurant", (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
 });
 
 /////////////////////////
@@ -114,7 +114,10 @@ loginRoute.get("/service", (req, res) => {
       .then((tables) => {
         res.render("service", { tables });
       })
-      .catch((err) => console.log("Error post", err));
+      //.catch((err) => console.log("Error post", err));
+      .catch((err) => {
+        res.render('404')
+      });
   } else {
     res.render("loginService");
   }
@@ -153,7 +156,10 @@ loginRoute.post("/service/tableService", (req, res) => {
     .then(() => {
       res.json(1);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.render('404')
+    //  console.log(err)
+    });
 });
 
 /////////////////////
@@ -164,7 +170,10 @@ loginRoute.post("/service/tablePayment", (req, res) => {
     .then(() => {
       res.json(1);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.render('404')
+    //  console.log(err)
+    });
 });
 
 ///////////////////////////////
@@ -173,7 +182,10 @@ loginRoute.post("/service/resetTable", (req, res) => {
   serviceModule
     .resetTableOrder(req.body.tableId)
     .then(() => res.json(1))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.render('404')
+    //  console.log(err)
+    });
 });
 
 //////////////////
@@ -186,19 +198,28 @@ loginRoute.get("/table", (req, res) => {
       .then((table) => {
         return table;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        res.render('404')
+      //  console.log(err)
+      });
 
     const promiseMenu = adminModule
       .getAllMeals(req.session.user._id)
       .then((meals) => {
         return meals;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        res.render('404')
+      //  console.log(err)
+      });
     Promise.all([promiseTable, promiseMenu])
       .then((tableMenu) => {
         res.render("menuTable", { tableMenu });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        res.render('404')
+      //  console.log(err)
+      });
   } else {
     res.render("loginTable");
   }
@@ -244,7 +265,10 @@ loginRoute.post("/table/sendOrder", (req, res) => {
     .then(() => {
       return;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.render('404')
+    //  console.log(err)
+    });
   Promise.all([promiseSetTable, promiseSetKitchen])
     .then(() => res.json(1))
     .catch(() => res.json(2));

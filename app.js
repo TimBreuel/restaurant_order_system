@@ -7,16 +7,11 @@ const adminRoute = require("./routes/adminRoute");
 const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
-const adminModules = require("./modules/adminModule");
 const emailSender = require("./modules/emailSenderModule")
-const fs = require("fs");
 const session = require("express-session");
 //creat session object options
 const sessionOptions = {
   secret: "restaurant_order",
-  //resave: false,  for debuger
-  //saveUninitialized: true,
-  //cookie: { secure: true }
   cookie: {},
 };
 ////////////////
@@ -62,10 +57,11 @@ app.post("/register", (req, res) => {
       .registerUser(restaurantName, firstName, lastName, email, password)
       .then(() => {
         res.json(1); //user register success
-        //res.render("login")
+      
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
+        res.render('404')
         if (error == "exist") {
           res.json(3); // user exist
         } else {
@@ -91,7 +87,7 @@ app.get("/verify/:id", (req, res) => {
         res.json(2);
       });
   } else {
-    res.send("error");
+    res.render('404')
   }
 });
 
