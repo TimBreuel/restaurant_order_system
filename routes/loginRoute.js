@@ -118,10 +118,8 @@ loginRoute.get("/service", (req, res) => {
       .then((tables) => {
         res.render("service", { tables });
       })
-      //.catch((err) => console.log("Error post", err));
-      .catch((err) => {
-        res.render("404");
-      });
+     .catch((err) => console.log("Error post", err));
+
   } else {
     res.render("loginService");
   }
@@ -161,8 +159,8 @@ loginRoute.post("/service/tableService", (req, res) => {
       res.json(1);
     })
     .catch((err) => {
-      res.render("404");
-      //  console.log(err)
+    
+     console.log(err)
     });
 });
 
@@ -175,8 +173,8 @@ loginRoute.post("/service/tablePayment", (req, res) => {
       res.json(1);
     })
     .catch((err) => {
-      res.render("404");
-      //  console.log(err)
+     
+        console.log(err)
     });
 });
 
@@ -203,8 +201,8 @@ loginRoute.get("/table", (req, res) => {
         return table;
       })
       .catch((err) => {
-        res.render("404");
-        //  console.log(err)
+     
+     console.log(err)
       });
 
     const promiseMenu = adminModule
@@ -213,16 +211,16 @@ loginRoute.get("/table", (req, res) => {
         return meals;
       })
       .catch((err) => {
-        res.render("404");
-        //  console.log(err)
+
+         console.log(err)
       });
     Promise.all([promiseTable, promiseMenu])
       .then((tableMenu) => {
         res.render("menuTable", { tableMenu });
       })
       .catch((err) => {
-        res.render("404");
-        //  console.log(err)
+ 
+      console.log(err)
       });
   } else {
     res.render("loginTable");
@@ -244,17 +242,14 @@ loginRoute.post("/table", (req, res) => {
       })
       .catch((error) => {
         if (error == 3) {
-          //res.json(3);
-          res.render("404")
+          res.json(3);       
         } else {
-         // res.json(4);
-         res.render("404")
-
+          res.json(4);
         }
       });
   } else {
-  //  res.json(2);
-  res.render("404")
+   res.json(2);
+ 
 
   }
 });
