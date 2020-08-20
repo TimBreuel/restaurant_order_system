@@ -192,7 +192,7 @@ loginRoute.post("/service/resetTable", (req, res) => {
 //GET LOGIN TABLE
 loginRoute.get("/table", (req, res) => {
   // console.log(req.session.user);
-  if (req.session.user) {
+  if (req.session.user && req.session.table_number) {
     const promiseTable = serviceModule
       .getTable(req.session.user._id, req.session.table_number)
       .then((table) => {
@@ -214,7 +214,12 @@ loginRoute.get("/table", (req, res) => {
       });
     Promise.all([promiseTable, promiseMenu])
       .then((tableMenu) => {
-        res.render("menuTable", { tableMenu });
+        console.log("TABLE CHECK:", tableMenu[0]);
+        if (tableMenu[0] === "not_exist") {
+          res.render("404");
+        } else {
+          res.render("menuTable", { tableMenu });
+        }
       })
       .catch((err) => {
         res.render("404");
