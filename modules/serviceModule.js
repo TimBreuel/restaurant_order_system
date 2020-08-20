@@ -96,7 +96,7 @@ const getTable = (id, tableNumber) => {
     connect().then(() => {
       TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
         .then((table) => resolve(table))
-        .catch((err) => error);
+        .catch((err) => reject(err));
     });
   });
 };
@@ -106,7 +106,7 @@ const resetTableOrder = (tableId) => {
     connect().then(() => {
       TABLESCHEMA.findByIdAndUpdate({ _id: tableId.trim() }, { orders: [] })
         .then(() => resolve())
-        .catch((err) => err);
+        .catch((err) => reject(err));
     });
   });
 };
@@ -149,7 +149,7 @@ const getOrder = (id) => {
                 if (menu._id == orderId) {
                   newOrdersArr.push(menu);
                 }
-              }); 
+              });
             });
             orderObj.orders = newOrdersArr;
             newOrdersArr = [];
