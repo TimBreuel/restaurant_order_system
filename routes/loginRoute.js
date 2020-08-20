@@ -82,29 +82,29 @@ loginRoute.post("/kitchen", (req, res) => {
 
 /////////////////////
 //GET LOGIN/BAR ROUTE
-loginRoute.get("/bar", (req, res) => {
-  res.render("loginBar");
-});
+// loginRoute.get("/bar", (req, res) => {
+//   res.render("loginBar");
+// });
 
 /////////////////////
 //POST LOGIN/BAR ROUTE
-loginRoute.post("/bar", (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
-});
+// loginRoute.post("/bar", (req, res) => {
+//   const { email, password } = req.body;
+//   console.log(req.body);
+// });
 
 /////////////////////
 //GET LOGIN/BAR ROUTE
 loginRoute.get("/restaurant", (req, res) => {
-  res.render("loginRestaurant");
+  res.render("login");
 });
 
 /////////////////////
 //POST RESTAURANT ROUTE
-loginRoute.post("/restaurant", (req, res) => {
-  const { email, password } = req.body;
-  //console.log(req.body);
-});
+// loginRoute.post("/restaurant", (req, res) => {
+//   const { email, password } = req.body;
+//   //console.log(req.body);
+// });
 
 /////////////////////////
 //GET LOGIN/SERVICE ROUTE
@@ -191,7 +191,7 @@ loginRoute.post("/service/resetTable", (req, res) => {
 //GET LOGIN TABLE
 loginRoute.get("/table", (req, res) => {
   // console.log(req.session.user);
-  if (req.session.user) {
+  if (req.session.user && req.session.table_number) {
     const promiseTable = serviceModule
       .getTable(req.session.user._id, req.session.table_number)
       .then((table) => {
@@ -213,7 +213,12 @@ loginRoute.get("/table", (req, res) => {
       });
     Promise.all([promiseTable, promiseMenu])
       .then((tableMenu) => {
-        res.render("menuTable", { tableMenu });
+        // console.log("TABLE CHECK:", tableMenu[0]);
+        if (tableMenu[0] === "not_exist") {
+          res.render("404");
+        } else {
+          res.render("menuTable", { tableMenu });
+        }
       })
       .catch((err) => {
  

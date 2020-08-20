@@ -228,8 +228,11 @@
                 onblur="this.placeholder = 'Repeat Password'"
               />
 
-              <button class="primary-btn text-uppercase mt-20" id="registerBtn">
-                Register
+              <button
+                class="primary-btn text-uppercase mt-20"
+                id="goToRegister"
+              >
+                Go to register
               </button>
             </form>
           </div>
@@ -305,103 +308,14 @@
 
     <%- include('partials/scripts') %>
     <script>
-      //GET THE BUTTON AND MAKE VALIDATION
-      const registerBtn = document.querySelector("#registerBtn");
-      registerBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const registerRestaurantName = document.querySelector(
-          "#registerRestaurantName"
-        );
-        const registerFirstName = document.querySelector("#registerFirstName");
-        const registerLastName = document.querySelector("#registerLastName");
-        const registerEmail = document.querySelector("#registerEmail");
-        const registerPassword = document.querySelector("#registerPassword");
-        const registerRePassword = document.querySelector(
-          "#registerRePassword"
-        );
-        const registerHeadline = document.querySelector("#registerHeadline");
-        const registerMessage = document.querySelector("#registerHeadline");
-        let isVerified = {
-          valid: true,
-          msg: "",
-        };
 
-        if (!registerRestaurantName.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out restaurant name<br>";
-        }
-        if (!registerFirstName.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out frist name<br>";
-        }
-        if (!registerLastName.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out last name<br>";
-        }
-        if (!registerEmail.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out email<br>";
-        }
-        if (!registerPassword.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
-        }
-        if (!registerPassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
-        }
-        if (!registerRePassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
-        }
-        if (registerPassword.value !== registerRePassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Password are not match<br>";
-        }
-        if (!isVerified.valid) {
-          errorMessage(isVerified.msg);
-        } else {
-          const data = {
-            restaurantName: registerRestaurantName.value,
-            firstName: registerFirstName.value,
-            lastName: registerLastName.value,
-            email: registerEmail.value,
-            password: registerPassword.value,
-          };
-          postData("/register", data).then((data) => {
-        
-          });
-        }
-      });
+      const goToRegister = document
+        .querySelector("#goToRegister")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          window.location.href = "/register";
 
-      //////////////////////////
-      //FETCH THE REGISTER DATA
-      async function postData(url = "", data = {}) {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
         });
-        return response.json();
-      }
-
-      ///////////////////
-      //ERROR MESSGAE fn
-      function errorMessage(message) {
-        const registerHeadline = document.querySelector("#registerHeadline");
-        const registerMessage = document.querySelector("#registerMessage");
-        registerHeadline.innerHTML =
-          "Something goes wrong check the text below";
-        registerMessage.innerHTML = message;
-        setTimeout(() => {
-          registerHeadline.innerHTML =
-            "Register your restaurant to our sytem and see how amazing it is. :)";
-          registerMessage.innerHTML =
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam. Quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea.";
-        }, 6000);
-      }
     </script>
   </body>
 </html>
