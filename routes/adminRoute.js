@@ -125,6 +125,20 @@ adminRoute.post("/deleteMeal", (req, res) => {
     });
 });
 
+
+adminRoute.post("/deleteMealKitchen", (req, res) => {
+  console.log(req.body.menuid);
+  
+  adminModule
+    .dltMealkitchen(req.body.menuid)
+    .then(() => {
+      res.json(1);
+    })
+    .catch((error) => {
+      res.json(2);
+    });
+});
+
 /////////////////////
 //GET ADMIN ADD MEAL
 adminRoute.get("/editMeal/:id", (req, res) => {

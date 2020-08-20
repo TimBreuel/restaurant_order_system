@@ -48,7 +48,7 @@ app.get("/register", (req, res) => {
 ////////////
 //HOME ROUTE
 app.post("/register", (req, res) => {
-  console.log(req.body);
+ // console.log(req.body);
 
   const { restaurantName, firstName, lastName, email, password } = req.body;
 
@@ -149,9 +149,11 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-app.get("/404", (req, res) => {
-  res.render("404");
+/* app.get('/404', (req, res) => {
+  res.render("404")
 });
+ */
+
 
 ///////
 //PORT

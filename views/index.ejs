@@ -308,11 +308,13 @@
 
     <%- include('partials/scripts') %>
     <script>
+
       const goToRegister = document
         .querySelector("#goToRegister")
         .addEventListener("click", (e) => {
           e.preventDefault();
           window.location.href = "/register";
+
         });
     </script>
   </body>
