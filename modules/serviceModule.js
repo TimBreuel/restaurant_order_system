@@ -74,6 +74,8 @@ const setTablePayment = (tableId, boolean) => {
   });
 };
 
+//////////////////////////////////
+//SET TABKE ORDERS TO THE KITCHEN
 const setTableOrders = (tableId, orderArr) => {
   return new Promise((resolve, reject) => {
     connect()
@@ -91,16 +93,18 @@ const setTableOrders = (tableId, orderArr) => {
   });
 };
 
+///////////////////
+//GET SINGLE TABLE
 const getTable = (id, tableNumber) => {
   return new Promise((resolve, reject) => {
     connect().then(() => {
       TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
         .then((table) => {
-          console.log(table);
-          if (!table === null) {
-            resolve(table);
-          } else {
+          // console.log("GET TABLE:", table);
+          if (table === null) {
             resolve("not_exist");
+          } else {
+            resolve(table);
           }
         })
         .catch((err) => reject(err));
