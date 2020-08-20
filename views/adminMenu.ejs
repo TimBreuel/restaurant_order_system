@@ -69,8 +69,6 @@
                       <% if (meal.number !== '') { %>
                       <h4><%= meal.number %> <%= meal.title %></h4>
                       <h4 class="price">$<%= meal.price %></h4>
-              <a href="/admin/editMeal/<%-meal.id%>" class="adminEditMenuBtn" ><input class="btn btn-success" type="button" value="EDIT"></a>
-              <a href="#" mealid="<%= meal.id%>" class="DeletMealBtn"><input class="btn btn-danger" type="button" value="DELETE"></a>
 
                       <% }else{ %>
                       <h4><%= meal.title %></h4>
@@ -81,6 +79,20 @@
                     <p>
                       <%= meal.description %>
                     </p>
+                    <a
+                      href="/admin/editMeal/<%-meal.id%>"
+                      class="adminEditMenuBtn"
+                      ><input
+                        class="btn btn-success"
+                        type="button"
+                        value="EDIT"
+                    /></a>
+                    <a href="#" mealid="<%= meal.id%>" class="DeletMealBtn"
+                      ><input
+                        class="btn btn-danger"
+                        type="button"
+                        value="DELETE"
+                    /></a>
                   </div>
                 </div>
               </div>
@@ -98,44 +110,62 @@
                   <% } %>
                 </div>
                 <p>
-                  <%= meal.description %>  
+                  <%= meal.description %>
                 </p>
-              
+                <a href="/admin/editMeal/<%-meal.id%>" class="adminEditMenuBtn"
+                  ><input class="btn btn-success" type="button" value="EDIT"
+                /></a>
+                <a href="#" mealid="<%= meal.id%>" class="DeletMealBtn"
+                  ><input class="btn btn-danger" type="button" value="DELETE"
+                /></a>
               </div>
-              <div>
-              </div>
-                
+              <div></div>
             </div>
 
             <% } %> <% }) %>
-          
-                     
           </div>
-         
         </div>
       </div>
     </section>
     <!-- End menu-area Area -->
     <div class="modal" tabindex="-1" role="dialog" id="resultModal">
       <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Delet???</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <p>are you sure you want to delet </p>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" id="modaldeletMealBtn" data-dismiss="modal" class="btn btn-primary">DELET</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
-              </div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delet???</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+          <div class="modal-body">
+            <p>are you sure you want to delet</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="modaldeletMealBtn"
+              data-dismiss="modal"
+              class="btn btn-primary"
+            >
+              DELET
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              cancel
+            </button>
+          </div>
+        </div>
       </div>
-  </div>
-  <!-- modal end -->
+    </div>
+    <!-- modal end -->
 
     <!-- start footer Area -->
     <%- include('partials/footer') %>
@@ -143,59 +173,64 @@
 
     <%- include('partials/scripts') %>
 
-
     <script>
       let mealid;
-     const deleteMealBtn = document.querySelectorAll('.DeletMealBtn')
-      deleteMealBtn.forEach(btn => {     //! 2
-            btn.addEventListener('click', e => {
-                e.preventDefault()
-          
-               showModal(true, 'Delete', 'are you sure you want to delet, no way to bring it back ...')
-                mealid = btn.getAttribute('mealid') 
-          
+      const deleteMealBtn = document.querySelectorAll(".DeletMealBtn");
+      deleteMealBtn.forEach((btn) => {
+        //! 2
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          showModal(
+            true,
+            "Delete",
+            "are you sure you want to delet, no way to bring it back ..."
+          );
+          mealid = btn.getAttribute("mealid");
+        });
+      });
+
+      document
+        .querySelector("#modaldeletMealBtn")
+        .addEventListener("click", (e) => {
+          //!4
+          e.preventDefault();
+          // get parentElement to remove it
+          document
+            .querySelector('a[mealid="' + mealid + '"]')
+            .parentElement.parentElement.parentElement.remove();
+          data = {
+            //   it muss be as a object
+            mealid: mealid,
+          };
+          postDtata("/admin/deleteMeal", data)
+            .then((data) => {
+              //hide the delet confirmation modal
+              $("#deletConfirmModal").modal("hide");
+              if (data.status == 200) {
+                if (data == 1) {
+                  showModal(false, "success", "meal is Deleted");
+                } else {
+                  showModal(true, "error", "meal can not be Deleted");
+                }
+              }
             })
-        }); 
- 
-        document.querySelector("#modaldeletMealBtn").addEventListener('click', (e) => {  //!4
-            e.preventDefault() 
-            // get parentElement to remove it
-            document.querySelector('a[mealid="' + mealid + '"]').parentElement.parentElement.parentElement.remove()
-         data = {   //   it muss be as a object
-                mealid: mealid
-            }
-            postDtata('/admin/deleteMeal', data).then((data) => {  
-                //hide the delet confirmation modal
-                $('#deletConfirmModal').modal('hide')
-                if (data.status == 200) {
-                    if (data == 1) {
-                        showModal(false, 'success', "meal is Deleted")
+            .catch((error) => {
+              showModal(true, "error", "error from server");
+            });
+        });
 
-                    } else {
-                        showModal(true, 'error', "meal can not be Deleted")
-                    }
-                } 
-            }).catch(error => {
-                showModal(true, 'error', "error from server")
-
-            }) 
-        })
-
-
-
-        async function postDtata(url = "", data = "") {   // send data to server 
-            const response = await fetch(url, {
-                method: "Post",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)  
-            })
-            return response.json()
-        }
+      async function postDtata(url = "", data = "") {
+        // send data to server
+        const response = await fetch(url, {
+          method: "Post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        return response.json();
+      }
     </script>
-
-
-
   </body>
 </html>
