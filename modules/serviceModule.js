@@ -134,28 +134,51 @@ const setOrderToKitchen = (restaurantId, tableId, orderArr) => {
 const getOrder = (id) => {
   return new Promise((resolve, reject) => {
     connect().then(() => {
-      KITCHENSCHEMA.find({ restaurantId: id })
-        .then((ordersArr) => {
-          const orderObjFinalReturn = [];
+      // KITCHENSCHEMA.find({ restaurantId: id })
+      //   .then((ordersArr) => {
+
+      //     ordersArr.forEach((orderObj) => {
+      //       const promisesArr = [];
+      //       orderObj.orders.forEach((orderId) => {
+      //         promisesArr.push(MENUSCHEMA.findById({ _id: orderId }));
+      //       });
+      //       Promise.all(promisesArr)
+      //         .then((newOrders) => {
+      //           // console.log(newOrders);
+      //           orderObj.orders = newOrders;
+      //           // console.log(ordersArr);
+      //           //resolve(ordersArr);
+      //         })
+      //         .catch((errs) => {
+      //           reject(errs);
+      //         });
+      //     });
+      //   })
+      //   .catch((err) => reject(err));
+      const promisesArr1 = [];
+      promisesArr1.push(KITCHENSCHEMA.find({ restaurantId: id }));
+      promisesArr1.push(MENUSCHEMA.find({ restaurantId: id }));
+      Promise.all(promisesArr1)
+        .then((results) => {
+          const ordersArr = results[0];
+          const menuArr = results[1];
+          let newOrdersArr = [];
           ordersArr.forEach((orderObj) => {
-            const promisesArr = [];
             orderObj.orders.forEach((orderId) => {
-              promisesArr.push(MENUSCHEMA.findById({ _id: orderId }));
-            });
-            Promise.all(promisesArr)
-              .then((newOrders) => {
-                orderObj.orders = newOrders;
-                // console.log(ordersArr);
-                orderObjFinalReturn.push(ordersArr);
-              })
-              .catch((errs) => {
-                reject(errs);
+              menuArr.forEach((menu) => {
+                if (menu._id === orderId) {
+                  newOrdersArr.push(menu);
+                }
               });
+            });
+            orderObj.orders = newOrdersArr;
+            newOrdersArr = [];
           });
-          console.log(orderObjFinalReturn);
-          resolve(orderObjFinalReturn);
+          console.log("ORDER ARRAY", ordersArr);
         })
-        .catch((err) => reject(err));
+        .catch((errors) => {
+          reject(errors);
+        });
     });
   });
 };

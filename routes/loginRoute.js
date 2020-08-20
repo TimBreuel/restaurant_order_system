@@ -45,13 +45,11 @@ loginRoute.post("/", (req, res) => {
 //GET LOGIN/KITCHEN ROUTE
 loginRoute.get("/kitchen", (req, res) => {
   if (req.session.user) {
-
     // console.log(req.session);
     serviceModule.getOrder(req.session.user._id).then((orders) => {
       // console.log(orders);
       res.render("kitchen", { orders });
     });
-
   } else {
     res.render("loginKitchen");
   }
