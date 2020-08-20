@@ -214,7 +214,7 @@ loginRoute.get("/table", (req, res) => {
       });
     Promise.all([promiseTable, promiseMenu])
       .then((tableMenu) => {
-        console.log("TABLE CHECK:", tableMenu[0]);
+        // console.log("TABLE CHECK:", tableMenu[0]);
         if (tableMenu[0] === "not_exist") {
           res.render("404");
         } else {
