@@ -244,13 +244,18 @@ loginRoute.post("/table", (req, res) => {
       })
       .catch((error) => {
         if (error == 3) {
-          res.json(3);
+          //res.json(3);
+          res.render("404")
         } else {
-          res.json(4);
+         // res.json(4);
+         res.render("404")
+
         }
       });
   } else {
-    res.json(2);
+  //  res.json(2);
+  res.render("404")
+
   }
 });
 
