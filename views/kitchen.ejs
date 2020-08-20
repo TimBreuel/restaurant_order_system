@@ -35,26 +35,11 @@
 
             <div class="col-md-12 all">
               <div class="single-menu">
-                <!-- 
-                <div class="title-wrap d-flex justify-content-between ">
-                  <h3 class="text-uppercase ">Table number: #</h3>
-                </div>
-
-                <div style="display: flex; justify-content: space-between;">
-                  <button
-                    class="btn btn-small bg-danger text-white tableResetBtn"
-                    tableId=""
-                  >
-                    Reset
-                  </button>
-                </div> -->
-                <!-- accordion -->
-                <!--Accordion wrapper-->
                 <% orders.forEach(order => { %>
 
                 <div class="tableCollapse">
                   <h2 class="text-center">
-                    <span>+</span> Table number:<%= order.tableId %>
+                    <span>+</span> Table number:<%= order.tableNumber %>
                   </h2>
                   <div>
                     <ul class="card-body">
@@ -82,7 +67,7 @@
                     </div>
                   </div>
                 </div>
-                <% }) %> <%= orders %>
+                <% }) %>
                 <!-- Accordion card -->
 
                 <!-- accordion -->
