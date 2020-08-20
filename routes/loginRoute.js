@@ -79,7 +79,6 @@ loginRoute.post("/kitchen", (req, res) => {
   }
 });
 
-
 /////////////////////
 //GET LOGIN/BAR ROUTE
 // loginRoute.get("/bar", (req, res) => {
@@ -115,8 +114,7 @@ loginRoute.get("/service", (req, res) => {
       .then((tables) => {
         res.render("service", { tables });
       })
-     .catch((err) => console.log("Error post", err));
-
+      .catch((err) => console.log("Error post", err));
   } else {
     res.render("loginService");
   }
@@ -156,8 +154,7 @@ loginRoute.post("/service/tableService", (req, res) => {
       res.json(1);
     })
     .catch((err) => {
-    
-     console.log(err)
+      console.log(err);
     });
 });
 
@@ -170,8 +167,7 @@ loginRoute.post("/service/tablePayment", (req, res) => {
       res.json(1);
     })
     .catch((err) => {
-     
-        console.log(err)
+      console.log(err);
     });
 });
 
@@ -191,15 +187,15 @@ loginRoute.post("/service/resetTable", (req, res) => {
 //GET LOGIN TABLE
 loginRoute.get("/table", (req, res) => {
   // console.log(req.session.user);
-  if (req.session.user && req.session.table_number) {
+  if (req.session.user) {
     const promiseTable = serviceModule
       .getTable(req.session.user._id, req.session.table_number)
       .then((table) => {
+        // console.log("Promise TABLE:", table);
         return table;
       })
       .catch((err) => {
-     
-     console.log(err)
+        console.log(err);
       });
 
     const promiseMenu = adminModule
@@ -208,8 +204,7 @@ loginRoute.get("/table", (req, res) => {
         return meals;
       })
       .catch((err) => {
-
-         console.log(err)
+        console.log(err);
       });
     Promise.all([promiseTable, promiseMenu])
       .then((tableMenu) => {
@@ -221,8 +216,7 @@ loginRoute.get("/table", (req, res) => {
         }
       })
       .catch((err) => {
- 
-      console.log(err)
+        console.log(err);
       });
   } else {
     res.render("loginTable");
@@ -244,15 +238,13 @@ loginRoute.post("/table", (req, res) => {
       })
       .catch((error) => {
         if (error == 3) {
-          res.json(3);       
+          res.json(3);
         } else {
           res.json(4);
         }
       });
   } else {
-   res.json(2);
- 
-
+    res.json(2);
   }
 });
 
