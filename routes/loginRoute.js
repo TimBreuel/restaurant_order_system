@@ -81,29 +81,29 @@ loginRoute.post("/kitchen", (req, res) => {
 
 /////////////////////
 //GET LOGIN/BAR ROUTE
-loginRoute.get("/bar", (req, res) => {
-  res.render("loginBar");
-});
+// loginRoute.get("/bar", (req, res) => {
+//   res.render("loginBar");
+// });
 
 /////////////////////
 //POST LOGIN/BAR ROUTE
-loginRoute.post("/bar", (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
-});
+// loginRoute.post("/bar", (req, res) => {
+//   const { email, password } = req.body;
+//   console.log(req.body);
+// });
 
 /////////////////////
 //GET LOGIN/BAR ROUTE
 loginRoute.get("/restaurant", (req, res) => {
-  res.render("loginRestaurant");
+  res.render("login");
 });
 
 /////////////////////
 //POST RESTAURANT ROUTE
-loginRoute.post("/restaurant", (req, res) => {
-  const { email, password } = req.body;
-  //console.log(req.body);
-});
+// loginRoute.post("/restaurant", (req, res) => {
+//   const { email, password } = req.body;
+//   //console.log(req.body);
+// });
 
 /////////////////////////
 //GET LOGIN/SERVICE ROUTE

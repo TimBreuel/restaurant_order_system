@@ -50,7 +50,7 @@
     </section>
     <!-- End menu-area Area -->
     <!-- Start add meal area -->
-    <section class="menu-area">
+    <section class="menu-area" style="padding-bottom: 100px;">
       <div class="container">
         <form
           class="form-wrap text-center"
@@ -112,7 +112,7 @@
           />
 
           <button
-            class="primary-btn btn-block bg-dark text-uppercase mt-20 mb-5"
+            class="btn btn-block bg-dark text-uppercase mt-20 mb-5 text-white"
             id="addMealBtn"
             style="border-radius: 3px;"
           >
@@ -194,7 +194,7 @@
           })
             .then((response) => {
               if (response.status === 200) {
-                successOrNot("SUCCESFULL ADDED", "#00AB66 !important");
+                successOrNot("SUCCESFULL ADDED", "bg-success");
                 addMealTitle.value = "";
                 AddMealDescription.value = "";
                 addMealNumber.value = "";
@@ -202,7 +202,7 @@
                 addMealImg.value = "";
                 addMealSelect.selectedIndex = "0";
               } else {
-                successOrNot("SOMETHING GOES WRONG", "#EA2626 !important");
+                successOrNot("SOMETHING GOES WRONG", "bg-danger");
               }
             })
             .catch((err) => console.log(err));
@@ -228,10 +228,11 @@
 
       function successOrNot(msg, color) {
         addMealBtn.classList.remove("bg-dark");
-        addMealBtn.style.backgroundColor = color;
+        addMealBtn.classList.add(color);
         addMealBtn.innerText = msg;
         setTimeout(() => {
           addMealBtn.classList.add("bg-dark");
+          addMealBtn.classList.remove(color);
           addMealBtn.innerText = "ADD MEAL";
         }, 2000);
       }
