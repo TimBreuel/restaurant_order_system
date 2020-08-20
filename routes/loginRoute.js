@@ -45,11 +45,13 @@ loginRoute.post("/", (req, res) => {
 //GET LOGIN/KITCHEN ROUTE
 loginRoute.get("/kitchen", (req, res) => {
   if (req.session.user) {
-    // console.log(req.session);
-    serviceModule.getOrder(req.session.user._id).then((orders) => {
-      // console.log(orders);
-      res.render("kitchen", { orders });
-    });
+    serviceModule
+    .getOrder(req.session.user._id , req.session.table_number , req.session.orders)
+    .then((order) =>{
+      return order
+    })
+
+    
   } else {
     res.render("loginKitchen");
   }
@@ -59,13 +61,15 @@ loginRoute.get("/kitchen", (req, res) => {
 //POST LOGIN/KITCHEN ROUTE
 loginRoute.post("/kitchen", (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   if (email && password) {
     loginDataModules
       .checkUser(email.trim(), password)
       .then((user) => {
         req.session.user = user;
-
+        
         res.json(1);
+      
       })
       .catch((error) => {
         if (error == 3) {
@@ -78,6 +82,9 @@ loginRoute.post("/kitchen", (req, res) => {
     res.json(2);
   }
 });
+
+
+
 
 /////////////////////
 //GET LOGIN/BAR ROUTE
@@ -259,7 +266,10 @@ loginRoute.post("/table/sendOrder", (req, res) => {
     .then(() => {
       return;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.render('404')
+    //  console.log(err)
+    });
   const promiseSetKitchen = serviceModule
     .setOrderToKitchen(restaurantId, tableId, order)
     .then(() => {

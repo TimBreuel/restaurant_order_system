@@ -165,16 +165,17 @@ const getOrder = (id) => {
           let newOrdersArr = [];
           ordersArr.forEach((orderObj) => {
             orderObj.orders.forEach((orderId) => {
-              menuArr.forEach((menu) => {
+            menuArr.forEach((menu) => {
                 if (menu._id === orderId) {
                   newOrdersArr.push(menu);
                 }
-              });
+              }); 
             });
             orderObj.orders = newOrdersArr;
             newOrdersArr = [];
           });
-          console.log("ORDER ARRAY", ordersArr);
+         // console.log(err);
+          //console.log("ORDER ARRAY", ordersArr);
         })
         .catch((errors) => {
           reject(errors);
