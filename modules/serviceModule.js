@@ -96,7 +96,7 @@ const getTable = (id, tableNumber) => {
     connect().then(() => {
       TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
         .then((table) => {
-          console.log(table);
+          //console.log(table);
           if (!table === null) {
             resolve(table);
           } else {
