@@ -149,10 +149,7 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-/* app.get('/404', (req, res) => {
-  res.render("404")
-});
- */
+
 
 
 ///////

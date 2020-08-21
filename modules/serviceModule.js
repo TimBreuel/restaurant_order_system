@@ -100,8 +100,10 @@ const getTable = (id, tableNumber) => {
     connect().then(() => {
       TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
         .then((table) => {
-          // console.log("GET TABLE:", table);
+
+ // console.log("GET TABLE:", table);
           if (table === null) {
+
             resolve("not_exist");
           } else {
             resolve(table);
