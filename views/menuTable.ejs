@@ -32,7 +32,7 @@
             <ul class="list-group modal__orderList"></ul>
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
-              style="padding-right: 8px; font-weight: 700;"
+              style="padding-right: 10px; font-weight: 700;"
             >
               Total cost:<span class="badge badge-primary totalCost"> 0$</span>
             </li>
@@ -40,7 +40,7 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-danger"
               data-dismiss="modal"
             >
               Close
@@ -413,7 +413,7 @@
         orderAll.forEach((order) => {
           totalCostNum += order.price;
           const liElement = document.createElement("div");
-          liElement.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center" style="border-left:0;border-right:0; padding:8px">${order.title}<span class="badge badge-secondary">${order.price} $</span></li>`;
+          liElement.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center" style="border-left:0;border-right:0; padding:10px">${order.title}<span class="badge badge-secondary">${order.price} $</span></li>`;
           modalOrderList.append(liElement);
         });
         totalCost.innerText = totalCostNum + " €";
