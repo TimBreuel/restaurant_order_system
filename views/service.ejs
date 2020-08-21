@@ -4,6 +4,37 @@
     <%- include('partials/header') %>
   </head>
   <body onload="pageloadEvery(30000)">
+    <!-- modal start -->
+    <div class="modal" tabindex="-1" role="dialog" id="resultModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delet???</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>are you sure you want to delet</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal end -->
     <div
       class="bg-dark"
       style="
@@ -104,6 +135,12 @@
             if (data === 1) {
               e.target.classList.remove("bg-warning");
               e.target.classList.add("bg-secondary");
+            } else {
+              showModal(
+                true,
+                "Something goes wrong",
+                "Something goes wrong the table is not reseted"
+              );
             }
           });
         });
@@ -121,6 +158,12 @@
             if (data === 1) {
               e.target.classList.remove("bg-primary");
               e.target.classList.add("bg-secondary");
+            } else {
+              showModal(
+                true,
+                "Something goes wrong",
+                "Something goes wrong the table is not reseted"
+              );
             }
           });
         });
@@ -136,12 +179,23 @@
             tableId: e.target.getAttribute("tableId"),
           }).then((data) => {
             if (data === 1) {
+              showModal(
+                false,
+                "Reset the table success",
+                "The table is reseted and ready for the next customer"
+              );
               e.target.classList.remove("bg-secondary");
               e.target.classList.add("bg-success");
               setTimeout(() => {
                 e.target.classList.remove("bg-success");
                 e.target.classList.add("bg-secondary");
               }, 3000);
+            } else {
+              showModal(
+                true,
+                "Something goes wrong",
+                "Something goes wrong the table is not reseted"
+              );
             }
           });
         });
