@@ -3,6 +3,8 @@ const loginRoute = express.Router();
 const loginDataModules = require("../modules/loginModule");
 const serviceModule = require("../modules/serviceModule");
 const adminModule = require("../modules/adminModule");
+const { getOrderLogs } = require("../modules/serviceModule");
+const session = require("express-session");
 
 //////////////////
 //GET LOGIN ROUTE
@@ -187,7 +189,7 @@ loginRoute.post("/service/resetTable", (req, res) => {
 //GET LOGIN TABLE
 loginRoute.get("/table", (req, res) => {
   // console.log(req.session.user);
-  if (req.session.user) {
+  if (req.session.user && req.session.table_number) {
     const promiseTable = serviceModule
       .getTable(req.session.user._id, req.session.table_number)
       .then((table) => {
@@ -210,6 +212,7 @@ loginRoute.get("/table", (req, res) => {
       .then((tableMenu) => {
         // console.log("TABLE CHECK:", tableMenu[0]);
         if (tableMenu[0] === "not_exist") {
+          req.session.destroy();
           res.render("404");
         } else {
           res.render("menuTable", { tableMenu });
@@ -291,6 +294,18 @@ loginRoute.post("/table/wantsToPay", (req, res) => {
     .setTablePayment(req.body.tableId, req.body.wantsToPay)
     .then(() => res.json(1))
     .catch(() => res.json(2));
+});
+
+///////////////////////////////
+//POST TABLESERVICE RESET TABLE
+loginRoute.post("/table/orderLog", (req, res) => {
+  const { tableId, restaurantId } = req.body;
+  serviceModule
+    .getOrderLogs(tableId, restaurantId)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => res.json(2));
 });
 
 module.exports = loginRoute;
