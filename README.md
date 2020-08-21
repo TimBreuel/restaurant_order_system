@@ -6,7 +6,7 @@ Fullstack application
 
 [Here you come to the side](https://tim-breuel-order-system.herokuapp.com/)
 
-### Technology: ,, JAVASCRIPT, , ,
+### Technology:
 
 - HTML
 - CSS
