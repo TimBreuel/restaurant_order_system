@@ -82,7 +82,7 @@ const setTableOrders = (tableId, orderArr) => {
       .then(() => {
         TABLESCHEMA.findByIdAndUpdate(
           { _id: tableId.trim() },
-          { orders: orderArr }
+          { $push: { orders: orderArr } }
         )
           .then(() => resolve())
           .catch((err) => {
@@ -100,10 +100,8 @@ const getTable = (id, tableNumber) => {
     connect().then(() => {
       TABLESCHEMA.findOne({ restaurantId: id, table_number: tableNumber })
         .then((table) => {
-
- // console.log("GET TABLE:", table);
+          // console.log("GET TABLE:", table);
           if (table === null) {
-
             resolve("not_exist");
           } else {
             resolve(table);
@@ -176,6 +174,35 @@ const getOrder = (id) => {
   });
 };
 
+/////////////////////////////////
+//GET ALL ORDERS FOR THE KITCHEN
+const getOrderLogs = (tableId, restaurantId) => {
+  return new Promise((resolve, reject) => {
+    connect().then(() => {
+      const promisesArr1 = [];
+      promisesArr1.push(TABLESCHEMA.findOne({ _id: tableId }));
+      promisesArr1.push(MENUSCHEMA.find({ restaurantId: restaurantId }));
+      Promise.all(promisesArr1)
+        .then((results) => {
+          const ordersArr = results[0];
+          const menuArr = results[1];
+          let newOrdersArr = [];
+          ordersArr.orders.forEach((orderId) => {
+            menuArr.forEach((menu) => {
+              if (menu._id == orderId) {
+                newOrdersArr.push(menu);
+              }
+            });
+          });
+          resolve(newOrdersArr);
+        })
+        .catch((errors) => {
+          reject(errors);
+        });
+    });
+  });
+};
+
 module.exports = {
   addTables,
   getAllTables,
@@ -186,4 +213,5 @@ module.exports = {
   setOrderToKitchen,
   resetTableOrder,
   getOrder,
+  getOrderLogs,
 };

@@ -4,6 +4,61 @@
     <%- include('partials/header') %>
   </head>
   <body>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Here are all of your orders
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group modal__orderList"></ul>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              style="padding-right: 8px; font-weight: 700;"
+            >
+              Total cost:<span class="badge badge-primary totalCost"> 0$</span>
+            </li>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              class="btn btn-outline-primary"
+              type="button"
+              id="wantsToPay"
+            >
+              Call service to pay
+            </button>
+            <button type="button" class="btn btn-outline-primary payOnlineBtn">
+              Pay online
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="pos-f-t">
       <div class="collapse" id="navbarToggleExternalContent">
         <div class="bg-dark p-4">
@@ -64,24 +119,31 @@
         >
           Need service
         </button>
+
         <button
-          class="navbar-toggler"
           type="button"
-          id="wantsToPay"
+          class="navbar-toggler"
+          style="font-weight: 300; font-size: 18px;"
+          id="orderLogBtn"
+        >
+          Order log & pay
+        </button>
+
+        <button
+          type="button"
+          class="navbar-toggler"
           style="font-weight: 300; font-size: 18px;"
         >
-          Wants to pay
-        </button>
-        <div>
           <a
-            class="navbar-brand tableIdLogout"
+            class="tableIdLogout"
+            style="text-decoration: none; color: rgb(158, 158, 158);"
             href="/login/logout"
             restaurantid="<%= tableMenu[0].restaurantId %>"
             tableid="<%= tableMenu[0]._id %>"
             tablenumber="<%= tableMenu[0].table_number %>"
             >Table: #<%= tableMenu[0].table_number %> Logout</a
           >
-        </div>
+        </button>
       </nav>
     </div>
     <div
@@ -94,9 +156,9 @@
     <section
       class="menu-area section-gap"
       id="menu"
-      style="padding-top: 70px; height: 100vh;"
+      style="padding-top: 70px; height: 100vh; height: 100vh;"
     >
-      <div class="container">
+      <div class="container" style="padding-bottom: 100px;">
         <ul class="filter-wrap filters col-lg-12 no-padding">
           <li class="active" data-filter="*">All Menu</li>
           <li data-filter=".drinks">Drinks</li>
@@ -244,7 +306,6 @@
               infoMessage.classList.remove("text-danger");
             }, 5000);
           }
-    
         });
       });
 
@@ -312,6 +373,52 @@
           }
         );
       });
+      /////////////
+      //TOTAL COST
+      let totalCost = document.querySelector(".totalCost");
+      /////////////////
+      //ORDER LOG MODAL
+      const orderLogBtn = document.querySelector("#orderLogBtn");
+      orderLogBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        let data = {
+          tableId: tableIdLogout.getAttribute("tableid"),
+          restaurantId: tableIdLogout.getAttribute("restaurantId"),
+        };
+        postDataTable("/login/table/orderLog", data).then((response) => {
+          if (!response === 2) {
+            console.log("ERROR");
+          } else {
+            showModalOrderLog(response);
+          }
+        });
+      });
+
+      const payOnlineBtn = document.querySelector(".payOnlineBtn");
+      payOnlineBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.open("https://www.paypal.com", "_blank");
+      });
+
+      /////////////////
+      //MODAL FUNCTION
+      function showModalOrderLog(orderAll) {
+        const modal = document.querySelector("#exampleModal");
+        let modalOrderList = document.querySelector(".modal__orderList");
+        modalOrderList.innerHTML = "";
+        let totalCostNum = totalCost.innerText;
+        totalCostNum = parseInt(totalCostNum);
+
+        orderAll.forEach((order) => {
+          totalCostNum += order.price;
+          const liElement = document.createElement("div");
+          liElement.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center" style="border-left:0;border-right:0; padding:8px">${order.title}<span class="badge badge-secondary">${order.price} $</span></li>`;
+          modalOrderList.append(liElement);
+        });
+        totalCost.innerText = totalCostNum + " €";
+        $("#exampleModal").modal("show");
+      }
 
       /////////////////////
       //FETCH DATA FUNCTION
