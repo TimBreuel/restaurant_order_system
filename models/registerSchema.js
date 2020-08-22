@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const connect = require('../models/connectionFn')
+var passportLocalMongoose=require("passport-local-mongoose");
 
 
 // get schema object
@@ -39,11 +41,56 @@ const userSchema = new Schema({
     verified : {
         type: Boolean,
         required: true
+    },
+ 
+    resetPasswordToken: {
+        type: String,
+       // required: false
+    },
+
+    resetPasswordExpires: {
+        type: Date,
+       // required: false
+    },
+    isAdmin: {
+        type:Boolean,
+        default:false
     }
+   
 
-})
 
+} ,{timestamps: true})
+
+
+
+// checkuser mongoose  for LOGIN form
+function checkUser(email, password) {
+    return new Promise((resolve, reject) => {
+        connect().then(() => {
+            userSchema.findOne({ email: email }).then(user => {
+                if (user) {
+                    if (passwordHash.verify(password, user.password)) {
+                        resolve(user)
+                    } else {
+                        reject(3)
+                    }
+                } else {
+                    reject(3)
+                }
+            }).catch(error => {
+                reject(error)
+            })
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
+
+
+userSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model('restaurant_users', userSchema)
+//module.exports = {checkExist, checkUser}
 
 
 
