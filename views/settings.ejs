@@ -8,7 +8,38 @@
 <body>
   <%- include('partials/adminHeader') %>
   <!-- #header -->
-
+        <!-- modal start -->
+        <div class="modal" tabindex="-1" role="dialog" id="resultModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Delet???</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>are you sure you want to delet</p>
+              </div>
+              <div class="modal-footer">
+                
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal end -->
   <!-- start banner Area -->
   <section class="about-banner relative">
     <div class="overlay overlay-bg"></div>
@@ -80,6 +111,11 @@
           postData('/admin/settings',data)
           .then(data => {
            if(data ===1){
+            showModal(
+            false,
+            "Tables added successfully",
+            "We are add the tables to your restaurant."
+          );
             addTables.value = ''
             addTables.style.border = '2px solid green'
             tableHeadline.innerHTML = 'SUCCESSFULLY ADDED'
@@ -87,7 +123,11 @@
               addTables.style.border = '1px solid #ced4da'},3000)
               tableHeadline.innerHTML = 'Here you can set your tables'
            } else{
-            
+            showModal(
+                true,
+                "Something goes wrong",
+                "Something goes wrong the tables are not added to the system"
+              );
             addTables.style.border = '1px solid red'
             tableHeadline.innerHTML = 'SOMTHING GOES WRONG'
             setTimeout(()=>{
