@@ -14,7 +14,7 @@ const emailSender = require('./emailSenderModule')
 
 
 //! registerUser mongoose
-function registerUser(rname,fname, lname, email, password) {
+function registerUser(rname,fname, lname, email, password  ) {
     return new Promise((resolve, reject) => {
         connect().then(() => {
             //creat new user      
@@ -24,7 +24,8 @@ function registerUser(rname,fname, lname, email, password) {
                 last_name: lname,
                 email: email,
                 password: passwordHash.generate(password),
-                verified: false
+                verified: false,
+      
             })
             //  save newuser in DB
             newUser.save().then(() => {
@@ -66,4 +67,35 @@ function verifyRegister(id) {
 
 
 
-module.exports = {registerUser , verifyRegister}
+function findUserEmail(email){
+    return new Promise((resolve , reject)=>{
+        connect().then(()=>{
+            REGISTERSCHEMA.findOne({email:email}).then(user =>{
+                resolve(user)
+            }).catch(err =>{
+                err
+            })
+        })
+    })
+}
+
+
+const checkExist=obj=>{
+    return new Promise((resolve,reject)=>{
+        connect().then(()=>{
+            REGISTERSCHEMA.findOne(obj).then(val=>{
+                if(val){
+                    resolve(val)
+                }else{
+                    reject({error:"not found"})
+                }
+            }).catch(error=>{
+                reject(error)
+            })
+        })
+})
+}
+
+
+
+module.exports = {registerUser , verifyRegister , findUserEmail , checkExist}

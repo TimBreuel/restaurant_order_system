@@ -23,9 +23,26 @@ function checkUser(email, password) {
             reject(error)
         })
     })
-
-
 }
 
 
-module.exports = {checkUser}
+const checkExist=obj=>{
+    return new Promise((resolve,reject)=>{
+        connect().then(()=>{
+            REGISTERSCHEMA.findOne(obj).then(val=>{
+                if(val){
+                    resolve(val)
+                }else{
+                    reject({error:"not found"})
+                }
+            }).catch(error=>{
+                reject(error)
+            })
+        })
+})
+}
+
+module.exports = {checkUser, checkExist}
+
+
+

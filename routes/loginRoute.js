@@ -1,6 +1,7 @@
 const express = require("express");
 const loginRoute = express.Router();
 const loginDataModules = require("../modules/loginModule");
+//const loginDataModules = require("../models/registerSchema");
 const serviceModule = require("../modules/serviceModule");
 const adminModule = require("../modules/adminModule");
 
@@ -40,6 +41,19 @@ loginRoute.post("/", (req, res) => {
     res.json(2);
   }
 });
+
+////////////////////
+//password
+
+
+
+
+
+
+
+
+
+
 
 //////////////////////////
 //GET LOGIN/KITCHEN ROUTE

@@ -27,18 +27,11 @@
           <div class="col-lg-5 reservation-right">
             <form
               class="form-wrap text-center"
-              action="#"
+              action="/reset/<%= token %>"
               style="padding-top: 80px; padding-bottom: 80px;"
+              method="POST"
             >
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                id="loginRestaurantEmail"
-                placeholder="Your Email Address"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Your Email Address'"
-              />
+       
               <input
                 type="password"
                 class="form-control"
@@ -46,14 +39,23 @@
                 id="loginRestaurantPassword"
                 placeholder="Password"
                 onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Password'"
+                onblur="this.placeholder =  ' new Password'"
               />
-
+              <input
+              type="password"
+              class="form-control"
+              name="confirm"
+              id="loginRestaurantPassword"
+              placeholder="Password"
+              onfocus="this.placeholder = ''"
+              onblur="this.placeholder = 'confirm Password'"
+            />
               <button
                 class="primary-btn text-uppercase mt-20"
-                id="loginRestaurantBtn"
+                type="submit"
+                id="RestaurantBtnReset"
               >
-                Login
+                update password
               </button>
               <div>
                    <a href="/forgotPassword">Forgot your password?</a>
@@ -74,7 +76,7 @@
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
-    <script>
+<!--     <script>
       //GET THE BUTTON AND MAKE VALIDATION
       const loginRestaurantBtn = document.querySelector("#loginRestaurantBtn");
       loginRestaurantBtn.addEventListener("click", (e) => {
@@ -146,6 +148,6 @@
             "Login to your restaurant to set your tables and create your menu for your customer.";
         }, 6000);
       }
-    </script>
+    </script> -->
   </body>
 </html>
