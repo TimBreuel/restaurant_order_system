@@ -17,7 +17,7 @@
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 reservation-left">
             <h1 class="text-white" id="registerHeadline">
-              Register your restaurant to our sytem.
+              Register Your Restaurant To Our System.
             </h1>
             <p class="text-white pt-20" id="registerMessage">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -84,7 +84,7 @@
               />
 
               <button class="primary-btn text-uppercase mt-20" id="registerBtn">
-                Register
+                REGISTER NOW
               </button>
             </form>
           </div>
@@ -125,35 +125,35 @@
 
         if (!registerRestaurantName.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out restaurant name<br>";
+          isVerified.msg += "Please fill out restaurant name<br>";
         }
         if (!registerFirstName.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out frist name<br>";
+          isVerified.msg += "Please fill out frist name<br>";
         }
         if (!registerLastName.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out last name<br>";
+          isVerified.msg += "Please fill out last name<br>";
         }
         if (!registerEmail.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out email<br>";
+          isVerified.msg += "Please fill out email<br>";
         }
         if (!registerPassword.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
+          isVerified.msg += "Please fill out password<br>";
         }
         if (!registerPassword.value) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
+          isVerified.msg += "Please fill out password<br>";
         }
         if (!registerRePassword.value) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
+          isVerified.msg += "Please fill out password<br>";
         }
         if (registerPassword.value !== registerRePassword.value) {
           isVerified.valid = false;
-          isVerified.msg += "Password are not match<br>";
+          isVerified.msg += "Passwords do not match<br>";
         }
         if (!isVerified.valid) {
           errorMessage(isVerified.msg);
@@ -193,7 +193,8 @@
           "Something goes wrong check the text below";
         registerMessage.innerHTML = message;
         setTimeout(() => {
-          registerHeadline.innerHTML = "Register your restaurant to our sytem.";
+          registerHeadline.innerHTML =
+            "Register your restaurant to our system.";
           registerMessage.innerHTML =
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam. Quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea.";
         }, 6000);
