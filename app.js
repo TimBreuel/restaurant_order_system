@@ -15,8 +15,8 @@ const crypto = require("crypto")
 const async = require("async")
 const nodemailer = require('nodemailer');
 const sensitiveData = require('./modules/sensitiveData')
-var flash=require("connect-flash");
-
+//var flash=require("connect-flash");
+const flash = require("express-flash")
 //creat session object options
 const sessionOptions = {
   secret: "restaurant_order",
@@ -43,6 +43,12 @@ app.use(
 app.use(session(sessionOptions)); //use a session
 app.use(cors()) //!!
 app.use(flash());
+app.use(function(req, res, next){
+  // if there's a flash message in the session request, make it available in the response, then delete it
+  res.locals.sessionFlash = req.session.sessionFlash;
+  delete req.session.sessionFlash;
+  next();
+});
 
 ////////////////
 //IMPORT ROUTES
@@ -136,7 +142,7 @@ app.post('/forgotPassword', (req, res, next) => {
           user.resetPasswordToken = token;
           user.resetPasswordExpires = Date.now() + 3600000; //1hour
           user.save(err => {
-            console.log("start Saving====>")
+          //  console.log("start Saving====>")
             if (!err)
               done(err, token, user)
             else { console.log(err) }
@@ -145,7 +151,7 @@ app.post('/forgotPassword', (req, res, next) => {
         else { console.log("not found"), res.json("not found") }
       }).catch(error => {
         console.log(error)
-        res.json(error)
+      //  res.json(error)
       })
     },
     function (token, user, done) {
@@ -166,21 +172,17 @@ app.post('/forgotPassword', (req, res, next) => {
       };
       smtpTransport.sendMail(mailOptions, function (error , info) {
         console.log('mailsend');
-        //    //res.json(1)
+   
         if (error) {
           console.log(error);
-         // reject(error)
+      
       } else {
-      res.json(1)
-         req.flash('success' , 'An e-mail has been send to'+ user.email+ 'with further instractions')
-         // console.log(info.response);
-          //resolve(info.response)
+     res.json(1)
            done(err, 'done')
       }
       
       })
     }
-
 
   ], function (err) {
     if (err) {
@@ -195,8 +197,8 @@ app.get('/reset/:token', (req, res) => {
   connect().then(() => {
     REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt:  Date.now() } }, function (err, user) {
       if (!user) {
-        //res.send("err, password reset token is invalid")
-        alert('err')
+     
+  
         return res.redirect('/forgotPassword')
       } else {
         res.render('reset', { token: req.params.token })
@@ -210,7 +212,7 @@ app.post('/reset/:token', (req, res) => {
     function (done) {
       REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
         if (!user) {
-          //  res.send('err');
+        
          console.log('user is not define');
         }
         if (req.body.password === req.body.confirm) {
@@ -219,9 +221,9 @@ app.post('/reset/:token', (req, res) => {
             user.resetPasswordExpires = undefined;
             user.save().then((user) => {
               req.session.user = user
-              //res.json(1);
+     
               res.redirect("/admin");
-            // res.render("login");
+           
             }).catch(err => {
               console.log(err);
             })
@@ -250,9 +252,6 @@ app.post('/reset/:token', (req, res) => {
       };
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log('mailsend');
-         req.flash('success' , 'An e-mail has been send to'+ user.email+ 'with further instractions')
-        //res.json(1)
-       
         done(err)
       })
     }
