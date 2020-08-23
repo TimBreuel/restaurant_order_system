@@ -77,10 +77,10 @@
     <script>
       const RestaurantBtnReset = document.querySelector("#RestaurantBtnReset");
       RestaurantBtnReset.addEventListener("click", (e) => {
-        e.preventDefault();
         const firstPw = document.querySelector(".firstPw").value;
         const secendPw = document.querySelector(".secendPw").value;
         if (firstPw !== secendPw) {
+          e.preventDefault();
           errorMessage("Please check that booth passwords are the same.");
         }
       });
