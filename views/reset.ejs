@@ -16,12 +16,12 @@
       <div class="container">
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 reservation-left">
-            <h1 class="text-white" id="loginRestaurantHeadline">
-              Login to your Restaurant.
+            <h1 class="text-white" id="loginResetHeadline">
+              Please type a new password.
             </h1>
-            <p class="text-white pt-20" id="loginRestaurantMessage">
-              Login to your restaurant to set your tables and create your menu
-              for your customer.
+            <p class="text-white pt-20" id="loginResetMessage">
+              Please type a new password to change your old password to the new
+              one.
             </p>
           </div>
           <div class="col-lg-5 reservation-right">
@@ -31,10 +31,9 @@
               style="padding-top: 80px; padding-bottom: 80px;"
               method="POST"
             >
-       
               <input
                 type="password"
-                class="form-control"
+                class="form-control firstPw"
                 name="password"
                 id="loginRestaurantPassword"
                 placeholder="Password"
@@ -42,14 +41,14 @@
                 onblur="this.placeholder =  ' new Password'"
               />
               <input
-              type="password"
-              class="form-control"
-              name="confirm"
-              id="loginRestaurantPassword"
-              placeholder="Password"
-              onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'confirm Password'"
-            />
+                type="password"
+                class="form-control secendPw"
+                name="confirm"
+                id="loginRestaurantPassword"
+                placeholder="Password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'confirm Password'"
+              />
               <button
                 class="primary-btn text-uppercase mt-20"
                 type="submit"
@@ -58,9 +57,8 @@
                 update password
               </button>
               <div>
-                   <a href="/forgotPassword">Forgot your password?</a>
-              <p>Dont have an account?<a href="/register">Sign up.</a></p>
-           
+                <a href="/forgotPassword">Forgot your password?</a>
+                <p>Dont have an account?<a href="/register">Sign up.</a></p>
               </div>
             </form>
           </div>
@@ -76,78 +74,32 @@
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
-<!--     <script>
-      //GET THE BUTTON AND MAKE VALIDATION
-      const loginRestaurantBtn = document.querySelector("#loginRestaurantBtn");
-      loginRestaurantBtn.addEventListener("click", (e) => {
+    <script>
+      const RestaurantBtnReset = document.querySelector("#RestaurantBtnReset");
+      RestaurantBtnReset.addEventListener("click", (e) => {
         e.preventDefault();
-        const loginRestaurantEmail = document.querySelector(
-          "#loginRestaurantEmail"
-        );
-        const loginRestaurantPassword = document.querySelector(
-          "#loginRestaurantPassword"
-        );
-        let isVerified = {
-          valid: true,
-          msg: "",
-        };
-
-        if (!loginRestaurantEmail.value.trim()) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out email<br>";
-        }
-        if (!loginRestaurantPassword.value) {
-          isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
-        }
-
-        if (!isVerified.valid) {
-          errorMessage(isVerified.msg);
-        } else {
-          const data = {
-            email: loginRestaurantEmail.value,
-            password: loginRestaurantPassword.value,
-          };
-          postData("/login", data).then((data) => {
-            console.log(data);
-            if (data === 1) {
-              window.location.href = "/admin";
-            }
-          });
+        const firstPw = document.querySelector(".firstPw").value;
+        const secendPw = document.querySelector(".secendPw").value;
+        if (firstPw !== secendPw) {
+          errorMessage("Please check that booth passwords are the same.");
         }
       });
-
-      //////////////////////////
-      //FETCH THE REGISTER DATA
-      async function postData(url = "", data = {}) {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        return response.json();
-      }
 
       ///////////////////
       //ERROR MESSGAE fn
       function errorMessage(message) {
-        const loginRestaurantHeadline = document.querySelector(
-          "#loginRestaurantHeadline"
+        const loginResetHeadline = document.querySelector(
+          "#loginResetHeadline"
         );
-        const loginRestaurantMessage = document.querySelector(
-          "#loginRestaurantMessage"
-        );
-        loginRestaurantHeadline.innerHTML =
-          "Something goes wrong check the text below";
-        loginRestaurantMessage.innerHTML = message;
+        const loginResetMessage = document.querySelector("#loginResetMessage");
+        loginResetHeadline.innerHTML = "Password are not the same";
+        loginResetMessage.innerHTML = message;
         setTimeout(() => {
-          loginRestaurantHeadline.innerHTML = "Login to your restaurant!";
-          loginRestaurantMessage.innerHTML =
-            "Login to your restaurant to set your tables and create your menu for your customer.";
+          loginResetHeadline.innerHTML = "Please type a new password.";
+          loginResetMessage.innerHTML =
+            "Please type a new password to change your old password to the new one.";
         }, 6000);
       }
-    </script> -->
+    </script>
   </body>
 </html>
