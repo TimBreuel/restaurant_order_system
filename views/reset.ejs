@@ -36,7 +36,7 @@
                 type="password"
                 class="form-control"
                 name="password"
-                id="loginRestaurantPassword"
+                id="loginRestaurantrePassword"
                 placeholder="Password"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder =  ' new Password'"
@@ -76,13 +76,13 @@
     <!-- End footer Area -->
 
     <%- include('partials/scripts') %>
-<!--     <script>
+   <!--  <script>
       //GET THE BUTTON AND MAKE VALIDATION
-      const loginRestaurantBtn = document.querySelector("#loginRestaurantBtn");
-      loginRestaurantBtn.addEventListener("click", (e) => {
+      const RestaurantBtnReset = document.querySelector("#RestaurantBtnReset");
+      RestaurantBtnReset.addEventListener("click", (e) => {
         e.preventDefault();
-        const loginRestaurantEmail = document.querySelector(
-          "#loginRestaurantEmail"
+        const loginRestaurantrePassword = document.querySelector(
+          "#loginRestaurantrePassword"
         );
         const loginRestaurantPassword = document.querySelector(
           "#loginRestaurantPassword"
@@ -92,9 +92,9 @@
           msg: "",
         };
 
-        if (!loginRestaurantEmail.value.trim()) {
+        if (!loginRestaurantrePassword.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out email<br>";
+          isVerified.msg += "Please feel out rePassword<br>";
         }
         if (!loginRestaurantPassword.value) {
           isVerified.valid = false;
@@ -105,13 +105,16 @@
           errorMessage(isVerified.msg);
         } else {
           const data = {
-            email: loginRestaurantEmail.value,
+            rePassword: loginRestaurantrePassword.value,
             password: loginRestaurantPassword.value,
           };
           postData("/login", data).then((data) => {
             console.log(data);
             if (data === 1) {
               window.location.href = "/admin";
+            }else{
+              showModal(true, "Error", "The operation was not successful");
+
             }
           });
         }
@@ -148,6 +151,6 @@
             "Login to your restaurant to set your tables and create your menu for your customer.";
         }, 6000);
       }
-    </script> -->
+    </script>  -->
   </body>
 </html>

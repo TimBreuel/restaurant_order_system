@@ -15,8 +15,8 @@ const crypto = require("crypto")
 const async = require("async")
 const nodemailer = require('nodemailer');
 const sensitiveData = require('./modules/sensitiveData')
-//var flash=require("connect-flash");
-const flash = require("express-flash")
+
+
 //creat session object options
 const sessionOptions = {
   secret: "restaurant_order",
@@ -42,13 +42,7 @@ app.use(
 );
 app.use(session(sessionOptions)); //use a session
 app.use(cors()) //!!
-app.use(flash());
-app.use(function(req, res, next){
-  // if there's a flash message in the session request, make it available in the response, then delete it
-  res.locals.sessionFlash = req.session.sessionFlash;
-  delete req.session.sessionFlash;
-  next();
-});
+
 
 ////////////////
 //IMPORT ROUTES
@@ -74,17 +68,14 @@ app.post("/register", (req, res) => {
   // console.log(req.body);
 
   const { restaurantName, firstName, lastName, email, password } = req.body;
-
   if (restaurantName && firstName && lastName && email && password) {
     registerDataModules
       .registerUser(restaurantName, firstName, lastName, email, password)
       .then(() => {
         res.json(1); //user register success
-
       })
       .catch((error) => {
-        console.log(error);
-
+        //console.log(error);
         if (error == "exist") {
           res.json(3); // user exist
         } else {
@@ -118,21 +109,18 @@ app.get("/verify/:id", (req, res) => {
 ////////////////////////
 //!
 app.get("/forgotPassword", (req, res) => {
-
   res.render("forgotPassword")
 });
 
 //put 
 app.post('/forgotPassword', (req, res, next) => {
   const { email } = req.body
-
   async.waterfall([
     function (done) {
       crypto.randomBytes(20, function (err, buf) {
         let token = buf.toString('hex');
         done(err, token)
       })
-
     },
 
     function (token, done) {
@@ -142,7 +130,7 @@ app.post('/forgotPassword', (req, res, next) => {
           user.resetPasswordToken = token;
           user.resetPasswordExpires = Date.now() + 3600000; //1hour
           user.save(err => {
-          //  console.log("start Saving====>")
+            //  console.log("start Saving====>")
             if (!err)
               done(err, token, user)
             else { console.log(err) }
@@ -150,8 +138,7 @@ app.post('/forgotPassword', (req, res, next) => {
         }
         else { console.log("not found"), res.json("not found") }
       }).catch(error => {
-        console.log(error)
-      //  res.json(error)
+  //    console.log(error)
       })
     },
     function (token, user, done) {
@@ -167,38 +154,32 @@ app.post('/forgotPassword', (req, res, next) => {
         from: 'restaurantordersystem8@gmail.com',
         to: user.email,
         subject: 'Password Resset',
-        text: 'you are receving this link because you have requested the reset password , pls click an the following link, '+
-        ' http://' +req.headers.host+ '/reset/' + token + '\n\n '+'if you did not request this , pls ignore this email and your password will remain unchange '
+        text: 'you are receving this link because you have requested the reset password , pls click an the following link, ' +
+          ' http://' + req.headers.host + '/reset/' + token + '\n\n ' + 'if you did not request this , pls ignore this email and your password will remain unchange '
       };
-      smtpTransport.sendMail(mailOptions, function (error , info) {
+      smtpTransport.sendMail(mailOptions, function (error, info) {
         console.log('mailsend');
-   
+
         if (error) {
           console.log(error);
-      
-      } else {
-     res.json(1)
-           done(err, 'done')
-      }
-      
+        } else {
+          res.json(1)
+          done(err, 'done')
+        }
       })
     }
-
   ], function (err) {
     if (err) {
       return next(err)
     }
   })
-
 })
 
 
 app.get('/reset/:token', (req, res) => {
   connect().then(() => {
-    REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt:  Date.now() } }, function (err, user) {
+    REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
       if (!user) {
-     
-  
         return res.redirect('/forgotPassword')
       } else {
         res.render('reset', { token: req.params.token })
@@ -212,8 +193,8 @@ app.post('/reset/:token', (req, res) => {
     function (done) {
       REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
         if (!user) {
-        
-         console.log('user is not define');
+          console.log('user is not define');
+          
         }
         if (req.body.password === req.body.confirm) {
           user.setPassword(req.body.password, function (err) {
@@ -221,15 +202,14 @@ app.post('/reset/:token', (req, res) => {
             user.resetPasswordExpires = undefined;
             user.save().then((user) => {
               req.session.user = user
-     
               res.redirect("/admin");
-           
             }).catch(err => {
               console.log(err);
             })
           })
         } else {
-          console.log('err pass');
+         console.log('err pass');
+      
         }
       })
     },
@@ -246,9 +226,9 @@ app.post('/reset/:token', (req, res) => {
         from: 'restaurantordersystem8@gmail.com',
         to: user.email,
         subject: 'Password Resset',
-        text: 'hallo'+ '\n'
-        +user.email+' this is a confirmation ' 
-         
+        text: 'hallo' + '\n'
+          + user.email + ' this is a confirmation '
+
       };
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log('mailsend');
