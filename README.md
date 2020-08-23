@@ -4,7 +4,7 @@ Fullstack application
 
 ## See it live
 
-[Here you come to the side](https://tim-breuel-order-system.herokuapp.com/)
+[Here you come to the site](https://tim-breuel-order-system.herokuapp.com/)
 
 ### Technology:
 
@@ -21,11 +21,11 @@ Fullstack application
 ## Discripton Areas
 
 - **Register:** Register your restaurant.
-- **Admin:** here you can upload your menu, delete and edit it.
+- **Admin:** Here you can upload your menu, delete and edit it.
 - **Settings:** Set your restaurant tables.
-- **Table:** Here can you log in with your table number on the table with a (Tablet or screen with internet) and your customer can see your menu and place his order and send it to the kitchen. Your customer can also call service or say that they want to pay (pay online coming soon).
-- **Service:** Here you can see all your tables and see which one needs service or want to pay.
-- **Kitchen:** login from your kitchen and you see all orders from your tables and you can delete them if the order is finished.
+- **Table:** Here can you login with your table number on the table with a (tablet or device with internet) and your customer can see the menu and place thier order and send it to the kitchen. Your customer can also call service or say that they want to pay (pay online coming soon).
+- **Service:** Here you can see all your tables and see which one needs service or would like to pay.
+- **Kitchen:** Login from your kitchen and you see all orders from your tables and you can delete them when the order is finished.
 
 ## Authors
 

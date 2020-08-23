@@ -9,7 +9,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Delet???</h5>
+            <h5 class="modal-title">Delete?</h5>
             <button
               type="button"
               class="close"
@@ -20,7 +20,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>are you sure you want to delet</p>
+            <p>Are you sure you want to delete?</p>
           </div>
           <div class="modal-footer">
             <button
@@ -28,7 +28,7 @@
               class="btn btn-secondary"
               data-dismiss="modal"
             >
-              cancel
+              Cancel
             </button>
           </div>
         </div>
@@ -68,7 +68,7 @@
             <div class="col-md-6 all">
               <div class="single-menu">
                 <div class="title-wrap d-flex justify-content-between">
-                  <h3>Table number: #<%= table.table_number %></h3>
+                  <h3>Table Number: #<%= table.table_number %></h3>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <% if (table.service===false) { %>
@@ -93,7 +93,7 @@
                     tableId="<%= table._id %> "
                     tablePay="<%= table.pay %>"
                   >
-                    Payed
+                    Payment
                   </button>
                   <% } else{%>
                   <button
@@ -101,7 +101,7 @@
                     tableId="<%= table._id %> "
                     tablePay="<%= table.pay %>"
                   >
-                    Payed
+                    Payment
                   </button>
                   <% }%>
                   <button
@@ -138,8 +138,8 @@
             } else {
               showModal(
                 true,
-                "Something goes wrong",
-                "Something goes wrong the table is not reseted"
+                "Something went wrong",
+                "Something went wrong, the table is not reseted"
               );
             }
           });
