@@ -17,11 +17,11 @@
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 reservation-left">
             <h1 class="text-white" id="loginTableHeadline">
-              Login to your table.
+              Login To The Table.
             </h1>
             <p class="text-white pt-20" id="loginTableMessage">
-              Login to your table to see the menu and make some orders to the
-              kitchen.
+              Login to your table to see the menu and allow sending orders to
+              the kitchen.
             </p>
           </div>
           <div class="col-lg-5 reservation-right">
@@ -53,15 +53,15 @@
                 class="form-control"
                 name="table number"
                 id="loginTableNumber"
-                placeholder="Table number"
+                placeholder="Table Number"
                 onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Table number'"
+                onblur="this.placeholder = 'Table Number'"
               />
               <button
                 class="primary-btn text-uppercase mt-20"
                 id="loginTableBtn"
               >
-                Login
+                LOGIN
               </button>
             </form>
           </div>
@@ -118,14 +118,10 @@
               if (data === 1) {
                 window.location.href = "/login/table";
               }
-
             })
-            .catch((err) => { 
-              
-            console.log(err) 
-              });
-           
-           
+            .catch((err) => {
+              console.log(err);
+            });
         }
       });
 
@@ -150,12 +146,12 @@
         );
         const loginTableMessage = document.querySelector("#loginTableMessage");
         loginTableHeadline.innerHTML =
-          "Something goes wrong check the text below";
+          "Something went wrong, check the text below";
         loginTableMessage.innerHTML = message;
         setTimeout(() => {
           loginTableHeadline.innerHTML = "Login to your table!";
           loginTableMessage.innerHTML =
-            "Login to your table to see the menu and make some orders to the kitchen.";
+            "Login to your table to see the menu and send orders to the kitchen.";
         }, 6000);
       }
     </script>

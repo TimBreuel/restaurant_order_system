@@ -17,11 +17,11 @@
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 reservation-left">
             <h1 class="text-white" id="loginRestaurantHeadline">
-              Login to your Restaurant.
+              Login to your Restaurant
             </h1>
             <p class="text-white pt-20" id="loginRestaurantMessage">
               Login to your restaurant to set your tables and create your menu
-              for your customer.
+              for your customers.
             </p>
           </div>
           <div class="col-lg-5 reservation-right">
@@ -53,12 +53,11 @@
                 class="primary-btn text-uppercase mt-20"
                 id="loginRestaurantBtn"
               >
-                Login
+                LOGIN
               </button>
               <div>
-                   <a href="/forgotPassword">Forgot your password?</a>
-              <p>Dont have an account?<a href="/register">Sign up.</a></p>
-           
+                <a href="/forgotPassword">Forgot your password?</a>
+                <p>Dont have an account?<a href="/register"> Sign up.</a></p>
               </div>
             </form>
           </div>
@@ -92,11 +91,11 @@
 
         if (!loginRestaurantEmail.value.trim()) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out email<br>";
+          isVerified.msg += "Please fill out email<br>";
         }
         if (!loginRestaurantPassword.value) {
           isVerified.valid = false;
-          isVerified.msg += "Please feel out password<br>";
+          isVerified.msg += "Please fill out password<br>";
         }
 
         if (!isVerified.valid) {
@@ -138,7 +137,7 @@
           "#loginRestaurantMessage"
         );
         loginRestaurantHeadline.innerHTML =
-          "Something goes wrong check the text below";
+          "Something went wrong, check the text below";
         loginRestaurantMessage.innerHTML = message;
         setTimeout(() => {
           loginRestaurantHeadline.innerHTML = "Login to your restaurant!";
