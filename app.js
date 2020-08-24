@@ -187,11 +187,12 @@ app.get('/reset/:token', (req, res) => {
       } else {
         res.render('reset', { token: req.params.token })
 
-      }
-    );
+      }  
+    
   });
-});
 
+});
+})
 app.post("/reset/:token", (req, res) => {
   async.waterfall([
     function (done) {
@@ -217,7 +218,7 @@ app.post("/reset/:token", (req, res) => {
       
 
         }
-      );
+      
     },
     function (user, done) {
       let smtpTransport = nodemailer.createTransport({
@@ -243,6 +244,7 @@ app.post("/reset/:token", (req, res) => {
         done(err);
       });
     },
+      )}
   ]);
 });
 
