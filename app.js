@@ -7,17 +7,15 @@ const adminRoute = require("./routes/adminRoute");
 const loginRoute = require("./routes/loginRoute");
 const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
-const emailSender = require("./modules/emailSenderModule");
+const emailSender = require("./modules/emailSenderModule")
 const session = require("express-session");
+const REGISTERSCHEMA = require('./models/registerSchema')
+const connect = require('./models/connectionFn')
+const crypto = require("crypto")
+const async = require("async")
+const nodemailer = require('nodemailer');
+const sensitiveData = require('./modules/sensitiveData')
 
-const REGISTERSCHEMA = require("./models/registerSchema");
-const connect = require("./models/connectionFn");
-const crypto = require("crypto");
-const async = require("async");
-const nodemailer = require("nodemailer");
-const sensitiveData = require("./modules/sensitiveData");
-//var flash=require("connect-flash");
-const flash = require("express-flash");
 
 //creat session object options
 const sessionOptions = {
@@ -25,9 +23,10 @@ const sessionOptions = {
   cookie: {},
 };
 
-const cors = require("cors"); //!
 
-require("dotenv").config(); //!
+const cors = require('cors');//!
+
+require('dotenv').config() //!
 
 ////////////////
 //MIDLEWEARE FN
@@ -42,9 +41,7 @@ app.use(
   })
 );
 app.use(session(sessionOptions)); //use a session
-
 app.use(cors()) //!!
-
 
 
 ////////////////
@@ -68,7 +65,7 @@ app.get("/register", (req, res) => {
 ////////////
 //HOME ROUTE
 app.post("/register", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const { restaurantName, firstName, lastName, email, password } = req.body;
   if (restaurantName && firstName && lastName && email && password) {
@@ -104,14 +101,14 @@ app.get("/verify/:id", (req, res) => {
         res.json(2);
       });
   } else {
-    res.render("404");
+    res.render('404')
   }
 });
+
 
 ////////////////////////
 //!
 app.get("/forgotPassword", (req, res) => {
-
   res.render("forgotPassword")
 });
 
@@ -186,17 +183,14 @@ app.get('/reset/:token', (req, res) => {
         return res.redirect('/forgotPassword')
       } else {
         res.render('reset', { token: req.params.token })
-
-      }  
-    
-  });
-
+      }
+    })
+  })
 });
-})
-app.post("/reset/:token", (req, res) => {
+
+app.post('/reset/:token', (req, res) => {
   async.waterfall([
     function (done) {
-
       REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
         if (!user) {
           console.log('user is not define');
@@ -216,59 +210,59 @@ app.post("/reset/:token", (req, res) => {
         } else {
          console.log('err pass');
       
-
         }
-      
+      })
     },
     function (user, done) {
       let smtpTransport = nodemailer.createTransport({
-        service: "Gmail",
+        service: 'Gmail',
         auth: {
-          user: "restaurantordersystem8@gmail.com",
-          pass: sensitiveData.password(),
-        },
-      });
+          user: 'restaurantordersystem8@gmail.com',
+          pass: sensitiveData.password()
+        }
+      })
 
       let mailOptions = {
-        from: "restaurantordersystem8@gmail.com",
+        from: 'restaurantordersystem8@gmail.com',
         to: user.email,
-
         subject: 'Password Resset',
         text: 'hallo' + '\n'
           + user.email + ' this is a confirmation '
 
-
       };
       smtpTransport.sendMail(mailOptions, function (err) {
-        console.log("mailsend");
-        done(err);
-      });
-    },
-      )}
-  ]);
+        console.log('mailsend');
+        done(err)
+      })
+    }
+  ])
 });
 
 ////////////////////////////////
 //emailSender
-app.get("/contact", (req, res) => {
-  res.render("contact");
+app.get('/contact', (req, res) => {
+  res.render('contact')
 });
 
-app.post("/contact", (req, res) => {
-  console.log(req.body);
-  const { name, email, subject, message } = req.body;
+
+app.post('/contact', (req, res) => {
+  console.log(req.body)
+  const { name, email, subject, message } = req.body
 
   if (name != "" && name.length < 100) {
-    emailSender
-      .sendEmail2(name, email, subject, message)
-      .then(() => {
-        res.json(1);
-      })
-      .catch((err) => {
-        res.json(2);
-      });
+    emailSender.sendEmail2(name, email, subject, message).then(() => {
+      res.json(1)
+    }).catch(err => {
+      res.json(2)
+    })
   }
+
+
+
 });
+
+
+
 
 /////////////
 //MENU ROUTE
@@ -299,6 +293,9 @@ app.get("/elements", (req, res) => {
 app.get("/contact", (req, res) => {
   res.render("contact");
 });
+
+
+
 
 ///////
 //PORT
