@@ -220,6 +220,10 @@
           console.log(data);
           if (data === 1) {
             $("#success").modal("show");
+            name.value = '',
+            email.value = '' ,
+            subject.value = '' ,
+            textArea.value = ''
           }
           if (data === 2) {
             $("#error").modal("show");
