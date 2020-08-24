@@ -9,6 +9,7 @@ const registerDataModules = require("./modules/registerModule");
 const fileUpload = require("express-fileupload");
 const emailSender = require("./modules/emailSenderModule");
 const session = require("express-session");
+
 const REGISTERSCHEMA = require("./models/registerSchema");
 const connect = require("./models/connectionFn");
 const crypto = require("crypto");
@@ -17,6 +18,7 @@ const nodemailer = require("nodemailer");
 const sensitiveData = require("./modules/sensitiveData");
 //var flash=require("connect-flash");
 const flash = require("express-flash");
+
 //creat session object options
 const sessionOptions = {
   secret: "restaurant_order",
@@ -40,14 +42,10 @@ app.use(
   })
 );
 app.use(session(sessionOptions)); //use a session
-app.use(cors()); //!!
-app.use(flash());
-app.use(function (req, res, next) {
-  // if there's a flash message in the session request, make it available in the response, then delete it
-  res.locals.sessionFlash = req.session.sessionFlash;
-  delete req.session.sessionFlash;
-  next();
-});
+
+app.use(cors()) //!!
+
+
 
 ////////////////
 //IMPORT ROUTES
@@ -73,7 +71,6 @@ app.post("/register", (req, res) => {
   console.log(req.body);
 
   const { restaurantName, firstName, lastName, email, password } = req.body;
-
   if (restaurantName && firstName && lastName && email && password) {
     registerDataModules
       .registerUser(restaurantName, firstName, lastName, email, password)
@@ -81,8 +78,7 @@ app.post("/register", (req, res) => {
         res.json(1); //user register success
       })
       .catch((error) => {
-        console.log(error);
-
+        //console.log(error);
         if (error == "exist") {
           res.json(3); // user exist
         } else {
@@ -115,101 +111,82 @@ app.get("/verify/:id", (req, res) => {
 ////////////////////////
 //!
 app.get("/forgotPassword", (req, res) => {
-  res.render("forgotPassword");
+
+  res.render("forgotPassword")
 });
 
-//put
-app.post("/forgotPassword", (req, res, next) => {
-  const { email } = req.body;
+//put 
+app.post('/forgotPassword', (req, res, next) => {
+  const { email } = req.body
+  async.waterfall([
+    function (done) {
+      crypto.randomBytes(20, function (err, buf) {
+        let token = buf.toString('hex');
+        done(err, token)
+      })
+    },
 
-  async.waterfall(
-    [
-      function (done) {
-        crypto.randomBytes(20, function (err, buf) {
-          let token = buf.toString("hex");
-          done(err, token);
-        });
-      },
-
-      function (token, done) {
-        registerDataModules
-          .checkExist({ email: email })
-          .then((user) => {
-            if (user) {
-              console.log(user);
-              user.resetPasswordToken = token;
-              user.resetPasswordExpires = Date.now() + 3600000; //1hour
-              user.save((err) => {
-                //  console.log("start Saving====>")
-                if (!err) done(err, token, user);
-                else {
-                  console.log(err);
-                }
-              });
-            } else {
-              console.log("not found"), res.json("not found");
-            }
+    function (token, done) {
+      registerDataModules.checkExist({ email: email }).then(user => {
+        if (user) {
+          console.log(user)
+          user.resetPasswordToken = token;
+          user.resetPasswordExpires = Date.now() + 3600000; //1hour
+          user.save(err => {
+            //  console.log("start Saving====>")
+            if (!err)
+              done(err, token, user)
+            else { console.log(err) }
           })
-          .catch((error) => {
-            console.log(error);
-            //  res.json(error)
-          });
-      },
-      function (token, user, done) {
-        let smtpTransport = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: "restaurantordersystem8@gmail.com",
-            pass: sensitiveData.password(),
-          },
-        });
-
-        let mailOptions = {
-          from: "restaurantordersystem8@gmail.com",
-          to: user.email,
-          subject: "Password Resset",
-          text:
-            "you are receving this link because you have requested the reset password , pls click an the following link, " +
-            " http://" +
-            req.headers.host +
-            "/reset/" +
-            token +
-            "\n\n " +
-            "if you did not request this , pls ignore this email and your password will remain unchange ",
-        };
-        smtpTransport.sendMail(mailOptions, function (error, info) {
-          console.log("mailsend");
-
-          if (error) {
-            console.log(error);
-          } else {
-            res.json(1);
-            done(err, "done");
-          }
-        });
-      },
-    ],
-    function (err) {
-      if (err) {
-        return next(err);
-      }
-    }
-  );
-});
-
-app.get("/reset/:token", (req, res) => {
-  connect().then(() => {
-    REGISTERSCHEMA.findOne(
-      {
-        resetPasswordToken: req.params.token,
-        resetPasswordExpires: { $gt: Date.now() },
-      },
-      function (err, user) {
-        if (!user) {
-          return res.redirect("/forgotPassword");
-        } else {
-          res.render("reset", { token: req.params.token });
         }
+        else { console.log("not found"), res.json("not found") }
+      }).catch(error => {
+  //    console.log(error)
+      })
+    },
+    function (token, user, done) {
+      let smtpTransport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'restaurantordersystem8@gmail.com',
+          pass: sensitiveData.password()
+        }
+      })
+
+      let mailOptions = {
+        from: 'restaurantordersystem8@gmail.com',
+        to: user.email,
+        subject: 'Password Resset',
+        text: 'you are receving this link because you have requested the reset password , pls click an the following link, ' +
+          ' http://' + req.headers.host + '/reset/' + token + '\n\n ' + 'if you did not request this , pls ignore this email and your password will remain unchange '
+      };
+      smtpTransport.sendMail(mailOptions, function (error, info) {
+        console.log('mailsend');
+
+        if (error) {
+          console.log(error);
+        } else {
+          res.json(1)
+          done(err, 'done')
+        }
+      })
+    }
+  ], function (err) {
+    if (err) {
+      return next(err)
+    }
+  })
+})
+
+
+app.get('/reset/:token', (req, res) => {
+  connect().then(() => {
+    REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+      if (!user) {
+        return res.redirect('/forgotPassword')
+      } else {
+        res.render('reset', { token: req.params.token })
+
       }
     );
   });
@@ -218,33 +195,27 @@ app.get("/reset/:token", (req, res) => {
 app.post("/reset/:token", (req, res) => {
   async.waterfall([
     function (done) {
-      REGISTERSCHEMA.findOne(
-        {
-          resetPasswordToken: req.params.token,
-          resetPasswordExpires: { $gt: Date.now() },
-        },
-        function (err, user) {
-          if (!user) {
-            console.log("user is not define");
-          }
-          if (req.body.password === req.body.confirm) {
-            user.setPassword(req.body.password, function (err) {
-              user.resetPasswordToken = undefined;
-              user.resetPasswordExpires = undefined;
-              user
-                .save()
-                .then((user) => {
-                  req.session.user = user;
 
-                  res.redirect("/admin");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            });
-          } else {
-            console.log("err pass");
-          }
+      REGISTERSCHEMA.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+        if (!user) {
+          console.log('user is not define');
+          
+        }
+        if (req.body.password === req.body.confirm) {
+          user.setPassword(req.body.password, function (err) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+            user.save().then((user) => {
+              req.session.user = user
+              res.redirect("/admin");
+            }).catch(err => {
+              console.log(err);
+            })
+          })
+        } else {
+         console.log('err pass');
+      
+
         }
       );
     },
@@ -260,8 +231,12 @@ app.post("/reset/:token", (req, res) => {
       let mailOptions = {
         from: "restaurantordersystem8@gmail.com",
         to: user.email,
-        subject: "Password Resset",
-        text: "hallo" + "\n" + user.email + " this is a confirmation ",
+
+        subject: 'Password Resset',
+        text: 'hallo' + '\n'
+          + user.email + ' this is a confirmation '
+
+
       };
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log("mailsend");
